@@ -1,0 +1,10 @@
+Colors.pm         - provides red/blue etc for perl scripts
+Slurp.pm          - provides slurp/trim commands
+cleanpath.pl      - outputs uniq'ified path
+colors.csh        - defines sh colors WHITE/RED etc
+colortest.pl      - lists all combinations of terminal color
+lcolor.sh         - similar
+my_pt_funcs.tcl   - primetime/icc/synopsys functions
+path.tcl          - GUI presenting path (and wrong ones !)
+routines.rake     - adds colors to String class
+

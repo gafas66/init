@@ -1,0 +1,33 @@
+-*- outline -*-
+
+* hl-line-mode
+
+Will make cursor highlight whole line
+
+* hi-lock-mode (globally on by default)
+
+M-s h p (highlight phrase)
+M-s h r (highlight regexp)
+...
+
+* C-h m
+
+List help for major and minor modes, click on mode name to jump to section
+
+* M-x calc
+
+Advanced calculator
+
+* F11 (toggle fullscreen)
+
+* M-x white-space-mode
+
+See all whitespace
+
+* M-x artistic-mode
+
+Advanced draw ascii art.
+
+* M-: (require 'table)
+
+Advanced table editing?

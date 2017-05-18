@@ -1,0 +1,276 @@
+// -*- js -*-
+////////////////////////////////////////////////////////////////////////////////
+
+// I2S worst case
+
+// out
+{ signal: [{ "name": "Internal master", "wave": "P.............",node: ".a...b.....c.d" },
+           { "name" : "DATA (slave)", "wave" : "x4.4.3.....4.x", data : ["Sync","IP to out","IP to pad","I2S setup"]},
+            { "name": "Time (slave)", node: ".a...b.....c.d" },
+            { "name" : "DATA (master)", "wave" : "x4.3.......4.x", data : ["IP to out","IP to pad","I2S setup"]},
+            { "name": "Time (master)", node: ".e.f.......g.h" },
+           { "name" : "I2S clock", "wave" : "01.....0.....1", "node" : ".x.....y.....z"},
+           {"name" : "Period", "node" : ".m...........n"}],
+  head:{text: "I2S writing from ASIC",tick: -1},
+  foot: {text: "IP to pad and I2S setup are not really cycle related"},
+  edge: ['a<->b 26.7 ns','b<->c 37.3 ns', 'c<->d 16 ns',
+         'e<->f 13.3 ns','f<->g 50.7 ns','g<->h 16 ns','m<->n 80 ns',
+         'x<->y 35 ns min pulse width','y<->z 35 ns min pulse width']
+}
+
+
+// IN
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "DATA", "wave" : "x4....2....x", data: ["Clock 2 out","data valid"]},
+            { name: "Timing", node: ".a....b"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 0/64 ns','b<->c 0','d<->e 80 ns'],
+ head: {text: "I2S timing in to ASIC"},
+ foot: {text: "Input delay is c2q + 2*pcb"}
+
+}
+
+// I2C, UART, SPI, GPIO
+
+// Into ASIC
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "DATA", "wave" : "x4..2......x", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Timing", node: ".a..b"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 0/14 ns','b<->c 0','d<->e 20 ns'],
+ head: {text: "I2C, SPI, UART, GPIO timing in to ASIC"},
+ foot: {text: "Max input delay here does include pcb"}
+
+}
+
+// Out of ASIC
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "DATA", "wave" : "x.....2..2.x", data: ["setup time","hold"]},
+            { name: "Timing", node: "......a..b.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 8 ns','b<->c 0','d<->e 20 ns','b<->g 0 ns','g<->h 0 ns'],
+ head: {text: "I2C, SPI, UART, GPIO timing out of ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay. UART/GPIO has no clock"}
+
+}
+
+// SDIO BusDefault
+
+//in
+{ signal: [{ "name": "Clock", "wave": "10...1...0..", },
+           { "name" : "DATA", "wave" : "x4..2....2.x", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Timing", node: ".a..b....f.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 14 ns','b<->c 0','d<->e 40 ns','f<->g 0 ns','g<->h 0 ns'],
+ head: {text: "SDIO BusDefault timing in to ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay"}
+
+}
+
+// out
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "DATA", "wave" : "x.....2..2.x", data: ["setup time","hold"]},
+            { name: "Timing", node: "......a..b.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 5 ns','b<->c 0','d<->e 40 ns','b<->g 0 ns'],
+ head: {text: "SDIO BusDefault timing out of ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay."}
+
+}
+
+// High speed
+// in
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Read", "wave" : "x4..2....2.x", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Write Timing", node: ".a..b....c.d"},
+          { name: "Period", node: ".e.......f"}],
+ edge: ['a<->b 14 ns','c<->d 0 ns','e<->f 20 ns','b<->g 2 ns','x<->y '],
+ head: {text: "SDIO HighSpeed mode timing into ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay."}
+
+}
+// out
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Write", "wave" : "x.....2..2.x", data: ["setup time","hold"]},
+            { name: "Write Timing", node: "......a..b.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 6 ns','b<->c 0','d<->e 20 ns','b<->g 2 ns','x<->y '],
+ head: {text: "SDIO HighSpeed mode timing out of ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay."}
+
+}
+
+// SDR50
+//  in
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Read", "wave" : "x4..2....2.x", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Write Timing", node: ".a..b....c.d"},
+          { name: "Period", node: ".e.......f"}],
+ edge: ['a<->b 7.5 ns','c<->d 0 ns','e<->f 20 ns','b<->g 2 ns','x<->y '],
+ head: {text: "SDIO SDR50 mode timing into ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay."}
+
+}
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Write", "wave" : "x.....2..2.x", data: ["setup time","hold"]},
+            { name: "Write Timing", node: "......a..b.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 3 ns','b<->c 0','d<->e 20 ns','b<->g 1.8 ns'],
+ head: {text: "SDIO SDR50 mode timing out of ASIC"},
+ foot: {text: "Next data has 0 ns delay, i.e., only PCB delay."}
+
+}
+
+// Multiple in one diagram
+// IN
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Read (busDefault)", "wave" : "x....4..2...", data: ["0/14 ns","data valid","hold"]},
+            { name: "Period", node: ".p.......q"},
+           { "name" : "Read", "wave" : "x4..2.......", data: ["clock 2 out","data valid"]},
+            { name: "Read (HS)", node: ".a..b...."},
+            { name: "Read (SDR1225)", node: ".h..i"},
+            { name: "Read (SDR50)", node: ".l..m"},
+          { name: "Period", node: ".e.......f"}],
+ edge: ['p<->q 40 ns','a<->b 2.5/14 ns','e<->f 10 ns (SDR50) / 20 ns',
+       'h<->i 1.5/14 ns','l<->m 1.5/7.5 ns'],
+ head: {text: "SDIO timing into ASIC"},
+ foot: {text: "PCB delay (0/1 ns)*2 need to be added (lowered to 0/0.9 ns)"}
+
+}
+
+// OUT
+
+{ signal: [{ "name": "Clock", "wave": "01...0...1..", },
+           { "name" : "Write (busDefault)", "wave" : "x......2.2.x", data: ["setup","hold"]},
+            { name: "Timing", node: ".......a.b.c"},
+            { name: "Period", node: ".d.......e"},
+            { "name" : "Write", "wave" : "x......2.2.x", data: ["setup","hold"]},
+            { name: "Write (HS)", node: ".......f.g.h"},
+            { name: "Write (SDR1225)", node: ".......i.j.k"},
+            { name: "Write (SDR50)", node: ".......l.m.n"},
+          { name: "Period", node: ".o.......p.."}],
+ edge: ['a<->b 5 ns','b<->c 5 ns','d<->e 40 ns','f<->g 6 ns','g<->h 2 ns',
+       'i<->j 3 ns','j<->k 0.8 ns','l<->m 3 ns','m<->n 0.8 ns','o<->p 10 ns (SDR50) / 20 ns'],
+ head: {text: "Write to SDIO card"},
+ foot: {text: "PCB delay (0/1 ns) need to be added (lowered to 0/0.9 ns)"}
+
+}
+
+// NANDF
+
+// IN
+{ signal: [{ "name": "Clock (system)", "wave": "0H0101010H01010H0", },
+           { "name": "RE(N)", "wave": "10.......1.....0.", node: ".x.......y"},
+           { "name" : "DATA", "wave" : "x4...2...x.....4.", data: ["Clock 2 out","data valid","Clock 2"]},
+            { name: "Timing", node: ".a...b"},
+          { name: "Period", node: ".d.......e.....f"}],
+ edge: ['a<->b 15/25 ns','b<->c 0','d<->e 40 ns','e<->f 30 ns','x<->y 4 cycles (programmable)'],
+ head: {text: "NANDF timing in to ASIC (mode 2 of 6)"},
+ foot: {text: "PCB roundtrip delay must be added (0/1 ns)*2"}
+
+}
+
+// out
+
+{ signal: [{ "name": "Clock", "wave": "0H0101010H01", },
+           { "name": "WE(N)", "wave": "10.......1..", },
+           { "name" : "DATA", "wave" : "x.....2..2.x", data: ["setup time","hold"]},
+            { name: "Timing", node: "......a..b.g"},
+          { name: "Period", node: ".d.......e"}],
+ edge: ['a<->b 15 ns','d<->e 40 ns (programmable)','b<->g 5 ns','g<->h 0 ns'],
+ head: {text: "NANDF timing out of ASIC (mode 2 of 6)"},
+ foot: {text: "One PCB delay needs to be added (0/1 ns)"}
+
+}
+
+// RGMII
+// TX
+
+{ signal: [ { name: "Data", wave: "=...x.......=...",data: ["VALID","VALID"],node: "....a.......c"},
+           {name: "",},
+           { "name": "Clock", "wave": "0H",node: ".b",period: 8 },
+          ],
+      
+ edge: ['b~>a Hold = -0.5 ns','b~>c Setup = -0.5 ns'],
+ head: {text: "RGMII TX timing, skew at ASIC pad"},
+ foot: {text: "Longest valid path edge+0.5, shortest valid edge-0.5 (AXIS wants +-0.34 ns)" }
+
+}
+
+// MII (GMII?)
+
+
+{ signal: [{ "name": "Clock", "wave": "0H...0...H..", },
+            { name: "Period", node: ".d.......e"},
+           ["MII", ["input",{ "name" : "DATA", "wave" : "x4..2......x", 
+                             data: ["Clock 2 out","data valid","hold"]},
+            { name: "Timing", node: ".a..b"},
+         
+           ],
+           ["output",{ "name" : "DATA", "wave" : "x......2.2.x", data: ["setup","hold"]},
+           
+            { name: "Timing", node: ".......f.g.h"},
+           ]],
+                     {},
+           ["CRS/COL", ["input",{ "name" : "DATA", "wave" : "x4..2......x", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Timing", node: ".i..j"},
+           ],
+           ["output",{ "name" : "DATA", "wave" : "x......2...x", data: ["output delay"]},
+            { name: "Timing", node: ".......k...m"},
+           ]]],
+            
+ edge: ['a<->b 0/25 ns','n<->o 3.5/37.5 ns','p<->q 4.5/32.5 ns','b<->c 0','d<->e 40 ns','f<->g 10 ns','g<->h 10 ns',
+            
+           'i<->j async 0/34 ns', 'k<->m async 0/28 ns'],
+ head: {text: "RGMII I/F in MII mode"},
+ foot: {text: "Delay for CRS/COL does not need pcb (0/2.5 ns) (constrained as LS per section 2.1)"},
+                     config: {hscale: 1.5}
+
+}
+
+
+
+// MDIO - RGMII in MDIO mode
+
+{ signal: [{ "name": "Clock", "wave": "1L...H...L...H..", },
+            { name: "Period", node: ".d.......e"},
+           ["MDIO", ["input",{ "name" : "DATA", "wave" : "x4..2..zxx2.....", data: ["Clock 2 out","data valid","data out"]},
+            { name: "Timing", node: ".a..b"},
+          
+           ],
+           ["output",{ "name" : "DATA", "wave" : "x..........2.2.x", data: ["setup","hold"]},
+             { name: "Period", node: ".........x...z"},
+            { name: "Timing", node: "...........f.g.h"},
+           ]],
+                     {},
+           ["CRS/COL", ["input",{ "name" : "DATA", "wave" : "x4..2...x.......", data: ["Clock 2 out","data valid","hold"]},
+            { name: "Timing", node: ".i..j"},
+           ],
+           ["output",{ "name" : "DATA", "wave" : "x........2..x...", data: ["output delay"]},
+            { name: "Timing", node: ".......k...m"},
+           ]]],
+            
+ edge: ['a<->b 0/300 ns','b<->c 0','d<->e 400 ns','f<->g 10 ns','g<->h 10 ns',
+            'r<->s ? ns','s<->t 7.5 ns',
+           'i<->j async 0/34 ns', 'k<->m async 0/28 ns','x<->z Fall-2-rise'],
+ head: {text: "MDIO timing"},
+ foot: {text: "Delay for CRS/COL does not need pcb (0/2.5 ns) (constrained as LS per section 2.1)"},
+                     config: {hscale: 1}
+
+}
+
+// SPI? (serial example)
+
+{ "signal" : [{ "name": "SPI", "wave": "0p.......hppphphpl" },
+             { "name": "Data", "wave": "x2.......22222222x", 
+              "data": ["clock for sync","0","1","1","1","0","1","0","1"] },
+              {name: "Datagram", "node": ".a.......b.......c"}],
+ "edge": ['a<->b Synchronize clock','b<->c databits, pulse is 1, flat is 0']}
+
+// End
+////////////////////////////////////////////////////////////////////////////////

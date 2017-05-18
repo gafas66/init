@@ -1,0 +1,155 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("hold problem in gdp"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/GDP_PART/35_ENET_MDIO.tcl")
+ (front-context-string . "\n    set_case_an")
+ (rear-context-string . "get_ports $port]")
+ (position . 2724))
+("GDP sessions"
+ (filename . "/proj/ARTPEC7/implementation/DI/GDP_PART/SIGNOFF.OptView.1/STA_MULTI_SCENARIO/SESSIONS/")
+ (front-context-string . "LV_ATPGShift_GDP")
+ (rear-context-string . "19 Apr  5 15:11 ")
+ (position . 516))
+("i2s doc"
+ (filename . "/proj/ARTPEC7_MD/libs/MACRO_LIBS/IIS_R107/cdnsi2ssc_r107/doc/")
+ (front-context-string . "i2s_sc_implement")
+ (rear-context-string . "28 Mar 25  2015 ")
+ (position . 267))
+("psc"
+ (filename . "/proj/PSC/implementation/DI/psc_e/SIGNOFF.3/")
+ (front-context-string . "_ChipFinishScrip")
+ (rear-context-string . "21 Jan 11 08:33 ")
+ (position . 264))
+("init.el"
+ (filename . "~/init/.emacs.d/init.el")
+ (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1))
+("20_SDIO.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/PERI_PART/20_SDIO.tcl")
+ (front-context-string . "C_tIDLY_min    [")
+ (rear-context-string . "    set SDIO_ASI")
+ (position . 23823))
+("in2reg.rpt"
+ (filename . "/proj/ARTPEC7/implementation/DI/GDP_PART/PR/place.OptView.1/in2reg.rpt")
+ (front-context-string . "00\n     = Beginp")
+ (rear-context-string . "             3.6")
+ (position . 66436))
+("PERI_PART"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/PERI_PART/")
+ (front-context-string . "30_LS_Default.tc")
+ (rear-context-string . "14 Jan 23 09:40 ")
+ (position . 607))
+("ARTPEC7.SIGNOFF.clock_groups_reduced_VIO.AM..rpt"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_zsigmonda/to_andreas/ARTPEC7.SIGNOFF.clock_groups_reduced_VIO.AM..rpt")
+ (front-context-string . "K2_5\n	GDP_CLOCK_")
+ (rear-context-string . "GDP_CLOCK_CTS_CL")
+ (position . 843648))
+("PERI_PART.top.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/PERI_PART/PERI_PART.top.tcl")
+ (front-context-string . "\n# NOTE NANDF\nNO")
+ (rear-context-string . "CK_I2S1_M_EXT}]\n")
+ (position . 6979))
+("scripts"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/")
+ (front-context-string)
+ (rear-context-string . "aster_table.tcl\n")
+ (position . 1522))
+("master"
+ (filename . "/proj/ARTPEC7/implementation/DI/Constraining/scripts_master/")
+ (front-context-string . "blocks\n  -rw-rw-")
+ (rear-context-string . "96 Oct 13 13:34 ")
+ (position . 260))
+("rgmii netx4000 reports from norbert"
+ (filename . "/arch/netX4000/design_center/implementation/final/sta_NS/reports/NetX4000_ECO47-MF2_18.Feb.2016/")
+ (front-context-string . "ENET_RGMII_GMAC-")
+ (rear-context-string . "22 Feb 18  2016 ")
+ (position . 10532))
+("DWC_eqos_mdc_tso.v2"
+ (filename . "/proj/ARTPEC7/implementation/DI/GDP_PART/CONSTRAINING/DWC_eqos_mdc_tso.v2")
+ (front-context-string . "	  else if (tcp_")
+ (rear-context-string . "])\n			    end\n		")
+ (position . 32134))
+("DWC_EQOS_DATAWIDTH defined"
+ (filename . "/proj/ARTPEC7/implementation/DI/GDP_PART/CONSTRAINING/tavern/RTL/DWC_ether_qos_cc_constants.v")
+ (front-context-string . "ne DWC_EQOS_DATA")
+ (rear-context-string . "interface.\n`defi")
+ (position . 5896))
+("AP6 final pt reports"
+ (filename . "/proj/IO_Constraint_Development/work_NS/reports/ARTPEC6_ECO38_MF_20160615/")
+ (front-context-string . "ARTPEC6_IO_setup")
+ (rear-context-string . "66 Jul  7 22:08 ")
+ (position . 279))
+("artpec6 report scripts"
+ (filename . "/proj/IO_Constraint_Development/work_NS/scripts/")
+ (front-context-string . "artpec6_io_const")
+ (rear-context-string . "37 Nov 27  2014 ")
+ (position . 244))
+("quick_DCsyn.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/DC/quick_DCsyn.tcl")
+ (front-context-string . "################")
+ (rear-context-string)
+ (position . 1))
+("ekProcs.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/ekProcs.tcl")
+ (front-context-string . "\n#C Return file ")
+ (rear-context-string . "\" $::env(USER)}\n")
+ (position . 2069))
+("GDP_PART"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/GDP_PART/")
+ (front-context-string . "GDP_PART.top.tcl")
+ (rear-context-string . "81 May 19 11:46 ")
+ (position . 1160))
+("GDP_PART.clocks.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/GDP_PART/GDP_PART.clocks.tcl")
+ (front-context-string . "_PLL0_CTRL/PLLCL")
+ (rear-context-string . "     i_CLKCTRL/i")
+ (position . 3498))
+("NetX4000_IO-FF_preplacement_GMAC_RGMII.info"
+ (filename . "/proj/ARTPEC7/design_center/IO_preplacement/NetX4000_IO-FF_preplacement_GMAC_RGMII.info")
+ (front-context-string)
+ (rear-context-string . "t_txerr_neg_reg\n")
+ (position . 4560))
+("analyze_dc.tcl"
+ (filename . "/proj/ARTPEC7/implementation/DI/_work_kofoede/scripts_master/blocks/GDP_PART/analyze_dc.tcl")
+ (front-context-string . "\n    analyze -li")
+ (rear-context-string . "ING/tavern/RTL/\n")
+ (position . 9806))
+("LCES_E_RM1.top.Netlist.sdc"
+ (filename . "/proj/LCES_E/implementation/DI/Constraining/dcol_synthesis_1v3/constraints/SDC_DI/LCES_E_RM1.top.Netlist.sdc")
+ (front-context-string . "# Created using ")
+ (rear-context-string)
+ (position . 1))
+("HOLD Clk_QuadSPI1"
+ (filename . "/proj/LCES_D/implementation/DI/LCES_D/SDC_GEN/dc_constraints1v0/constraints/func_constraints_1CHIP/LCES_D_QSPI.tcl")
+ (front-context-string . "set_multicycle_p")
+ (rear-context-string . "ll clock cycle)\n")
+ (position . 9041))
+("LCES_E clock spec file"
+ (filename . "/proj/LCES_E/implementation/DI/LCES_E/PR/cts.4/CTS/cts-merge.RUN_MODE2")
+ (front-context-string . "################")
+ (rear-context-string)
+ (position . 1))
+("run_cts.tcl"
+ (filename . "/proj/LCES_D/implementation/DI/LCES_D/PR/cts.5/FF/EDI/run_cts.tcl")
+ (front-context-string . "st { 0.6 0.6 0.6")
+ (rear-context-string . "d\n   set tran_li")
+ (position . 7649))
+("cts.3"
+ (filename . "/proj/LCES_D/implementation/DI/LCES_D/PR/cts.3/")
+ (front-context-string . "Add_New_Root_Clk")
+ (rear-context-string . "26 Oct 13 10:39 ")
+ (position . 263))
+("LCES_D"
+ (filename . "/proj/LCES_D/")
+ (front-context-string . "2signoff\n  drwxr")
+ (rear-context-string . "96 Sep 30  2014 ")
+ (position . 239))
+("timesheet"
+ (filename . "~/init/renesas_timesheet.org.gpg")
+ (front-context-string . "\n\n    - [ ] Make")
+ (rear-context-string . "\n  \n*** TODO Mon")
+ (position . 106092))
+)

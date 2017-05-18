@@ -1,0 +1,77 @@
+##!/usr/bin/env bash -f
+################################################################################
+# Alias for Erik Kofoed
+
+echo "# Reading .alias file for erik"
+
+unalias -a
+
+[[ -f /projects/ASIC/bin/ridge_alias ]] && . /projects/ASIC/bin/ridge_alias
+
+alias h='history'
+
+alias fix="x=\$(ps -eF | grep synergy | grep -v grep | awk '{print \$2}');kill -9 \$x;sleep 1;synergys -c .synergy.config"
+
+COLOR=--color
+if [[ "$HOSTNAME" == "callisto" ]];then COLOR= ;fi
+
+alias l="ls -lh $COLOR"
+alias ll="ls -lha $COLOR"
+alias lt="ls -lhat $COLOR | head -10"
+
+alias g="ps axf | grep -v grep | grep $1"
+
+alias em='~ekofoed/usr/local/bin/emacs -u ekofoed'
+
+# Git shorts
+alias gs='git status'
+alias gc='git commit -a -m "General Update"'
+alias gpl='git pull'
+alias gph='git push'
+
+# svn shorts
+alias svnl='svn stat | grep -v "?"'
+svnd() {
+    svn diff -r $1:HEAD --summarize
+}
+
+# Workspace alias
+#export WD='/net/`uname -n`/space/local_scratch/ekofoed/trunk_regression'
+export WD='/net/thebe/space/local_scratch/ekofoed/trunk_regression'
+
+alias wsc="cd $WD/asic/chips/ridge/syn"
+alias wrn="cd $WD/asic/build_asic_ridge/chips/ridge/syn/"
+alias wdc="cd $WD/asic/tools/dc"
+alias wsr="cd $WD/asic/scripts"
+
+_asic=/net/thebe/space/local_scratch/jenkins/ssh_slaves/ssh_slaves/asic_synth/workspace/Ridge_ASIC_Module_Synth/asic
+_asic2=/net/thebe/space/local_scratch/jenkins/ssh_slaves/ssh_slaves/asic_synth/workspace/Ridge_ASIC_Synth/asic
+alias asic="cd $_asic"
+alias CPA=" cd $WD/asic ; rm -fr build_asic_ridge ;cp -rL $_asic/build_asic_ridge . ;cp -rL $_asic2/build_asic_ridge/chips build_asic_ridge/;cd -"
+alias CPA2="cd $WD/asic ; rm -fr build_asic_ridge ;cp -rL \$(dirname \$(ls -dt /projects/ASIC/ridge/module_synth/buildcp*/chips | head -1)) build_asic_ridge"
+
+_jenkins="/net/metis/space/local_scratch/jenkins"
+_jenkins="$_jenkins/jobs/Ridge_ASIC_Module_Synth/builds/lastSuccessfulBuild/archive/asic/build_asic_ridge"
+
+# Tools
+
+alias dc_shell="dc_shell -64"
+alias dc="dc_shell -64 -f ~/bin/dc.tcl"
+alias rsc="wsc;rm -fr $WD/asic/build_asic_ridge;scons2 -c ridge_synth_check;scons2 ridge_synth_check"
+
+area() {
+    mod=$1
+    path=/net/metis/space/local_scratch/jenkins/jobs/Ridge_ASIC_Module_Synth/builds/201*/archive/asic/build_asic_ridge/libs/$mod/syn
+    for file in $path/dc_*.log ;do
+	date=unknown
+	if [[ $file =~ .*/builds/(.*)/archive.* ]]; then date=${BASH_REMATCH[1]} ;fi
+	echo -n "$date: "
+	grep MODULE_NAME $file | awk '{print $4}'
+    done
+}
+
+# WFH
+alias thebe='ssh -X -l ekofoed thebe.cam.newnhamgroup.com'
+
+# End of file
+################################################################################

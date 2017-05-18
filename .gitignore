@@ -1,0 +1,5 @@
+# Ignore these patterns
+*.*~
+.emacs.d/session.*
+*\#
+# End
