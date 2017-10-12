@@ -193,7 +193,7 @@
 (global-set-key (kbd "C-'") 'erase-buffer)
 (global-set-key (kbd "C-0") 'find-file-at-point)
 (global-set-key (kbd "C-x r p") 'replace-rectangle)
-(global-set-key (kbd "M-<return>") 'dirs)
+(global-set-key (kbd "M-<return>") 'my-dirs)
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-x p") 'previous-multiframe-window)
 
