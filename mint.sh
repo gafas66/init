@@ -6,14 +6,14 @@
 # 
 
 # Setup emacs
-apt-get -y install emacs emacs-goodies-el
+sudo apt-get -y install emacs emacs-goodies-el
 
 # Install chrome
 cd /tmp
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-dpkg -i google-chrome-stable_current_amd64.deb
+sudo dpkg -i google-chrome-stable_current_amd64.deb
 # NOTE gives errors which can be ignored - fixed by next line
-apt-get -y -f install
+sudo apt-get -y -f install
 
 # # gazebo
 # sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu saucy main" > /etc/apt/sources.list.d/gazebo-latest.list'
@@ -30,26 +30,26 @@ apt-get -y -f install
 #wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
 #apt-get update
 #apt-get install ros-indigo-stage
-apt-get install robot-player
+#sudo apt-get install robot-player <= not available
 
 # gitk
-apt-get -y install gitk
-apt-get -y install git-gui
+sudo apt-get -y install gitk
+sudo apt-get -y install git-gui
 
 # NOTE Security = already installed on debian
 #apt-get -y install gpg
 
 # NOTE BTSYNC localhost:8888 (probably)
 
-wget -O bittorrent_sync_x64.tar.gz http://download-new.utorrent.com/endpoint/btsync/os/linux-x64/track/stable
-tar -xzvf bittorrent_sync_x64.tar.gz 
-#cd bittorrent_sync_x64 
-mv btsync /opt 
-ln -sf /opt/btsync /usr/bin/btsync 
-btsync
-# FIXME Does btsync autostart?
+# wget -O bittorrent_sync_x64.tar.gz http://download-new.utorrent.com/endpoint/btsync/os/linux-x64/track/stable
+# tar -xzvf bittorrent_sync_x64.tar.gz 
+# #cd bittorrent_sync_x64 
+# sudo mv btsync /opt 
+# sudo ln -sf /opt/btsync /usr/bin/btsync 
+# sudo btsync
+# # FIXME Does btsync autostart?
 
-apt-get -y install robocode htop
+sudo apt-get -y install robocode htop
 #apt-get -y install eclipse
 
 
