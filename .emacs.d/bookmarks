@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("beringer_module_synth_check.sh"
+(("fm syn"
+ (filename . "/net/caliban/space/local_scratch/jenkins/ssh_slaves/master_caliban/workspace/Beringer_ASIC_Formality/asic/build_asic_beringer/chips/beringer/syn/")
+ (front-context-string . "alib-52\n  -rw-rw")
+ (rear-context-string . "96 Oct 24 22:06 ")
+ (position . 366))
+("svf.txt"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/build_asic_beringer/chips/beringer/syn/formality1_svf/svf.txt")
+ (front-context-string . "e_a/axil_interco")
+ (rear-context-string . "re_asic/core/cor")
+ (position . 349175329))
+("fm_top.tcl"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/formality/fm_top.tcl")
+ (front-context-string . "################")
+ (rear-context-string)
+ (position . 1))
+("beringer_module_synth_check.sh"
  (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/scripts/beringer_module_synth_check.sh")
  (front-context-string . "#!/bin/env bash\n")
  (rear-context-string)

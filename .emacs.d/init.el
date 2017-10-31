@@ -5,6 +5,7 @@
 
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
 (setq is-RN (if (file-exists-p "/proj/ARTPEC7/") t nil))
+(setq is-me (if (string= "ekofoed" (getenv "USER")) t nil))
 
 (setq HOME (cond
 	    (is-DL "/home/ekofoed")
@@ -22,26 +23,26 @@
 (setq width  (string-to-number (match-string 1 dimensions)))
 (setq height (string-to-number (match-string 2 dimensions)))
 
-
-(when (> emacs-major-version 23) ;; Works on 24 onwards
-  ;; Lets get packages set up
-  (require 'package) ;; You might already have this line
-  (add-to-list 'package-archives
-	       '("melpa" . "https://melpa.org/packages/"))
-  (when (< emacs-major-version 24) ;; Never to be used in this setting
-    ;; For important compatibility libraries like cl-lib
-    (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-  
-  (add-to-list 'package-archives
-	       '("marmalade" . "https://marmalade-repo.org/packages/"))
-  (package-initialize) ;; You might already have this line
-  
-  (when (not package-archive-contents)
-    (package-refresh-contents))
-  (defvar my-packages '(clojure-mode paredit clojure-mode-extra-font-locking cider smex projectile rainbow-delimiters magit))
-  (dolist (p my-packages)
-    (when (not (package-installed-p p))
-      (package-install p))))
+(when is-me
+  (when (> emacs-major-version 23) ;; Works on 24 onwards
+    ;; Lets get packages set up
+    (require 'package) ;; You might already have this line
+    (add-to-list 'package-archives
+		 '("melpa" . "https://melpa.org/packages/"))
+    (when (< emacs-major-version 24) ;; Never to be used in this setting
+      ;; For important compatibility libraries like cl-lib
+      (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+    
+    (add-to-list 'package-archives
+		 '("marmalade" . "https://marmalade-repo.org/packages/"))
+    (package-initialize) ;; You might already have this line
+    
+    (when (not package-archive-contents)
+      (package-refresh-contents))
+    (defvar my-packages '(clojure-mode paredit clojure-mode-extra-font-locking cider smex projectile rainbow-delimiters magit))
+    (dolist (p my-packages)
+      (when (not (package-installed-p p))
+	(package-install p)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
