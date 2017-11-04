@@ -1,7 +1,7 @@
 #! /bin/sh
 ################################################################################
 # Created: Thursday, November  2 2017
-# Time-stamp: <2017-11-02 14:08:51 erik>
+# Time-stamp: <2017-11-04 18:03:40 erik>
 # Author: Erik Kofoed, ESK# Description:
 #
 
@@ -15,16 +15,16 @@ sudo apt-get -y install mesa-common-dev mesa-utils-extra libgl1-mesa-dev libglap
 sudo apt-get -y install freeglut3-dev libltdl-dev
 sudo apt-get -y install git cmake g++ fltk1.1-dev libjpeg8-dev libpng12-dev libglu1-mesa-dev libltdl-dev
 
+
+sudo apt-get -y install build-essential autotools-dev cpp libboost-dev  libboost-thread-dev  libboost-signals-dev  libltdl7 libltdl7-dev libgnomecanvas2-0 libgtk2.0-dev libjpeg62-dev libtool swig libgsl-dev libgsl2
+
+sudo apt-get -y install libxmu-dev libxi-dev python-dev ruby ruby-dev
+
 tmp=$(mktemp -d)
 cd $tmp
 
-wget sourceforge.net/projects/playerstage/files/Player/3.0.2/player-3.0.2.tar.gz
-wget sourceforge.net/projects/playerstage/files/Stage/3.2.2/Stage-3.2.2-Source.tar.gz
-
-tar -xzvf player-3.0.2.tar.gz
-tar -xzvf Stage-3.2.2-Source.tar.gz 
-
-cd player-3.0.2
+svn checkout https://svn.code.sf.net/p/playerstage/svn/code/player/trunk player
+cd player
 mkdir build ;cd build ; cmake ../
 make
 sudo make install
@@ -34,12 +34,20 @@ cd $tmp
 mkdir stage4
 cd stage4
 git clone git://github.com/rtv/Stage.git
-#export STG=$HOME/stg
-#cmake -DCMAKE_INSTALL_PREFIX=$STG Stage
 cmake Stage
 make
 sudo make install
 
+cd ;rm -fr $tmp
+
+echo '
+#Player/Stage
+export PATH=$PATH:"/usr/local/lib64"
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"/usr/local/lib":"/usr/local/lib64"
+export PLAYERPATH="/usr/local/lib":"/usr/local/lib64"
+export STAGEPATH="/usr/local/lib":"/usr/local/lib64"
+' > /tmp/x
+echo "cat /tmp/x >> /etc/bash.bashrc" > /tmp/y ;chmod a+x /tmp/y ; sudo /tmp/y
 
 # End of file
 ################################################################################
