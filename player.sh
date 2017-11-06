@@ -1,7 +1,7 @@
 #! /bin/sh
 ################################################################################
 # Created: Thursday, November  2 2017
-# Time-stamp: <2017-11-04 18:03:40 erik>
+# Time-stamp: <2017-11-06 15:29:19 erik>
 # Author: Erik Kofoed, ESK# Description:
 #
 
@@ -13,12 +13,12 @@ sudo apt-get -y install build-essential
 sudo apt-get -y install libpng-dev libjpeg-dev libxxf86vm1 libxxf86vm-dev libxi-dev libxrandr-dev libfltk1.3-dev
 sudo apt-get -y install mesa-common-dev mesa-utils-extra libgl1-mesa-dev libglapi-mesa
 sudo apt-get -y install freeglut3-dev libltdl-dev
-sudo apt-get -y install git cmake g++ fltk1.1-dev libjpeg8-dev libpng12-dev libglu1-mesa-dev libltdl-dev
+sudo apt-get -y install git cmake g++ fltk1.1-dev libjpeg8-dev libpng12-dev libglu1-mesa-dev 
 
 
-sudo apt-get -y install build-essential autotools-dev cpp libboost-dev  libboost-thread-dev  libboost-signals-dev  libltdl7 libltdl7-dev libgnomecanvas2-0 libgtk2.0-dev libjpeg62-dev libtool swig libgsl-dev libgsl2
+sudo apt-get -y install  autotools-dev cpp libboost-dev  libboost-thread-dev  libboost-signals-dev  libltdl7 libltdl7-dev libgnomecanvas2-0 libgtk2.0-dev libjpeg62-dev libtool swig libgsl-dev libgsl2
 
-sudo apt-get -y install libxmu-dev libxi-dev python-dev ruby ruby-dev
+sudo apt-get -y install libxmu-dev libxi-dev python-dev ruby ruby-dev subversion
 
 tmp=$(mktemp -d)
 cd $tmp
