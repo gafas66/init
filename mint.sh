@@ -60,9 +60,9 @@ mkdir ~/bin
 mv lein ~/bin/
 
 cd
-lein new hello
+~/bin/lein new hello
 cd hello
-lein deps
+~/bin/lein deps
 
 # .................../´¯/) 
 # ................,/¯..// 
