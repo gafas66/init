@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("fm syn"
+(("build"
+ (filename . "/projects/ASIC/beringer/module_synth/")
+ (front-context-string . "buildcp048\n  drw")
+ (rear-context-string . "96 Oct 30 14:10 ")
+ (position . 262))
+("find1"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/build_asic_beringer/chips/beringer/syn/formality_svf/svf.txt")
+ (front-context-string . "a/axil_interconn")
+ (rear-context-string . "_asic/core/core_")
+ (position . 398066216))
+("fm syn"
  (filename . "/net/caliban/space/local_scratch/jenkins/ssh_slaves/master_caliban/workspace/Beringer_ASIC_Formality/asic/build_asic_beringer/chips/beringer/syn/")
  (front-context-string . "alib-52\n  -rw-rw")
  (rear-context-string . "96 Oct 24 22:06 ")

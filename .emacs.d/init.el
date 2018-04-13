@@ -246,9 +246,11 @@
   (highlight-lines-matching-regexp "^\\(?:WARN:\\).*$" 'hi-green-b)
   (highlight-lines-matching-regexp "^\\(?:\\[Warning\\]\\).*$" 'hi-green-b)
 ;  (highlight-lines-matching-regexp "\\(?:generics\\)" 'hi-yellow)
-)
+  )
+  
 (global-set-key (kbd "<f5>") 'ek-hi-set)
 (global-set-key (kbd "<f6>") 'highlight-changes-mode)
+(global-set-key (kbd "<f7>") 'whitespace-mode)
 
 					; Start maximized
 ;; (defun toggle-fullscreen (&optional f)
@@ -266,8 +268,23 @@
 (setq undo-outer-limit 1200000000)
 
 (setq HEIGHT (cond
-	      ((= height 1080) 100)
+	      ((= height 1080) 90)
 	      (t 120)))
+(setq FONTS '(70 80 90 100 120 150))
+
+(defun ek-font ()
+  (interactive)
+  (setq HEIGHT (car FONTS))
+  (setq FONTS (cdr FONTS))
+  (setq FONTS (append FONTS (list HEIGHT)))
+  (custom-set-faces
+   `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil
+			   :strike-through nil :overline nil :underline nil
+			   :slant normal :weight normal
+			   :height ,HEIGHT :width normal
+			   :foundry "bitstream" :family "Courier"))))))
+(global-set-key (kbd "<f4>") 'ek-font)
+
 ;; End
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-variables
