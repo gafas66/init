@@ -58,11 +58,18 @@ wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
 chmod +x lein
 mkdir ~/bin
 mv lein ~/bin/
+chown erik:erik ~/bin/lein
 
-cd
-~/bin/lein new hello
-cd hello
-~/bin/lein deps
+#cd
+#~/bin/lein new hello
+#cd hello
+#~/bin/lein deps
+
+
+# Git setup
+
+git config --global user.email "ekofoed@gmail.com"
+git config --global user.name "gafas66"
 
 # .................../´¯/) 
 # ................,/¯..// 
