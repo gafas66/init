@@ -17,11 +17,17 @@
 (add-to-list 'load-path (concat HOME "/.emacs.d/lisp"))
 (add-to-list 'load-path (concat HOME "/.emacs.d/bookmark+"))
 
-;; Get screen info
-(setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
-(string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
-(setq width  (string-to-number (match-string 1 dimensions)))
-(setq height (string-to-number (match-string 2 dimensions)))
+;; Get screen info if on X
+(if (= (string-to-number (getenv "SHLVL")) 3)
+    (progn
+	(setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
+	(string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
+	(setq width  (string-to-number (match-string 1 dimensions)))
+	(setq height (string-to-number (match-string 2 dimensions)))
+	)
+  (progn
+    (setq width  1920)
+    (setq height 1080)))
 
 (when is-me
   (when (> emacs-major-version 23) ;; Works on 24 onwards
@@ -39,7 +45,15 @@
     
     (when (not package-archive-contents)
       (package-refresh-contents))
-    (defvar my-packages '(clojure-mode paredit clojure-mode-extra-font-locking cider smex projectile rainbow-delimiters magit))
+    (defvar my-packages '(clojure-mode
+			  paredit
+			  clojure-mode-extra-font-locking
+			  cider
+			  smex
+			  projectile
+			  rainbow-delimiters
+			  magit
+			  groovy-mode))
     (dolist (p my-packages)
       (when (not (package-installed-p p))
 	(package-install p)))))
@@ -288,21 +302,34 @@
 ;; End
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(org-agenda-files (quote ("~/init/ridge_timesheet.org.gpg")))
- '(safe-local-variable-values (quote ((outline-egexp . "# [*]+") (fic-mode . 1) (Hi-lock ("#.*" (0 (quote hi-blue) t))) (hi-lock-mode . 1) (outline-minor-mode . 1))))
+ '(package-selected-packages
+   (quote
+    (groovy-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
+ '(safe-local-variable-values
+   (quote
+    ((outline-egexp . "# [*]+")
+     (fic-mode . 1)
+     (Hi-lock
+      ("#.*"
+       (0
+	(quote hi-blue)
+	t)))
+     (hi-lock-mode . 1)
+     (outline-minor-mode . 1))))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
  '(warning-supress-types (quote ((undo discard-info)))))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height ,HEIGHT :width normal :foundry "bitstream" :family "Courier"))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "bitstream" :family "Courier"))))
  '(ek-blue-face ((t (:foreground "blue" :size "8pt"))) t)
  '(ek-cyan-face ((t (:foreground "cyan" :size "8pt"))) t)
  '(ek-dark-face ((t (:foreground "dark goldenrod" :size "8pt"))) t)
