@@ -309,7 +309,7 @@
  '(org-agenda-files (quote ("~/init/ridge_timesheet.org.gpg")))
  '(package-selected-packages
    (quote
-    (groovy-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
+    (markdown-mode groovy-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
  '(safe-local-variable-values
    (quote
     ((outline-egexp . "# [*]+")

@@ -1,8 +1,33 @@
-;;;; Emacs Bookmark Format Version 1 ;;;;
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("build"
+(("yaml.yml"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/yaml.yml")
+ (front-context-string)
+ (rear-context-string . "---------------\n")
+ (position . 962))
+("dc.tcl"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/dc.tcl")
+ (front-context-string . "\n\n# OR\n\n# You ca")
+ (rear-context-string . "eters $init $des")
+ (position . 6070))
+("dc"
+ (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/")
+ (front-context-string . "  /net/thebe/spa")
+ (rear-context-string)
+ (position . 1))
+("navarro_timesheet.org.gpg"
+ (filename . "~/init/navarro_timesheet.org.gpg")
+ (front-context-string)
+ (rear-context-string . "###############\n")
+ (position . 16437))
+("from_brite"
+ (filename . "/projects/ASIC/beringer/from_brite/")
+ (front-context-string . "20170912\n  drwxr")
+ (rear-context-string . "96 Sep 12  2017 ")
+ (position . 263))
+("build"
  (filename . "/projects/ASIC/beringer/module_synth/")
  (front-context-string . "buildcp048\n  drw")
  (rear-context-string . "96 Oct 30 14:10 ")
@@ -22,11 +47,6 @@
  (front-context-string . "e_a/axil_interco")
  (rear-context-string . "re_asic/core/cor")
  (position . 349175329))
-("fm_top.tcl"
- (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/formality/fm_top.tcl")
- (front-context-string . "################")
- (rear-context-string)
- (position . 1))
 ("beringer_module_synth_check.sh"
  (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/scripts/beringer_module_synth_check.sh")
  (front-context-string . "#!/bin/env bash\n")
@@ -52,11 +72,6 @@
  (front-context-string . "camb-market-nvb.")
  (rear-context-string . "72 May  1  2012 ")
  (position . 288))
-("hdmi constraints (coreconsultant) v2.10a"
- (filename . "/projects/ASIC/external_ip/synopsys_ridge/hdmi_controller/v2.10a/i_DWC_hdmi_tx_20150413/syn/constrain/script/DWC_hdmi_tx.sdc")
- (front-context-string . "set sdc_version ")
- (rear-context-string)
- (position . 1))
 ("PrimeTime recommended flow"
  (filename . "/net/birch/space/local_scratch/dans_development_area/PT_RM/PT-RM_J-2014.06-SP2/")
  (front-context-string . "PT-RMsettings.tx")
@@ -67,24 +82,9 @@
  (front-context-string . "2014-11-13_19-01")
  (rear-context-string . "96 Dec 11 14:30 ")
  (position . 322))
-("jenkins builds"
- (filename . "/net/metis/space/local_scratch/jenkins/jobs/Ridge_ASIC_Module_Synth/builds/")
- (front-context-string)
- (rear-context-string . "fulBuild -> 481\n")
- (position . 3183))
-("formality.tcl"
- (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/formality/formality.tcl")
- (front-context-string . "################")
- (rear-context-string)
- (position . 1))
 ("procs.tcl"
  (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/dc/procs.tcl")
  (front-context-string . "#! /usr/bin/env ")
- (rear-context-string)
- (position . 1))
-("dc.tcl"
- (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/dc/dc.tcl")
- (front-context-string . "################")
  (rear-context-string)
  (position . 1))
 ("DDR PHY constraints dir"
