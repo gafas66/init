@@ -59,6 +59,7 @@ chmod +x lein
 mkdir ~/bin
 mv lein ~/bin/
 chown erik:erik ~/bin/lein
+chown erik:erik ~/bin
 
 #cd
 #~/bin/lein new hello
@@ -70,6 +71,13 @@ chown erik:erik ~/bin/lein
 
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name "gafas66"
+
+# Update and upgrade
+
+sudo apt -y update
+sudo apt -y upgrade
+
+echo "Install guest additions"
 
 # .................../´¯/) 
 # ................,/¯..// 
