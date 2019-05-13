@@ -5,6 +5,8 @@
 # Description:
 # 
 
+# Build stuff
+sudo apt-get -y install g++ cmake
 # Setup emacs
 sudo apt-get -y install emacs emacs-goodies-el
 
