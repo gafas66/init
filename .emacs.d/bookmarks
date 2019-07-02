@@ -2,7 +2,27 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("yaml.yml"
+(("pdb"
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/lint/scons/scripts/SConstruct")
+ (front-context-string . "pdb.set_trace() ")
+ (rear-context-string . "turn [line]\n    ")
+ (position . 89169))
+("comment"
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/lint/scons/scripts/SConstruct")
+ (front-context-string . "- for tool_name ")
+ (rear-context-string . "d tool modules\n#")
+ (position . 55551))
+("spyglass.py"
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/navarro/scons/scripts/builders/spyglass/spyglass.py")
+ (front-context-string . "ude_path(env, li")
+ (rear-context-string . "     #check_incl")
+ (position . 8732))
+("pips_ss.sv"
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/navarro/navarro_soc/asic/design/libraries/navarro/src/pips_ss.sv")
+ (front-context-string . "\n//    .pips_0_m")
+ (rear-context-string . "ic ; -- ~ +1GHz\n")
+ (position . 14838))
+("yaml.yml"
  (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/yaml.yml")
  (front-context-string)
  (rear-context-string . "---------------\n")

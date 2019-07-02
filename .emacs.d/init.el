@@ -34,13 +34,14 @@
     ;; Lets get packages set up
     (require 'package) ;; You might already have this line
     (add-to-list 'package-archives
-		 '("melpa" . "https://melpa.org/packages/"))
+		 '("melpa" . "http://melpa.milkbox.net/packages/") t)
+		 ;;'("melpa" . "http://melpa.org/packages/") t)
     (when (< emacs-major-version 24) ;; Never to be used in this setting
       ;; For important compatibility libraries like cl-lib
       (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
     
-    (add-to-list 'package-archives
-		 '("marmalade" . "https://marmalade-repo.org/packages/"))
+    ;(add-to-list 'package-archives
+;		 '("marmalade" . "https://marmalade-repo.org/packages/") t)
     (package-initialize) ;; You might already have this line
     
     (when (not package-archive-contents)
@@ -49,11 +50,12 @@
 			  paredit
 			  clojure-mode-extra-font-locking
 			  cider
+			  groovy-mode
 			  smex
 			  projectile
 			  rainbow-delimiters
 			  magit
-			  groovy-mode))
+			  ))
     (dolist (p my-packages)
       (when (not (package-installed-p p))
 	(package-install p)))))
@@ -62,6 +64,7 @@
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
 (add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode))
 (load (concat HOME "/.emacs.d/lisp/markerpen.el"))
+;(load (concat HOME "/.emacs.d/lisp/groovy-mode.el"))
 
 ;; Below requires some other stuff -add to package and update init
 ;;(load (concat HOME "/.emacs.d/lisp/clojure-cheatsheet.el"))
@@ -309,7 +312,7 @@
  '(org-agenda-files (quote ("~/init/ridge_timesheet.org.gpg")))
  '(package-selected-packages
    (quote
-    (markdown-mode groovy-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
+    (color-theme-buffer-local groovy-mode markdown-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
  '(safe-local-variable-values
    (quote
     ((outline-egexp . "# [*]+")
@@ -323,7 +326,8 @@
      (outline-minor-mode . 1))))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(warning-supress-types (quote ((undo discard-info)))))
+ '(warning-supress-types (quote ((undo discard-info))))
+ '(whitespace-line-column 200))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
