@@ -22,5 +22,8 @@ git config --global user.name  "ESK"
 
 if [ -f /opt/ros/hydro/setup.bash ];then . /opt/ros/hydro/setup.bash ;fi
 
+export LD_LIBRARY_PATH=/usr/local/lib
+#export PLAYERPATH+=/usr/local/lib
+#export STAGEPATH+=/usr/local/lib
 
 # End
