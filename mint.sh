@@ -28,12 +28,7 @@ sudo apt-get -y install git-gui
 sudo apt-get -y install robocode htop
 
 # Lein
-wget https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein
-chmod +x lein
-mkdir ~/bin
-mv lein ~/bin/
-chown erik:erik ~/bin/lein
-chown erik:erik ~/bin
+sudo apt-get -y install leiningen
 
 # Git setup
 git config --global user.email "ekofoed@gmail.com"
