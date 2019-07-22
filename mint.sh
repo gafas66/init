@@ -35,8 +35,16 @@ git config --global user.email "ekofoed@gmail.com"
 git config --global user.name "gafas66"
 
 # Update and upgrade
-#sudo apt-get -y update
-#sudo apt-get -y upgrade
+sudo apt-get -y update
+sudo apt-get -y upgrade
+sudo dpkg --configure -a # Fix things not installed
+
+# Install java 8
+sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+sudo apt-get install oracle-java8-set-default
 
 echo "Install guest additions"
 
