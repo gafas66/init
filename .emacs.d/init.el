@@ -5,7 +5,8 @@
 
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
 (setq is-RN (if (file-exists-p "/proj/ARTPEC7/") t nil))
-(setq is-me (if (string= "ekofoed" (getenv "USER")) t nil))
+(setq is-me (if (or (string= "ekofoed" (getenv "USER"))
+		    (string= "erik" (getenv "USER"))) t nil))
 
 (setq HOME (cond
 	    (is-DL "/home/ekofoed")
@@ -34,8 +35,8 @@
     ;; Lets get packages set up
     (require 'package) ;; You might already have this line
     (add-to-list 'package-archives
-		 '("melpa" . "http://melpa.milkbox.net/packages/") t)
-		 ;;'("melpa" . "http://melpa.org/packages/") t)
+		 ;;'("melpa" . "http://melpa.milkbox.net/packages/") t)
+		 '("melpa" . "http://melpa.org/packages/") t)
     (when (< emacs-major-version 24) ;; Never to be used in this setting
       ;; For important compatibility libraries like cl-lib
       (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))

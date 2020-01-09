@@ -5,9 +5,6 @@
 # Description:
 # 
 
-player=https://github.com/playerproject/player.git
-stage=https://github.com/rtv/Stage.git
-
 sudo apt-get -y install git cmake g++ fltk1.1-dev libjpeg8-dev libpng-dev libglu1-mesa-dev libltdl-dev
 
 # Build stuff
@@ -19,7 +16,14 @@ export CPATH=/usr/include/gdk-pixbuf-2.0:/usr/include/glib-2.0:/usr/lib/x86_64-l
 sudo apt-get -y install apt-file
 
 # Setup emacs
-sudo apt-get -y install emacs emacs-goodies-el
+sudo add-apt-repository ppa:kelleyk/emacs
+sudo apt-get update
+sudo apt-get install emacs26
+
+sudo rm /etc/alternatives/emacs
+sudo ln -s /usr/bin/emacs26 /etc/alternatives/emacs
+
+sudo apt-get -y install emacs-goodies-el
 
 # gitk
 sudo apt-get -y install gitk
@@ -28,7 +32,7 @@ sudo apt-get -y install git-gui
 sudo apt-get -y install robocode htop
 
 # Lein
-sudo apt-get -y install leiningen
+sudo apt-get -y install leiningen # Not in Mint 18.3
 
 # Git setup
 git config --global user.email "ekofoed@gmail.com"
@@ -40,13 +44,19 @@ sudo apt-get -y upgrade
 sudo dpkg --configure -a # Fix things not installed
 
 # Install java 8
-sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:webupd8team/java
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-sudo apt-get install oracle-java8-set-default
+#sudo apt-get install python-software-properties
+#sudo add-apt-repository ppa:webupd8team/java
+#sudo apt-get update
+#sudo apt-get install oracle-java8-installer
+#sudo apt-get install oracle-java8-set-default
+
+mkdir -p ~/bin
+cp ~/init/lein.sh ~/bin/lein
+chmod a+x ~/bin/lein
 
 echo "Install guest additions"
+echo "Install player"
+echo "Install gazebo"
 
 # .................../´¯/) 
 # ................,/¯..// 
