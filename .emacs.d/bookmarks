@@ -2,7 +2,22 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("pdb"
+(("pips error"
+ (filename . "/auto/ASIC_Userdata/ekofoed/builds/navarro/navarro_soc/build_09ea556a0cac18295aa9b9db8b29199a/design/libraries/navarro/syn_asic/navarro_soc_syn.log")
+ (front-context-string . "Error: Uncaught ")
+ (rear-context-string . "s/runtimes.html\n")
+ (position . 61376344))
+("saved"
+ (filename . "/projects/ASIC/navarro/dc_synth/")
+ (front-context-string . "display_slice\n  ")
+ (rear-context-string . "96 May 14 18:29 ")
+ (position . 524))
+("modcheck.pl"
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/modcheck.pl")
+ (front-context-string . "{GITLAB2}\";\n    ")
+ (rear-context-string . "GITLAB2: $self->")
+ (position . 6529))
+("pdb"
  (filename . "/net/cordelia/space/local_scratch/ekofoed/lint/scons/scripts/SConstruct")
  (front-context-string . "pdb.set_trace() ")
  (rear-context-string . "turn [line]\n    ")
@@ -28,12 +43,12 @@
  (rear-context-string . "---------------\n")
  (position . 962))
 ("dc.tcl"
- (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/dc.tcl")
- (front-context-string . "\n\n# OR\n\n# You ca")
- (rear-context-string . "eters $init $des")
- (position . 6070))
+ (filename . "~/navarro/scons/scripts/builders/dc/dc.tcl")
+ (front-context-string . "################")
+ (rear-context-string)
+ (position . 1))
 ("dc"
- (filename . "/net/thebe/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/")
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/dc.tcl")
  (front-context-string . "  /net/thebe/spa")
  (rear-context-string)
  (position . 1))
@@ -103,10 +118,10 @@
  (rear-context-string . "96 Dec 11 14:30 ")
  (position . 322))
 ("procs.tcl"
- (filename . "/net/thebe/space/local_scratch/ekofoed/trunk_regression/asic/tools/dc/procs.tcl")
- (front-context-string . "#! /usr/bin/env ")
- (rear-context-string)
- (position . 1))
+ (filename . "/net/cordelia/space/local_scratch/ekofoed/navarro/scons/scripts/builders/dc/procs.tcl")
+ (front-context-string . "\n	set clocks [DL")
+ (rear-context-string . "} {\n	DL::cs $pin")
+ (position . 85274))
 ("DDR PHY constraints dir"
  (filename . "/auto/projects/ASIC/external_ip/synopsys_ridge/ddr_phy/v1.30a/synopsys/ddr3_sdram/phy_top/fb_PHYTOP_DDR32_SMIC40LL25_v3_16/tcl/")
  (front-context-string . "DWC_DDR3PHY_setu")

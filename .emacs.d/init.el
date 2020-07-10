@@ -18,17 +18,20 @@
 (add-to-list 'load-path (concat HOME "/.emacs.d/lisp"))
 (add-to-list 'load-path (concat HOME "/.emacs.d/bookmark+"))
 
+(setq is-linux (if (eq system-type "gnu/linux") t nil))
+
 ;; Get screen info if on X
-(if (= (string-to-number (getenv "SHLVL")) 3)
-    (progn
-	(setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
-	(string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
-	(setq width  (string-to-number (match-string 1 dimensions)))
-	(setq height (string-to-number (match-string 2 dimensions)))
-	)
-  (progn
-    (setq width  1920)
-    (setq height 1080)))
+(if is-linux
+    (if (= (string-to-number (getenv "SHLVL")) 3)
+	(progn
+	  (setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
+	  (string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
+	  (setq width  (string-to-number (match-string 1 dimensions)))
+	  (setq height (string-to-number (match-string 2 dimensions)))
+	  )
+      (progn
+	(setq width  1920)
+	(setq height 1080))))
 
 (when is-me
   (when (> emacs-major-version 23) ;; Works on 24 onwards
@@ -50,12 +53,13 @@
     (defvar my-packages '(clojure-mode
 			  paredit
 			  clojure-mode-extra-font-locking
-			  cider
+			  ;;cider
 			  groovy-mode
 			  smex
 			  projectile
 			  rainbow-delimiters
 			  magit
+			  color-theme-modern
 			  ))
     (dolist (p my-packages)
       (when (not (package-installed-p p))
@@ -88,7 +92,7 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'reverse)
 
-; Setup decent colours
+;;; Setup decent colours
 (require 'color-theme)
 (color-theme-initialize)
 (color-theme-goldenrod)
@@ -270,6 +274,9 @@
 (global-set-key (kbd "<f6>") 'highlight-changes-mode)
 (global-set-key (kbd "<f7>") 'whitespace-mode)
 
+(global-set-key (kbd "<f8>")  'markerpen1)
+(global-set-key (kbd "<f9>")  'markerpen4)
+(global-set-key (kbd "<f10>") 'markerpen9)
 					; Start maximized
 ;; (defun toggle-fullscreen (&optional f)
 ;;   (interactive)
@@ -285,25 +292,27 @@
 
 (setq undo-outer-limit 1200000000)
 
-(setq HEIGHT (cond
-	      ((= height 1080) 90)
-	      (t 120)))
-(setq FONTS '(70 80 90 100 120 150))
+(if is-linux
+    (setq HEIGHT (cond
+		  ((= height 1080) 90)
+		  (t 120)))
+  (setq FONTS '(70 80 90 100 120 150))
 
-(defun ek-font ()
-  (interactive)
-  (setq HEIGHT (car FONTS))
-  (setq FONTS (cdr FONTS))
-  (setq FONTS (append FONTS (list HEIGHT)))
-  (custom-set-faces
-   `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil
-			   :strike-through nil :overline nil :underline nil
-			   :slant normal :weight normal
-			   :height ,HEIGHT :width normal
-			   :foundry "bitstream" :family "Courier"))))))
-(global-set-key (kbd "<f4>") 'ek-font)
+  (defun ek-font ()
+    (interactive)
+    (setq HEIGHT (car FONTS))
+    (setq FONTS (cdr FONTS))
+    (setq FONTS (append FONTS (list HEIGHT)))
+    (custom-set-faces
+     `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil
+			     :strike-through nil :overline nil :underline nil
+			     :slant normal :weight normal
+			     :height ,HEIGHT :width normal
+			     :foundry "bitstream" :family "Courier"))))))
+  (global-set-key (kbd "<f12>") 'ek-font))
 
-;; End
+(server-start) ;; For emacs to listen
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
