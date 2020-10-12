@@ -4,13 +4,11 @@
 ;; Make sure we have our local library setup
 
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
-(setq is-RN (if (file-exists-p "/proj/ARTPEC7/") t nil))
 (setq is-me (if (or (string= "ekofoed" (getenv "USER"))
 		    (string= "erik" (getenv "USER"))) t nil))
 
 (setq HOME (cond
 	    (is-DL "/home/ekofoed")
-	    (is-RN "/home/kofoede")
 	    (t (getenv "HOME"))))
 
 (setq ORG-FILE (concat HOME "/init/renesas_timesheet.org.gpg"))
@@ -54,11 +52,11 @@
 			  paredit
 			  clojure-mode-extra-font-locking
 			  ;;cider
-			  groovy-mode
-			  smex
-			  projectile
-			  rainbow-delimiters
-			  magit
+			  ;;groovy-mode ;;Mode used behind jenkins
+			  ;;smex ;;expand M-x fucntionality
+			  ;;projectile
+			  rainbow-delimiters ;; Each paranthesis pair a different color, M-x rainbow-delimers-mode - or hook
+			  magit ;; Git stuff
 			  color-theme-modern
 			  ))
     (dolist (p my-packages)
@@ -319,24 +317,20 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/init/ridge_timesheet.org.gpg")))
+ '(org-agenda-files '("~/init/ridge_timesheet.org.gpg"))
  '(package-selected-packages
-   (quote
-    (color-theme-buffer-local groovy-mode markdown-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider)))
+   '(color-theme-buffer-local groovy-mode markdown-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider))
  '(safe-local-variable-values
-   (quote
-    ((outline-egexp . "# [*]+")
+   '((outline-egexp . "# [*]+")
      (fic-mode . 1)
      (Hi-lock
       ("#.*"
-       (0
-	(quote hi-blue)
-	t)))
+       (0 'hi-blue t)))
      (hi-lock-mode . 1)
-     (outline-minor-mode . 1))))
+     (outline-minor-mode . 1)))
  '(show-paren-mode t)
  '(tool-bar-mode nil)
- '(warning-supress-types (quote ((undo discard-info))))
+ '(warning-supress-types '((undo discard-info)))
  '(whitespace-line-column 200))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

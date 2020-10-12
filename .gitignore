@@ -2,4 +2,6 @@
 *.*~
 .emacs.d/session.*
 *\#
+.emacs.d/elpa
+.emacs.d/transient
 # End
