@@ -4,4 +4,6 @@
 *\#
 .emacs.d/elpa
 .emacs.d/transient
+.emacs.d/transient
+.emacs.d/ido.last
 # End

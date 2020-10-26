@@ -11,36 +11,33 @@
 	    (is-DL "/home/ekofoed")
 	    (t (getenv "HOME"))))
 
-(setq ORG-FILE (concat HOME "/init/renesas_timesheet.org.gpg"))
-
 (add-to-list 'load-path (concat HOME "/.emacs.d/lisp"))
 (add-to-list 'load-path (concat HOME "/.emacs.d/bookmark+"))
 
-(setq is-linux (if (eq system-type "gnu/linux") t nil))
+(setq is-linux (if (string= system-type "gnu/linux") t nil))
 
 ;; Get screen info if on X
 (if is-linux
-    (if (= (string-to-number (getenv "SHLVL")) 3)
-	(progn
-	  (setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
-	  (string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
-	  (setq width  (string-to-number (match-string 1 dimensions)))
-	  (setq height (string-to-number (match-string 2 dimensions)))
-	  )
-      (progn
-	(setq width  1920)
-	(setq height 1080))))
+    ;;(if (= (string-to-number (getenv "SHLVL")) 3) ;; TODO test instead for existence of X and command below
+    (progn
+      (setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
+      (string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
+      (setq width  (string-to-number (match-string 1 dimensions)))
+      (setq height (string-to-number (match-string 2 dimensions)))
+      )
+  (progn
+    (setq width  1920)
+    (setq height 1080)))
 
 (when is-me
-  (when (> emacs-major-version 23) ;; Works on 24 onwards
+  (when (> emacs-major-version 25) ;; Works on 24 onwards
     ;; Lets get packages set up
     (require 'package) ;; You might already have this line
     (add-to-list 'package-archives
-		 ;;'("melpa" . "http://melpa.milkbox.net/packages/") t)
-		 '("melpa" . "http://melpa.org/packages/") t)
-    (when (< emacs-major-version 24) ;; Never to be used in this setting
-      ;; For important compatibility libraries like cl-lib
-      (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
+		 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+;;    (when (< emacs-major-version 24) ;; Never to be used in this setting
+;;      ;; For important compatibility libraries like cl-lib
+;;      (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
     
     ;(add-to-list 'package-archives
 ;		 '("marmalade" . "https://marmalade-repo.org/packages/") t)
@@ -48,14 +45,14 @@
     
     (when (not package-archive-contents)
       (package-refresh-contents))
-    (defvar my-packages '(clojure-mode
+    (defvar my-packages '(
+			  clojure-mode
 			  paredit
-			  clojure-mode-extra-font-locking
-			  ;;cider
+			  cider
 			  ;;groovy-mode ;;Mode used behind jenkins
 			  ;;smex ;;expand M-x fucntionality
 			  ;;projectile
-			  rainbow-delimiters ;; Each paranthesis pair a different color, M-x rainbow-delimers-mode - or hook
+			  ;;rainbow-delimiters ;; Each paranthesis pair a different color, M-x rainbow-delimers-mode - or hook
 			  magit ;; Git stuff
 			  color-theme-modern
 			  ))
@@ -67,10 +64,6 @@
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
 (add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode))
 (load (concat HOME "/.emacs.d/lisp/markerpen.el"))
-;(load (concat HOME "/.emacs.d/lisp/groovy-mode.el"))
-
-;; Below requires some other stuff -add to package and update init
-;;(load (concat HOME "/.emacs.d/lisp/clojure-cheatsheet.el"))
 
 ;;; KB macros
 
@@ -96,7 +89,7 @@
 (color-theme-goldenrod)
 
 ;; Other nice stuff
-(require 'other-modes);
+(require 'other-modes)
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
@@ -290,48 +283,39 @@
 
 (setq undo-outer-limit 1200000000)
 
-(if is-linux
-    (setq HEIGHT (cond
-		  ((= height 1080) 90)
-		  (t 120)))
+(defun ek-set-faces (HEIGHT)
+  (custom-set-faces
+   `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil
+			   :strike-through nil :overline nil :underline nil
+			   :slant normal :weight normal
+			   :height ,HEIGHT :width normal
+			   :foundry "bitstream" :family "Courier"))))))
+(when is-linux
+  (setq HEIGHT (cond
+		((= height 1080) 90)  ;HD
+		((= height 2160) 150) ;UHD
+		(t 120)))
   (setq FONTS '(70 80 90 100 120 150))
-
+  
   (defun ek-font ()
     (interactive)
     (setq HEIGHT (car FONTS))
     (setq FONTS (cdr FONTS))
     (setq FONTS (append FONTS (list HEIGHT)))
-    (custom-set-faces
-     `(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil
-			     :strike-through nil :overline nil :underline nil
-			     :slant normal :weight normal
-			     :height ,HEIGHT :width normal
-			     :foundry "bitstream" :family "Courier"))))))
-  (global-set-key (kbd "<f12>") 'ek-font))
+    (ek-set-faces HEIGHT))
+  (global-set-key (kbd "<f12>") 'ek-font)
+  (ek-set-faces HEIGHT))
 
 (server-start) ;; For emacs to listen
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; End of file
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files '("~/init/ridge_timesheet.org.gpg"))
- '(package-selected-packages
-   '(color-theme-buffer-local groovy-mode markdown-mode smex rainbow-delimiters projectile paredit magit clojure-mode-extra-font-locking cider))
- '(safe-local-variable-values
-   '((outline-egexp . "# [*]+")
-     (fic-mode . 1)
-     (Hi-lock
-      ("#.*"
-       (0 'hi-blue t)))
-     (hi-lock-mode . 1)
-     (outline-minor-mode . 1)))
- '(show-paren-mode t)
- '(tool-bar-mode nil)
- '(warning-supress-types '((undo discard-info)))
- '(whitespace-line-column 200))
+ '(package-selected-packages '(color-theme-modern magit paredit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -348,6 +332,3 @@
  '(ek-red-face ((t (:foreground "red" :size "8pt"))) t)
  '(ek-wheat-face ((t (:foreground "Wheat3" :size "8pt"))) t)
  '(ek-yellow-face ((t (:foreground "yellow" :size "8pt"))) t))
-
-;;; End of file
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
