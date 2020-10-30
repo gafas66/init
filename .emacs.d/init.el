@@ -290,21 +290,6 @@
 			   :slant normal :weight normal
 			   :height ,HEIGHT :width normal
 			   :foundry "bitstream" :family "Courier"))))))
-(when is-linux
-  (setq HEIGHT (cond
-		((= height 1080) 90)  ;HD
-		((= height 2160) 150) ;UHD
-		(t 120)))
-  (setq FONTS '(70 80 90 100 120 150))
-  
-  (defun ek-font ()
-    (interactive)
-    (setq HEIGHT (car FONTS))
-    (setq FONTS (cdr FONTS))
-    (setq FONTS (append FONTS (list HEIGHT)))
-    (ek-set-faces HEIGHT))
-  (global-set-key (kbd "<f12>") 'ek-font)
-  (ek-set-faces HEIGHT))
 
 (server-start) ;; For emacs to listen
 
