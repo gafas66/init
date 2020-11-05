@@ -74,7 +74,9 @@
   (enable-theme 'goldenrod))
 (use-package which-key :config (which-key-mode))
 (use-package better-defaults) ; removes menu, toolbar, and scroll
-(use-package ace-jump-mode)
+(use-package ace-jump-mode
+  :config
+  (define-key global-map (kbd "<f12>") 'ace-jump-mode))
 (use-package yaml-mode)
 (use-package tabbar		      ;Tabulate similar file-types (font size?)
   :config
@@ -91,6 +93,8 @@
 (add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode))
 (require 'rake-mode)	              ;
 (require 'epa-file)		      ;easyPG interface for GnuGPG
+(epa-file-enable)
+(custom-set-variables '(epg-gpg-program "/usr/bin/gpg2"))
 ;(require 'csv-mode)		      ;CSV files KLUDGE Incompatible with powerline
 (require 'uniquify)		      ;Built-in package, same file names looks diff.
 (setq uniquify-buffer-name-style 'reverse)
@@ -173,7 +177,7 @@
 
 (setq undo-outer-limit 1200000000)
 
-(server-start) ;; For emacs to listen
+(unless (server-running-p) (server-start)) ;; For emacs to listen
 
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
