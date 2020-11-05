@@ -1,5 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs init file (non-existing by default)
+;; Emacs init file
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Some general info
 
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
@@ -11,81 +12,6 @@
 	    (t (getenv "HOME"))))
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Make sure we have our local library setup from MALPA etc
-
-(require 'package)
-(package-initialize)
-
-;(add-to-list 'package-archives '("melpa"     . "https://melpa.org/packages/") t)
-(add-to-list 'package-archives '("melpa-stable"     . "https://stable.melpa.org/packages/") t)
-
-(add-to-list 'load-path (concat HOME "/.emacs.d/lisp")) ;My own packages
-(package-refresh-contents)
-(package-install 'use-package)
-;(require 'use-package-ensure)
-;(setq use-package-ensure t)
-
-;;; Can't get below to auto-work
-;;;(use-package auto-package-update
-;;;	     :config
-;;;	     (setq auto-package-update-delete-old-versions t)
-;;;	     (setq auto-package-update-hide-results t)
-;;;	     (auto-package-update-maybe))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Done setting up package and use-package
-;; .. now install desired packages
-
-;;; (use-package clojure-mode)	      ;Syntax highlight
-;;; (use-package cider)		      ;REPL in emacs
-;;; (use-package paredit)		      ;Electrical grouping of parens
-;;; (use-package rainbow-delimiters)      ;paranthesis in different colors
-;;; (use-package magit)		      ;Git details in emacs
-;;; (use-package color-theme-modern	      ;Covers goldenrod
-;;;   :config
-;;;   (load-theme 'goldenrod t t)
-;;;   (enable-theme 'goldenrod))
-;;; 					;(use-package which-key :config (which-key-mode)) ;FIXME
-;;; ;(package-install 'which-key)(which-key-mode)
-;;; 					;(use-package better-defaults) ;FIXME
-;;; ;(package-install 'better-defaults)
-;;; (use-package paredit)
-;;; 					;(use-package ace-jump-mode) ;FIXME
-;;; ;(package-install 'ace-jump-mode)
-;;; 					;(use-package powerline :config (powerline-default-theme)) ;FIXME
-;;; ;(package-install 'powerline) (powerline-default-theme)
-;;; (use-package yaml-mode)
-;;; 
-;;; ;; Local in my ./lisp dir
-;;; (use-package tabbar		      ;Tabulate similar file-types (font size?)
-;;;   :config
-;;;   (tabbar-mode))
-;;; (use-package my-auto-insert)          ;My auto-comments and headings
-;;; (use-package markerpen		      ;Allow changing selected text color
-;;;   :config
-;;;   (global-set-key (kbd "<f8>")  'markerpen1)
-;;;   (global-set-key (kbd "<f9>")  'markerpen4)
-;;;   (global-set-key (kbd "<f10>") 'markerpen9))
-;;; (use-package verilog-mode	      ;For verilog files
-;;;   :config
-;;;   (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
-;;;   (add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode)))
-;;; (use-package rake-mode)	              ;
-;;; (use-package epa-file)		      ;easyPG interface for GnuGPG
-;;; (use-package csv-mode)		      ;CSV files
-;;; (use-package uniquify		      ;Built-in package, same file names looks diff.
-;;;   :config
-;;;   (setq uniquify-buffer-name-style 'reverse))
-;;; (use-package other-modes)		      ;PT etc
-;;; (use-package fic-mode		      ;NOTE/TODO etc in files
-;;;   :config
-;;;   (setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
-;;;   (mapcar (lambda (mode) (add-hook mode 'fic-mode)) p-modes))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Done installing packages
 
 ;; Get screen info if on X
 (if is-linux
@@ -100,10 +26,80 @@
     (setq width  1920)
     (setq height 1080)))
 
-(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
-      ((= height 1080) (set-face-attribute 'default nil :height 100))
-      (t nil))
+;; FIXME Doesnt seem to work
+;(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+;      ((= height 1080) (set-face-attribute 'default nil :height 60))
+;      (t nil))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup MELPA package system
+
+(require 'package)
+;(setq package-enable-at-startup nil)
+(add-to-list 'package-archives '("melpa" . "https://stable.melpa.org/packages/"))
+(add-to-list 'load-path (concat HOME "/.emacs.d/lisp")) ;My own packages
+;(package-initialize)
+
+;; Bootstrap 'use-package'
+(eval-after-load 'gnutls
+  '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+(require 'bind-key)
+(setq use-package-always-ensure t)
+
+					;(use-package clojure-mode)
+(use-package auto-package-update
+  :config
+  (setq auto-package-update-delete-old-versions t)
+  (setq auto-package-update-hide-results t)
+  (auto-package-update-maybe))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Done setting up package and use-package
+;; .. now install desired packages
+
+;(use-package powerline :config (powerline-default-theme));FIXME Doesnt work
+(use-package clojure-mode)	      ;Syntax highlight
+(use-package cider)		      ;REPL in emacs
+(use-package paredit)		      ;Electrical grouping of parens
+(use-package rainbow-delimiters)      ;paranthesis in different colors
+(use-package magit)		      ;Git details in emacs
+(use-package color-theme-modern	      ;Covers goldenrod
+  :config
+  (load-theme 'goldenrod t t)
+  (enable-theme 'goldenrod))
+(use-package which-key :config (which-key-mode))
+(use-package better-defaults) ; removes menu, toolbar, and scroll
+(use-package ace-jump-mode)
+(use-package yaml-mode)
+(use-package tabbar		      ;Tabulate similar file-types (font size?)
+  :config
+  (tabbar-mode))
+ 
+;;; ;; Local in my ./lisp dir
+(require 'my-auto-insert)          ;My auto-comments and headings
+(require 'markerpen)		      ;Allow changing selected text color
+(global-set-key (kbd "<f8>")  'markerpen1)
+(global-set-key (kbd "<f9>")  'markerpen4)
+(global-set-key (kbd "<f10>") 'markerpen9)
+(require 'verilog-mode)
+(autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
+(add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode))
+(require 'rake-mode)	              ;
+(require 'epa-file)		      ;easyPG interface for GnuGPG
+;(require 'csv-mode)		      ;CSV files KLUDGE Incompatible with powerline
+(require 'uniquify)		      ;Built-in package, same file names looks diff.
+(setq uniquify-buffer-name-style 'reverse)
+(require 'other-modes)		      ;PT etc
+(require 'fic-mode)		      ;NOTE/TODO etc in files
+(setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
+(mapcar (lambda (mode) (add-hook mode 'fic-mode)) p-modes)
+
+;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Various setup
@@ -148,7 +144,6 @@
 ;; Various useful settings
 (global-hi-lock-mode 1)
 (setq hi-lock-file-patterns-policy (lambda (pattern) t))
-(tool-bar-mode -1)
 (show-paren-mode t)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -182,26 +177,3 @@
 
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(powerline ace-jump-mode better-defaults which-key use-package rainbow-delimiters paredit magit color-theme-modern cider)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "bitstream" :family "Courier"))))
- '(ek-blue-face ((t (:foreground "blue" :size "8pt"))) t)
- '(ek-cyan-face ((t (:foreground "cyan" :size "8pt"))) t)
- '(ek-dark-face ((t (:foreground "dark goldenrod" :size "8pt"))) t)
- '(ek-green-face ((t (:foreground "green" :size "8pt"))) t)
- '(ek-magenta-face ((t (:foreground "magenta" :size "8pt"))) t)
- '(ek-orange-face ((t (:foreground "orange3" :size "8pt"))) t)
- '(ek-red-bold-face ((t (:foreground "red" :size "8pt" :bold t))) t)
- '(ek-red-face ((t (:foreground "red" :size "8pt"))) t)
- '(ek-wheat-face ((t (:foreground "Wheat3" :size "8pt"))) t)
- '(ek-yellow-face ((t (:foreground "yellow" :size "8pt"))) t))
