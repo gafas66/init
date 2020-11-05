@@ -1,7 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs init file (non-existing by default)
 
-;; Make sure we have our local library setup
+(tool-bar-mode -1)
+
+;; Bookeeping
 
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
 (setq is-me (if (or (string= "ekofoed" (getenv "USER"))
@@ -12,7 +14,6 @@
 	    (t (getenv "HOME"))))
 
 (add-to-list 'load-path (concat HOME "/.emacs.d/lisp"))
-(add-to-list 'load-path (concat HOME "/.emacs.d/bookmark+"))
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
 
@@ -29,33 +30,21 @@
     (setq width  1920)
     (setq height 1080)))
 
+(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+      ((= height 1080) (set-face-attribute 'default nil :height 900))
+      (t nil))
+
 (when is-me
   (when (> emacs-major-version 25) ;; Works on 24 onwards
     ;; Lets get packages set up
     (require 'package) ;; You might already have this line
     (add-to-list 'package-archives
 		 '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-;;    (when (< emacs-major-version 24) ;; Never to be used in this setting
-;;      ;; For important compatibility libraries like cl-lib
-;;      (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
-    
-    ;(add-to-list 'package-archives
-;		 '("marmalade" . "https://marmalade-repo.org/packages/") t)
     (package-initialize) ;; You might already have this line
     
     (when (not package-archive-contents)
       (package-refresh-contents))
-    (defvar my-packages '(
-			  clojure-mode
-			  paredit
-			  cider
-			  ;;groovy-mode ;;Mode used behind jenkins
-			  ;;smex ;;expand M-x fucntionality
-			  ;;projectile
-			  ;;rainbow-delimiters ;; Each paranthesis pair a different color, M-x rainbow-delimers-mode - or hook
-			  magit ;; Git stuff
-			  color-theme-modern
-			  ))
+    (defvar my-packages '(clojure-mode paredit cider rainbow-delimiters magit color-theme-modern powerline which-key tabbar))
     (dolist (p my-packages)
       (when (not (package-installed-p p))
 	(package-install p)))))
@@ -70,11 +59,6 @@
 ;;; Magit short-cut
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;(setq select-active-regions nil) ; KLUDGE waiting for propery-notify
-;; ORG mode
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
 (setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "DONE")))
 
 (require 'epa-file) ;easyPG interface for GnuGPG
@@ -84,16 +68,16 @@
 (setq uniquify-buffer-name-style 'reverse)
 
 ;;; Setup decent colours
-(require 'color-theme)
-(color-theme-initialize)
-(color-theme-goldenrod)
+;(require 'color-theme)
+(load-theme 'goldenrod t t)
+(enable-theme 'goldenrod)
 
 ;; Other nice stuff
 (require 'other-modes)
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-(require 'tabbar)			;This gives tabs to switch between buffers in this windows
+;(require 'tabbar)			;This gives tabs to switch between buffers in this windows
 (tabbar-mode)				;Activate now
 
 (require 'my-auto-insert)		;Insert header and footers in various files
@@ -112,37 +96,10 @@
             (outline-minor-mode)
             (setq outline-regexp " *\\(def \\|class\\|module\\)")))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;; Highlight changes in file
-;;;(require 'hilit-chg)
-;;;(make-empty-face 'highlight-changes-saved-face)
-;;;(setq highlight-changes-face-list '(highlight-changes-saved-face))
-;;;
-;;;(defun DE-highlight-changes-rotate-faces ()
-;;;  (let ((toggle (eq highlight-changes-mode 'passive)))
-;;;    (when toggle (highlight-changes-mode t))
-;;;    (highlight-changes-rotate-faces)
-;;;    (when toggle (highlight-changes-mode nil))))
-;;;					; Example: activate highlight changes with rotating faces for C programming
-;;;(mapcar (lambda (mode)
-;;;	  (add-hook mode
-;;;		    (function (lambda ()
-;;;				(add-hook 'local-write-file-hooks 'DE-highlight-changes-rotate-faces)
-;;;				(highlight-changes-mode t)
-;;;				(highlight-changes-mode t)))))
-;;;	p-modes)
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (require 'rake-mode)
 
 (winner-mode 1)				;Allows revert windows content/position history w/ C-c <|> 
-
-;;; PAREDIT
-
-(require 'paredit)
-(autoload 'enable-paredit-mode "paredit"
-  "Turn on pseudo-structural editing of Lisp code."
-  t)
 
 ;;; Start Paredit Mode on the fly with `M-x enable-paredit-mode RET',
 ;;; or always enable it in a major mode `M' (e.g., `lisp') with:
@@ -173,6 +130,7 @@
 ;; Might be needed
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
+(add-hook 'shell-mode-hook (lambda () (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
 
 ;;; NOTE  F1 is shell instead of "Help"
 (global-set-key [f1] 'shell)
@@ -224,7 +182,6 @@
 ;; Various useful settings
 (global-hi-lock-mode 1)
 (setq hi-lock-file-patterns-policy (lambda (pattern) t))
-(tool-bar-mode nil)
 (show-paren-mode t)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -291,7 +248,7 @@
 			   :height ,HEIGHT :width normal
 			   :foundry "bitstream" :family "Courier"))))))
 
-(server-start) ;; For emacs to listen
+;(server-start) ;; For emacs to listen
 
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -300,7 +257,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages '(color-theme-modern magit paredit)))
+ '(package-selected-packages
+   '(rainbow-delimiters paredit magit color-theme-modern cider)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
