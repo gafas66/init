@@ -6,6 +6,7 @@
 (setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
 (setq is-me (if (or (string= "ekofoed" (getenv "USER"))
 		    (string= "erik" (getenv "USER"))) t nil))
+(setq is-home (if (string= "erik" (getenv "USER")) t nil))
 
 (setq HOME (cond
 	    (is-DL "/home/ekofoed")
@@ -13,32 +14,12 @@
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
 
-;; Get screen info if on X
-(if is-linux
-    ;;(if (= (string-to-number (getenv "SHLVL")) 3) ;; TODO test instead for existence of X and command below
-    (progn
-      (setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
-      (string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
-      (setq width  (string-to-number (match-string 1 dimensions)))
-      (setq height (string-to-number (match-string 2 dimensions)))
-      )
-  (progn
-    (setq width  1920)
-    (setq height 1080)))
-
-;; FIXME Doesnt seem to work
-;(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
-;      ((= height 1080) (set-face-attribute 'default nil :height 60))
-;      (t nil))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup MELPA package system
 
 (require 'package)
-;(setq package-enable-at-startup nil)
 (add-to-list 'package-archives '("melpa" . "https://stable.melpa.org/packages/"))
 (add-to-list 'load-path (concat HOME "/.emacs.d/lisp")) ;My own packages
-;(package-initialize)
 
 ;; Bootstrap 'use-package'
 (eval-after-load 'gnutls
@@ -62,7 +43,12 @@
 ;; Done setting up package and use-package
 ;; .. now install desired packages
 
-;(use-package powerline :config (powerline-default-theme));FIXME Doesnt work
+(if is-home (use-package powerline :config (powerline-default-theme))) ;Needs xpm compiled?
+(use-package helm :bind
+  (("M-x"    . helm-M-x)
+   ("M-<f5>" . helm-find-files)
+   ([f10]    . helm-buffers-list)
+   ([S-f10]  . helm-recentf)))
 (use-package clojure-mode)	      ;Syntax highlight
 (use-package cider)		      ;REPL in emacs
 (use-package paredit)		      ;Electrical grouping of parens
@@ -76,7 +62,7 @@
 (use-package better-defaults) ; removes menu, toolbar, and scroll
 (use-package ace-jump-mode
   :config
-  (define-key global-map (kbd "<f12>") 'ace-jump-mode))
+  (define-key global-map (kbd "C-.") 'ace-jump-mode))
 (use-package yaml-mode)
 (use-package tabbar		      ;Tabulate similar file-types (font size?)
   :config
@@ -87,14 +73,14 @@
 (require 'markerpen)		      ;Allow changing selected text color
 (global-set-key (kbd "<f8>")  'markerpen1)
 (global-set-key (kbd "<f9>")  'markerpen4)
-(global-set-key (kbd "<f10>") 'markerpen9)
+
 (require 'verilog-mode)
 (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
 (add-to-list 'auto-mode-alist '("\\.[ds]?vh?\\'" . verilog-mode))
 (require 'rake-mode)	              ;
 (require 'epa-file)		      ;easyPG interface for GnuGPG
 (epa-file-enable)
-(custom-set-variables '(epg-gpg-program "/usr/bin/gpg2"))
+(setq epg-gpg-program "/usr/bin/gpg2")
 ;(require 'csv-mode)		      ;CSV files KLUDGE Incompatible with powerline
 (require 'uniquify)		      ;Built-in package, same file names looks diff.
 (setq uniquify-buffer-name-style 'reverse)
@@ -179,5 +165,42 @@
 
 (unless (server-running-p) (server-start)) ;; For emacs to listen
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Screen resolution
+
+;; Get screen info if on X
+(if is-linux
+    ;;(if (= (string-to-number (getenv "SHLVL")) 3) ;; TODO test instead for existence of X and command below
+    (progn
+      (setq dimensions (shell-command-to-string "xdpyinfo | grep dimension"))
+      (string-match "\\([0-9]+\\)x\\([0-9]+\\) pixels (\\([0-9]+\\)x\\([0-9]+\\)" dimensions)
+      (setq width  (string-to-number (match-string 1 dimensions)))
+      (setq height (string-to-number (match-string 2 dimensions)))
+      )
+  (progn
+    (setq width  1920)
+    (setq height 1080)))
+
+; Set according to screen resolution
+(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+      ((= height 1080) (set-face-attribute 'default nil :height 60))
+      (t nil))
+
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "bitstream" :family "Courier"))))
+ '(ek-blue-face ((t (:foreground "blue" :size "8pt"))) t)
+ '(ek-cyan-face ((t (:foreground "cyan" :size "8pt"))) t)
+ '(ek-dark-face ((t (:foreground "dark goldenrod" :size "8pt"))) t)
+ '(ek-green-face ((t (:foreground "green" :size "8pt"))) t)
+ '(ek-magenta-face ((t (:foreground "magenta" :size "8pt"))) t)
+ '(ek-orange-face ((t (:foreground "orange3" :size "8pt"))) t)
+ '(ek-red-bold-face ((t (:foreground "red" :size "8pt" :bold t))) t)
+ '(ek-red-face ((t (:foreground "red" :size "8pt"))) t)
+ '(ek-wheat-face ((t (:foreground "Wheat3" :size "8pt"))) t)
+ '(ek-yellow-face ((t (:foreground "yellow" :size "8pt"))) t))

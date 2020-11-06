@@ -1,6 +1,6 @@
 ;;----------------------------------------------------------------------------------------------------------------------
 ;; Created: Friday, September 24 2010
-;; Time-stamp: <2017-01-30 10:38:18 kofoede>
+;; Time-stamp: <2020-11-05 23:08:07 erik>
 ;; Author: Erik KOFOED
 ;;
 ;; Description:
@@ -21,7 +21,7 @@
 (setq auto-insert-query nil) ;; don't ask, just do it.
 
 (setq user-company "ESK")
-(if (file-exists-p "/projects/ASIC/ridge/") (setq user-company "DisplayLink\n\n"))
+(if (file-exists-p "/projects/ASIC/ridge/") (setq user-company "Synaptics\n\n"))
 (if (file-exists-p "/proj/ARTPEC7") (setq user-company "Renesas\n\n"))
 
 (setq my-footer
@@ -82,9 +82,7 @@
 	 "################################################################################\n"
 	 "# Created: " (insert (format-time-string "%A, %B %e %Y" (current-time))) "\n"
 	 "# Author: "(user-full-name) ", " user-company
-	 "# Description:\n#\n"
-	 _
-	 "\n"
+	 "# Description:\n#\n" _ "\n"
 	 my-footer)
 	((ruby-mode . "Ruby mode")
 	 nil
