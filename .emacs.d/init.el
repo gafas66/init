@@ -182,32 +182,9 @@
     (setq height 1080)))
 
 ; Set according to screen resolution
-(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
-      ((= height 1080) (set-face-attribute 'default nil :height 60))
-      (t nil))
+;(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+;      ((= height 1080) (set-face-attribute 'default nil :height 60))
+;      (t nil))
 
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "bitstream" :family "Courier"))))
- '(ek-blue-face ((t (:foreground "blue" :size "8pt"))) t)
- '(ek-cyan-face ((t (:foreground "cyan" :size "8pt"))) t)
- '(ek-dark-face ((t (:foreground "dark goldenrod" :size "8pt"))) t)
- '(ek-green-face ((t (:foreground "green" :size "8pt"))) t)
- '(ek-magenta-face ((t (:foreground "magenta" :size "8pt"))) t)
- '(ek-orange-face ((t (:foreground "orange3" :size "8pt"))) t)
- '(ek-red-bold-face ((t (:foreground "red" :size "8pt" :bold t))) t)
- '(ek-red-face ((t (:foreground "red" :size "8pt"))) t)
- '(ek-wheat-face ((t (:foreground "Wheat3" :size "8pt"))) t)
- '(ek-yellow-face ((t (:foreground "yellow" :size "8pt"))) t))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   '(helm yaml-mode which-key use-package tabbar rainbow-delimiters powerline paredit magit color-theme-modern cider better-defaults auto-package-update ace-jump-mode)))

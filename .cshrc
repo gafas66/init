@@ -8,7 +8,6 @@
 if (! $?__CSHRC_RUN) then
 
     setenv __CSHRC_RUN 1
-    echo "# .cshrc run once"
     
     set _yellow = "%{\033[33m%}"
     set _green  = "%{\033[32m%}"
