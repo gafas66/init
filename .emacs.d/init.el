@@ -80,7 +80,7 @@
 (require 'rake-mode)	              ;
 (require 'epa-file)		      ;easyPG interface for GnuGPG
 (epa-file-enable)
-(setq epg-gpg-program "/usr/bin/gpg2")
+(custom-set-variables '(epg-gpg-program "/usr/bin/gpg2"))
 ;(require 'csv-mode)		      ;CSV files KLUDGE Incompatible with powerline
 (require 'uniquify)		      ;Built-in package, same file names looks diff.
 (setq uniquify-buffer-name-style 'reverse)
@@ -204,3 +204,10 @@
  '(ek-red-face ((t (:foreground "red" :size "8pt"))) t)
  '(ek-wheat-face ((t (:foreground "Wheat3" :size "8pt"))) t)
  '(ek-yellow-face ((t (:foreground "yellow" :size "8pt"))) t))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(helm yaml-mode which-key use-package tabbar rainbow-delimiters powerline paredit magit color-theme-modern cider better-defaults auto-package-update ace-jump-mode)))

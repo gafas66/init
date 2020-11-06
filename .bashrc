@@ -1,15 +1,14 @@
 # .bashrc
 ################################################################################
 
+#echo "$__SHLVL1 : $SHLVL"
 
-if [[ $__RUN_BASH ]];then
-    __x=1
-else
-    
-    export __RUN_BASH=1
-    
+if [[ $__SHLVL1 == $SHLVL ]];then
+
+    # This executes only first time
+
+    source $HOME/.alias
     export PATH=${HOME}/bin:${HOME}/usr/local/bin:${PATH}
-    . ~/.alias
 
     git config --global user.email "ekofoed@gmail.com"
     git config --global user.name  "ESK"
@@ -34,12 +33,14 @@ else
     fi
 
     function prompt_command {
-        export PS1=$(~/init/.bashrc "OFF")
+        # This executes second and future times, as command below is SHLVL+1
+        export PS1=$($HOME/init/.bashrc)
     }
     PROMPT_DIRTRIM=1
     export PROMPT_COMMAND=prompt_command
-
 fi
+
+# This section always executes
 
 BRANCH=""
 if which git &>/dev/null; then
@@ -49,10 +50,14 @@ else
 fi
 if [[ $BRANCH != "" ]];then BRANCH="git:$BRANCH ";fi
 
-if [[ ! -z __x ]];then
+if [[ $__SHLVL1 == $SHLVL ]];then
+
+    export PS1="\u@\h ${__GREEN}BASH ${__YELLOW}${BRANCH}${__RESTORE}${SCHROOT_CHROOT_NAME}${__BLUE}\w \
+${__RESTORE}\$ "                                                                                
+else
     echo "\u@\h ${__GREEN}BASH ${__YELLOW}${BRANCH}${__RESTORE}${SCHROOT_CHROOT_NAME}${__BLUE}\w \
 ${__RESTORE}\$ "                                                                                
-
 fi
 
 # End
+################################################################################
