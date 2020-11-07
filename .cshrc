@@ -9,6 +9,7 @@ if (! $?__CSHRC_RUN) then
 
     setenv __CSHRC_RUN 1
     
+    set _blue   = "%{\033[34m%}"
     set _yellow = "%{\033[33m%}"
     set _green  = "%{\033[32m%}"
     set _red    = "%{\033[31m%}"
@@ -25,10 +26,10 @@ unset GBRANCH; unsetenv GBRANCH
 setenv GBRANCH "sh -c 'git branch --no-color 2> /dev/null' | grep \* | cut -d ' ' -f 2"
 set BRANCH="`$GBRANCH`"
 if ($BRANCH != "") then
-    set BRANCH="git:$BRANCH "
+    set BRANCH=" git:$BRANCH "
 endif
 
-set prompt = "`whoami`@${hostn} ${_red}CSH${_off} ${_yellow}$BRANCH${_off}%c % "
+set prompt = "`whoami`@${hostn} ${_red}CSH${_off}${_yellow}$BRANCH${_off}%c $ "
 
 # End of file
 ################################################################################

@@ -2,7 +2,7 @@
 ################################################################################
 # Alias for Erik Kofoed
 
-echo "# Reading .alias file for erik"
+#echo "# Reading .alias file for erik"
 
 unalias -a
 

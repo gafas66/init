@@ -182,9 +182,9 @@
     (setq height 1080)))
 
 ; Set according to screen resolution
-;(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
-;      ((= height 1080) (set-face-attribute 'default nil :height 60))
-;      (t nil))
+(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+      ((= height 1080) (set-face-attribute 'default nil :height 60))
+      (t nil))
 
 ;;; End of file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
