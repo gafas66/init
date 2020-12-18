@@ -1,8 +1,13 @@
-;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*- 
+;;;; Emacs Bookmark Format Version 1 ;;;; -*- coding: utf-8-emacs -*-
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("pips error"
+(("init.el"
+ (filename . "/nfshome/ekofoed/init/.emacs.d/init.el")
+ (front-context-string . ";;;;;;;;;;;;;;;;")
+ (rear-context-string)
+ (position . 1))
+("pips error"
  (filename . "/auto/ASIC_Userdata/ekofoed/builds/navarro/navarro_soc/build_09ea556a0cac18295aa9b9db8b29199a/design/libraries/navarro/syn_asic/navarro_soc_syn.log")
  (front-context-string . "Error: Uncaught ")
  (rear-context-string . "s/runtimes.html\n")

@@ -25,6 +25,7 @@ alias gs='git status'
 alias gc='git commit -a -m "General Update"'
 alias gpl='git pull'
 alias gph='git push'
+alias gpr='git config --get remote.origin.url'
 
 # End of file
 ################################################################################
