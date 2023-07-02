@@ -3,14 +3,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Some general info
 
-(setq is-DL (if (file-exists-p "/projects/ASIC/ridge/") t nil))
-(setq is-me (if (or (string= "ekofoed" (getenv "USER"))
-		    (string= "erik" (getenv "USER"))) t nil))
 (setq is-home (if (string= "erik" (getenv "USER")) t nil))
 
-(setq HOME (cond
-	    (is-DL "/home/ekofoed")
-	    (t (getenv "HOME"))))
+(setq HOME (getenv "HOME"))
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
 
@@ -59,7 +54,9 @@
   (load-theme 'goldenrod t t)
   (enable-theme 'goldenrod))
 (use-package which-key :config (which-key-mode))
-(use-package better-defaults) ; removes menu, toolbar, and scroll
+;;(use-package better-defaults) ; NOTE Does not exist anymore -> FIXME; removes menu, toolbar, and scroll
+(tool-bar-mode -1)
+
 (use-package ace-jump-mode
   :config
   (define-key global-map (kbd "C-.") 'ace-jump-mode))
@@ -80,7 +77,14 @@
 (require 'rake-mode)	              ;
 (require 'epa-file)		      ;easyPG interface for GnuGPG
 (epa-file-enable)
-(custom-set-variables '(epg-gpg-program "/usr/bin/gpg2"))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(epg-gpg-program "/usr/bin/gpg2")
+ '(package-selected-packages
+   '(tabbar yaml-mode ace-jump-mode better-defaults which-key color-theme-modern magit rainbow-delimiters paredit cider clojure-mode helm powerline auto-package-update use-package)))
 ;(require 'csv-mode)		      ;CSV files KLUDGE Incompatible with powerline
 (require 'uniquify)		      ;Built-in package, same file names looks diff.
 (setq uniquify-buffer-name-style 'reverse)
@@ -161,9 +165,9 @@
 (global-set-key (kbd "<f6>") 'highlight-changes-mode)
 (global-set-key (kbd "<f7>") 'whitespace-mode)
 
-(setq undo-outer-limit 1200000000)
+;(setq undo-outer-limit 1200000000)
 
-(unless (server-running-p) (server-start)) ;; For emacs to listen
+;(unless (server-running-p) (server-start)) ;; For emacs to listen
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Screen resolution
@@ -182,7 +186,7 @@
     (setq height 1080)))
 
 ; Set according to screen resolution
-(cond ((= height 2160) (set-face-attribute 'default nil :height 140))
+(cond ((> height 2000) (set-face-attribute 'default nil :height 140))
       ((= height 1080) (set-face-attribute 'default nil :height 60))
       (t nil))
 
