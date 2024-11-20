@@ -188,7 +188,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(org-agenda-files '("~/org/tasks.org"))
+ '(org-agenda-files '("~/init/tasks.org"))
  '(package-selected-packages '(tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
