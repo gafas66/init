@@ -1,9 +1,12 @@
 * Tasks
 ** TODO Learn tasks in org-mode.
+SCHEDULED: <2024-11-20 Wed>
 - Practice various types of lists under tasks
 - This was M-RET, showing the same symbol at front
 ** TODO Setup repl for clojurescript inside emacs
+SCHEDULED: <2024-11-21 Thu>
 ** TODO Make sublist of actions for work
+SCHEDULED: <2024-11-22 Fri>
 ** TODO Reorganize github to isolate work-related out
 ** TODO Make email for Michael B improvements to Flow
 - Gasket -> think about how to transfer files from one step to the next
