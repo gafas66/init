@@ -1,0 +1,14 @@
+* Tasks
+** TODO Learn tasks in org-mode.
+- Practice various types of lists under tasks
+- This was M-RET, showing the same symbol at front
+** TODO Setup repl for clojurescript inside emacs
+** TODO Make sublist of actions for work
+** TODO Reorganize github to isolate work-related out
+** TODO Make email for Michael B improvements to Flow
+- Gasket -> think about how to transfer files from one step to the next
+- Shared memory -> avoid at any and all cost, every new run in a new, clean directory
+- Separate technology specific materials out of flow
+For example library and MMMC setup at a common location
+** TODO Change phy-ver flow to include $impl
+** TODO Remove run_settings from flow

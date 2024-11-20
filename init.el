@@ -2,7 +2,6 @@
 ;; Emacs init file
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq emacs-d "/home/kofoed/.emacs.d")
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -12,7 +11,6 @@
 
 (when (< emacs-major-version 27)
   (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")         ; NOTE w/o creates no "gnu", just gnupg
-  (add-to-list 'load-path (concat emacs-d "/lisp"))              ; NOTE Vital to have keys!! Download and move to lisp
   (require 'gnu-elpa-keyring-update)                             ; NOTE Now accepts gnu archives
   (add-to-list 'package-archives '("nongnu" . "http://elpa.nongnu.org/nongnu/") t))
 
@@ -21,6 +19,8 @@
 
 (package-initialize)
 (package-refresh-contents)
+
+(add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
@@ -65,7 +65,6 @@
 (use-package org
   :pin gnu
   :config
-  (setq org-agenda-files "~/org")
   (setq org-log-done 'time)
   (setq org-return-follows-link t)
   (add-hook 'org-mode-hook 'org-indent-mode)
@@ -187,7 +186,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (tabbar gnu-elpa-keyring-update))))
+ '(custom-safe-themes
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+ '(org-agenda-files '("~/org/tasks.org"))
+ '(package-selected-packages '(tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
