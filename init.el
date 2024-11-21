@@ -38,10 +38,19 @@
 (require 'my-auto-insert)          ;My auto-comments and headings
 (require 'markerpen)		      ;Allow changing selected text color; NOTE not in any archive
 ; TODO Use hydra below?
-(global-set-key (kbd "<f8>")  'markerpen1)
-(global-set-key (kbd "<f9>")  'markerpen4)
-(global-set-key (kbd "C-,")   'markerpen-mark-region) ; Default doesnt work
-(global-set-key (kbd "C-.")   'markerpen-clear-all-marks) ; Default doesnt work
+;(global-set-key (kbd "<f8>")  'markerpen1)
+;(global-set-key (kbd "<f9>")  'markerpen4)
+;(global-set-key (kbd "C-,")   'markerpen-mark-region) ; Default doesnt work
+					;(global-set-key (kbd "C-.")   'markerpen-clear-all-marks) ; Default doesnt work
+(defun markerpen-mark-region-blue () (interactive) (markerpen4) (markerpen-mark-region))
+(defhydra hydra-comma (:color blue)
+  "Toggle"
+  ("m" markerpen-mark-region      "mark region")
+  ("c" markerpen-clear-all-marks  "clear all marks")
+  ("r" markerpen1                 "red")
+  ("b" markerpen1                 "blue")
+  ;("b" markerpen-mark-region-blue "blue"))
+(global-set-key (kbd "C-,") 'hydra-comma/body)
 
 (use-package tabbar :ensure t :config (tabbar-mode))
 (when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
@@ -75,6 +84,8 @@
   (define-key global-map "\C-cc" 'org-capture)
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-restore-windows-after-quit t)
   (add-hook 'org-mode-hook 'visual-line-mode))
 
 (use-package magit

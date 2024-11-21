@@ -1,21 +1,74 @@
-* Tasks
-** TODO Learn tasks in org-mode.
-SCHEDULED: <2024-11-20 Wed>
+* VEC project
+** C2C
+*** TODO Avoid tie-offs to serdes
+SCHEDULED: <2024-11-22 Fri>
+*** DONE Rerun calibre
+CLOSED: [2024-11-21 Thu 12:22] SCHEDULED: <2024-11-21 Thu>
+*** DONE Check c2c calibre results
+CLOSED: [2024-11-21 Thu 16:46] SCHEDULED: <2024-11-21 Thu>
+We should have much less color errors (E1/E2)
+Much less, some 240 errors still in sea-of gates, all M2_E1
+*** DONE Introduce place block under M3/M2 contacts to avoid DRC's (color)
+CLOSED: [2024-11-21 Thu 18:02] SCHEDULED: <2024-11-21 Thu>
+This is not possible - will create 53k blockages, severly limiting
+placement freedom. Better perhaps solve by deleting violating vias at end?
+*** DONE Why is input CLK_REF_IN_N from serdes driven directly?
+CLOSED: [2024-11-21 Thu 17:19] SCHEDULED: <2024-11-21 Thu>
+An inverter is apparently driving this input pin at BUMP
+In the phy_tc this is driven by primary input, in c2c by clock tree - pin is both bump !
+According to Claudia, W/E are for connected parallell serdes, in: should perhaps be tied off
+Main clock bump should have a create_clock on it, N version generated -invert
+*** TODO Check serdes CLK_REF_IN_N def's with Chenming
+SCHEDULED: <2024-11-22 Fri>
+*** TODO Change phy-ver flow to include $impl
+SCHEDULED: <2024-11-29 Fri>
+*** TODO Remove run_settings from flow
+SCHEDULED: <2024-11-22 Fri>
+*** TODO How do we deal with 50 macro placement false warnings?
+SCHEDULED: <2024-11-28 Thu>
+** VEC
+*** DONE Update ddr from Emil
+CLOSED: [2024-11-21 Thu 12:55] SCHEDULED: <2024-11-21 Thu>
+*** TODO Do actual PG planning
+SCHEDULED: <2024-12-06 Fri>
+*** TODO Rerun top with latest ddr from Emil
+SCHEDULED: <2024-11-22 Fri>
+** PCIE
+*** TODO Rerun with colors, check timing, IO etc
+SCHEDULED: <2024-11-22 Fri>
+* Learning tasks
+** DONE Learn tasks in org-mode.
+CLOSED: [2024-11-21 Thu 11:28] SCHEDULED: <2024-11-20 Wed>
 - Practice various types of lists under tasks
 - This was M-RET, showing the same symbol at front
 ** TODO Setup repl for clojurescript inside emacs
-SCHEDULED: <2024-11-21 Thu>
+SCHEDULED: <2024-11-22 Fri>
 ** TODO Make sublist of actions for work
 SCHEDULED: <2024-11-22 Fri>
 ** TODO Reorganize github to isolate work-related out
-** TODO Make email for Michael B improvements to Flow
+SCHEDULED: <2024-11-22 Fri>
+** DONE Make email for Michael B improvements to Flow
+CLOSED: [2024-11-21 Thu 17:39] SCHEDULED: <2024-11-21 Thu>
 - Gasket -> think about how to transfer files from one step to the next
 - Shared memory -> avoid at any and all cost, every new run in a new, clean directory
 - Separate technology specific materials out of flow
 For example library and MMMC setup at a common location
-** TODO Change phy-ver flow to include $impl
-** TODO Remove run_settings from flow
-** TODO Setup hydra bindings for various
+** DONE Setup hydra bindings for various
+CLOSED: [2024-11-21 Thu 18:20] SCHEDULED: <2024-11-21 Thu>
 - hs-mode (hide code)
 - agenda mode?
+- Markerpen - use C-, as multi-choice, multi-color? Instead of F8/9?
+** TODO Review markerpen hydra - can we make color auto? More col's?
+SCHEDULED: <2024-11-22 Fri>
 ** TODO Make more org-files?
+
+
+
+* Debug notes
+** CLK_REF_IN_N on c2c
+Serdes inserted in block#1 c2c_chi_asic...
+Driven by direct input (no bufs)
+phy_clk_ref_in_n is the port name
+This is driven by CTS-net on top-level
+E=EAST, W=WEST, placed e/w in G1 -> unconnected in PHY_TC
+ 

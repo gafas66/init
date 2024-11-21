@@ -9,6 +9,8 @@ export PATH=${HOME}/bin:${HOME}/usr/local/bin:${PATH}
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name  "ESK"
 
+module load prj/vec/1
+
 export __RED="\[\033[0;31m\]"
 export __GREEN="\[\033[0;32m\]"
 export __BROWN="\[\033[0;33m\]"
