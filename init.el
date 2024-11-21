@@ -88,6 +88,13 @@
   :ensure t
   :bind (("C-x C-g" . magit-status)))
 
+;(use-package cycle-themes
+;  :ensure t
+;  :init (setq cycle-themes-theme-list
+;          '(leuven monokai solarized-dark))
+;  :config (cycle-themes-mode))
+;(setq list '(a b c))
+;(first list)
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -133,8 +140,9 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
   ("v" nil))
 
 ;(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body)
+;(setq org-agenda-mode-hook nil)
 ;(add-hook 'org-agenda-mode-hook
-;	  '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
+;	  (lambda () (define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body)))
 
 (defhydra hydra-toggle (:color blue)
   "Toggle"
@@ -258,7 +266,7 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(org-agenda-files '("~/init/tasks.org"))
- '(package-selected-packages '(magit tabbar gnu-elpa-keyring-update)))
+ '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
