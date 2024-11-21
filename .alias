@@ -6,19 +6,25 @@
 
 unalias -a
 
-[[ -f /projects/ASIC/bin/ridge_alias ]] && . /projects/ASIC/bin/ridge_alias
-
 alias h='history'
 
 COLOR=--color
 
-alias l="ls -lh $COLOR"
+alias l="ls -lha $COLOR"
 alias ll="ls -lha $COLOR"
-alias lt="ls -lhat $COLOR | head -20"
+alias lt="ls -lhat $COLOR | head -40"
+
+alias emacs=/usr/bin/emacs # NOTE Override local version for now
 
 alias g="ps axf | grep -v grep | grep $1"
 
-alias em='~ekofoed/usr/local/bin/emacs -u ekofoed'
+alias pd=pushd
+alias pp=popd
+
+# Find help stxmod
+stx() { cat ~/.stxmod | xargs egrep "$1" 2>/dev/null ; }
+
+alias mt="find . -newermt"
 
 # Git shorts
 alias gs='git status'
@@ -26,6 +32,17 @@ alias gc='git commit -a -m "General Update"'
 alias gpl='git pull'
 alias gph='git push'
 alias gpr='git config --get remote.origin.url'
+
+# Fraunhofer
+alias cadence="/home/bur/bin/cds/cadence"
+alias lic_in_use="/home/bur/bin/cds/cadence lic_in_use"
+alias lic_available="/home/bur/bin/cds/cadence lic_available"
+alias lic_expire="/home/bur/bin/cds/cadence lic_expire"
+
+# Current project
+alias vnc='vncserver -nolisten local -geometry 3840x2160'
+#alias  w='cd /home/EPI/project/EUPILOT/VEC/usr/esk/pnr_innovus/micro_tile_pcie_7p5T_r06_v2'
+alias  w='source /home/kofoed/bin/w'
 
 # End of file
 ################################################################################

@@ -7,6 +7,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
 
+(add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
 (require 'package)
 
 (when (< emacs-major-version 27)
@@ -20,7 +21,6 @@
 (package-initialize)
 (package-refresh-contents)
 
-(add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
@@ -44,13 +44,13 @@
 (global-set-key (kbd "C-.")   'markerpen-clear-all-marks) ; Default doesnt work
 
 (use-package tabbar :ensure t :config (tabbar-mode))
-(use-package powerline :ensure t :config (powerline-default-theme))
+(when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 
 (use-package helm
   :init (setq tab-bar-tab-name-function nil) ; KLUDGE this is undefined for some reason
   :ensure t
   :bind
-  (("M-x"    . helm-M-x)))
+  (("M-x" . helm-M-x)))
 
 (use-package fic-mode :ensure t)
 (setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
@@ -82,6 +82,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Various
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (winner-mode 1)				;Allows revert windows content/position history w/ C-c <|> 
 (ffap-bindings)				;ffap = fINDfILEaTPoint
@@ -187,9 +189,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(org-agenda-files '("~/init/tasks.org"))
- '(package-selected-packages '(tabbar gnu-elpa-keyring-update)))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+ '(org-agenda-files (quote ("~/init/tasks.org")))
+ '(package-selected-packages (quote (tabbar gnu-elpa-keyring-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
