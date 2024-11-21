@@ -1,5 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Emacs init file
+;; Local Variables:
+;; comment-column: 1
+;; End:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
@@ -21,7 +24,6 @@
 (package-initialize)
 (package-refresh-contents)
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
 
@@ -36,13 +38,17 @@
   (enable-theme 'goldenrod))
 
 (require 'my-auto-insert)          ;My auto-comments and headings
-(require 'markerpen)		      ;Allow changing selected text color; NOTE not in any archive
-; TODO Use hydra below?
-;(global-set-key (kbd "<f8>")  'markerpen1)
-;(global-set-key (kbd "<f9>")  'markerpen4)
-;(global-set-key (kbd "C-,")   'markerpen-mark-region) ; Default doesnt work
-					;(global-set-key (kbd "C-.")   'markerpen-clear-all-marks) ; Default doesnt work
-(use-package tabbar :ensure t :config (tabbar-mode))
+(require 'markerpen)		   ;Allow changing selected text color; NOTE not in any archive
+
+(use-package tabbar
+  :ensure t
+  :config (tabbar-mode)
+  (set-face-attribute 'tabbar-default    nil :background "gray60")
+  (set-face-attribute 'tabbar-unselected nil :background "gray85"  :foreground "gray30" :box nil)
+  (set-face-attribute 'tabbar-selected   nil :background "yellow" :foreground "blue"  :box nil :weight 'bold)
+  (set-face-attribute 'tabbar-button     nil :box '(:line-width 1 :color "gray72" :style released-button))
+  (set-face-attribute 'tabbar-separator  nil :height 0.7))
+
 (when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 
 (use-package helm
@@ -125,6 +131,7 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
          (message "Display now includes inactive timestamps as well")))
   ("q" (message "Abort") :exit t)
   ("v" nil))
+
 ;(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body)
 ;(add-hook 'org-agenda-mode-hook
 ;	  '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
