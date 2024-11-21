@@ -78,6 +78,7 @@
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
   (define-key global-map "\C-cc" 'org-capture)
+  (setq org-default-notes-file "~/init/notes.org")
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'current-window)
@@ -276,7 +277,7 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(org-agenda-files '("~/init/tasks.org"))
+ '(org-agenda-files '("~/init/notes.org" "/home/erik/init/tasks.org"))
  '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
