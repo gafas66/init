@@ -42,16 +42,6 @@
 ;(global-set-key (kbd "<f9>")  'markerpen4)
 ;(global-set-key (kbd "C-,")   'markerpen-mark-region) ; Default doesnt work
 					;(global-set-key (kbd "C-.")   'markerpen-clear-all-marks) ; Default doesnt work
-(defun markerpen-mark-region-blue () (interactive) (markerpen4) (markerpen-mark-region))
-(defhydra hydra-comma (:color blue)
-  "Toggle"
-  ("m" markerpen-mark-region      "mark region")
-  ("c" markerpen-clear-all-marks  "clear all marks")
-  ("r" markerpen1                 "red")
-  ("b" markerpen1                 "blue")
-  ;("b" markerpen-mark-region-blue "blue"))
-(global-set-key (kbd "C-,") 'hydra-comma/body)
-
 (use-package tabbar :ensure t :config (tabbar-mode))
 (when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 
@@ -95,16 +85,49 @@
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Various
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Key bindings
 
-(defalias 'yes-or-no-p 'y-or-n-p)
+(defun org-agenda-cts ()
+  (and (eq major-mode 'org-agenda-mode)
+       (let ((args (get-text-property
+                    (min (1- (point-max)) (point))
+                    'org-last-args)))
+         (nth 2 args))))
 
-(winner-mode 1)				;Allows revert windows content/position history w/ C-c <|> 
-(ffap-bindings)				;ffap = fINDfILEaTPoint
-(setq visible-bell t)
-(tool-bar-mode -1)
-;(scroll-bar-mode -1)
+(defhydra hydra-org-agenda-view (:hint none)
+  "
+_d_: ?d? day        _g_: time grid=?g?  _a_: arch-trees
+_w_: ?w? week       _[_: inactive       _A_: arch-files
+_t_: ?t? fortnight  _f_: follow=?f?     _r_: clock report=?r?
+_m_: ?m? month      _e_: entry text=?e? _D_: include diary=?D?
+_y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
+  ("SPC" org-agenda-reset-view)
+  ("d" org-agenda-day-view (if (eq 'day (org-agenda-cts)) "[x]" "[ ]"))
+  ("w" org-agenda-week-view (if (eq 'week (org-agenda-cts)) "[x]" "[ ]"))
+  ("t" org-agenda-fortnight-view (if (eq 'fortnight (org-agenda-cts)) "[x]" "[ ]"))
+  ("m" org-agenda-month-view (if (eq 'month (org-agenda-cts)) "[x]" "[ ]"))
+  ("y" org-agenda-year-view (if (eq 'year (org-agenda-cts)) "[x]" "[ ]"))
+  ("l" org-agenda-log-mode (format "% -3S" org-agenda-show-log))
+  ("L" (org-agenda-log-mode '(4)))
+  ("c" (org-agenda-log-mode 'clockcheck))
+  ("f" org-agenda-follow-mode (format "% -3S" org-agenda-follow-mode))
+  ("a" org-agenda-archives-mode)
+  ("A" (org-agenda-archives-mode 'files))
+  ("r" org-agenda-clockreport-mode (format "% -3S" org-agenda-clockreport-mode))
+  ("e" org-agenda-entry-text-mode (format "% -3S" org-agenda-entry-text-mode))
+  ("g" org-agenda-toggle-time-grid (format "% -3S" org-agenda-use-time-grid))
+  ("D" org-agenda-toggle-diary (format "% -3S" org-agenda-include-diary))
+  ("!" org-agenda-toggle-deadlines)
+  ("[" (let ((org-agenda-include-inactive-timestamps t))
+         (org-agenda-check-type t 'timeline 'agenda)
+         (org-agenda-redo)
+         (message "Display now includes inactive timestamps as well")))
+  ("q" (message "Abort") :exit t)
+  ("v" nil))
+;(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body)
+;(add-hook 'org-agenda-mode-hook
+;	  '(define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body))
 
 (defhydra hydra-toggle (:color blue)
   "Toggle"
@@ -116,29 +139,51 @@
   ("w" whitespace-mode           "whitespace"))
 (global-set-key (kbd "C-c t") 'hydra-toggle/body)
 
-;;; Various setup
-;
-;(setq org-todo-keywords '((sequence "TODO" "IN-PROGRESS" "DONE")))
+(global-unset-key [f1])
+(defhydra hydra-shell-stuff (:color blue)
+  "Shells"
+  ("s" shell                   "shell")
+  ("a" (ansi-term "/bin/bash") "ansi-term")
+  ("r" rename-buffer           "Rename buffer"))
+(global-set-key [f1] 'hydra-shell-stuff/body)
+
+(global-set-key (kbd "C-'") 'erase-buffer)
+(global-set-key (kbd "C-x r p") 'replace-rectangle)
+
+(defhydra hydra-comma (:color blue)
+  "Toggle"
+  ("m" markerpen-mark-region      "mark region")
+  ("c" markerpen-clear-all-marks  "clear all marks")
+  ("r" (markerpen-mark-region 1)  "red")
+  ("g" (markerpen-mark-region 2)  "grey")
+  ("y" (markerpen-mark-region 3)  "yellow")
+  ("b" (markerpen-mark-region 4)  "blue")
+  ("u" (markerpen-mark-region 5)  "underline"))
+(global-set-key (kbd "C-,") 'hydra-comma/body)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Various
+
+(defalias 'yes-or-no-p 'y-or-n-p)
+
+(winner-mode 1)				;Allows revert windows content/position history w/ C-c <|> 
+(ffap-bindings)				;ffap = fINDfILEaTPoint
+(setq visible-bell t)
+(tool-bar-mode -1)
+;(scroll-bar-mode -1)
+
+(global-hi-lock-mode 1)
+(show-paren-mode t)
+(put 'erase-buffer 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 
 ;;; Emacs shell setup
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'shell-mode-hook (lambda () (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
 
-(global-set-key [f1] 'shell)
 (setq display-buffer-alist '(("\\`\\*e?shell" display-buffer-same-window)))
-(global-set-key [f2] 'rename-buffer)
 
-(global-set-key (kbd "C-'") 'erase-buffer)
-(global-set-key (kbd "C-x r p") 'replace-rectangle)
-
-;; Various useful settings
-(global-hi-lock-mode 1)
-(show-paren-mode t)
-(put 'erase-buffer 'disabled nil)
-(put 'narrow-to-region 'disabled nil)
-
-;; ansi colors
 (setq ansi-color-names-vector
       ["black" "tomato" "PaleGreen2" "gold1"
        "DeepSkyBlue1" "MediumOrchid1" "cyan" "white"])
@@ -204,10 +249,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
- '(org-agenda-files (quote ("~/init/tasks.org")))
- '(package-selected-packages (quote (magit tabbar gnu-elpa-keyring-update))))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+ '(org-agenda-files '("~/init/tasks.org"))
+ '(package-selected-packages '(magit tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

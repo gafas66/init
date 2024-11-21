@@ -26,6 +26,8 @@ SCHEDULED: <2024-11-29 Fri>
 SCHEDULED: <2024-11-22 Fri>
 *** TODO How do we deal with 50 macro placement false warnings?
 SCHEDULED: <2024-11-28 Thu>
+*** TODO Remove M2 from rails and only use M1 like STXMOD -> solve M2 color isse
+SCHEDULED: <2024-11-22 Fri>
 ** VEC
 *** DONE Update ddr from Emil
 CLOSED: [2024-11-21 Thu 12:55] SCHEDULED: <2024-11-21 Thu>
