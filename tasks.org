@@ -15,3 +15,7 @@ SCHEDULED: <2024-11-22 Fri>
 For example library and MMMC setup at a common location
 ** TODO Change phy-ver flow to include $impl
 ** TODO Remove run_settings from flow
+** TODO Setup hydra bindings for various
+- hs-mode (hide code)
+- agenda mode?
+** TODO Make more org-files?
