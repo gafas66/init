@@ -88,18 +88,38 @@
   :ensure t
   :bind (("C-x C-g" . magit-status)))
 
-;(use-package cycle-themes
-;  :ensure t
-;  :init (setq cycle-themes-theme-list
-;          '(leuven monokai solarized-dark))
-;  :config (cycle-themes-mode))
-;(setq list '(a b c))
-;(first list)
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
+
+(setq good-themes
+      '(goldenrod classic cobalt dark-blue2 desert digital-ofs1 euphoria feng-shui fischmeister
+		  late-night lawrence ld-dark lethe marquardt retro-green xemacs tango-dark))
+
+(defun ek-theme (theme) (interactive) (mapcar #'disable-theme custom-enabled-themes) (load-theme theme t t) (enable-theme theme))
+
+(defhydra hydra-appearance (:color blue)
+  ("1" (ek-theme 'goldenrod)         "goldenrod"         :column "Theme")
+  ("2" (ek-theme 'classic)           "classic"           :column "Theme")
+  ("3" (ek-theme 'cobalt)            "cobalt"            :column "Theme")
+  ("4" (ek-theme 'feng-shui)         "feng-shui"         :column "Theme")
+  ("5" (ek-theme 'late-night)        "late-night"        :column "Theme")
+  ("6" (ek-theme 'retro-green)       "retro-green"       :column "Theme")
+  ("7" (ek-theme 'wheat)             "wheat"             :column "Theme")
+  ("8" (ek-theme 'word-perfect)      "word-perfect"      :column "Theme")
+  ("9" (ek-theme 'taming-mr-arneson) "taming-mr-arneson" :column "Theme")
+  ("0" (ek-theme 'light-blue)        "light-blue       " :column "Theme")
+
+  ("l" display-line-numbers-mode "line-numbers" :column "Toggle")
+  ("c" column-number-mode        "columns"      :column "Toggle")
+  ("t" toggle-truncate-lines     "truncate"     :column "Toggle")
+  ("f" follow-mode               "follow"       :column "Toggle")
+  ("v" visual-line-mode          "visual-line"  :column "Toggle")
+  ("w" whitespace-mode           "whitespace"   :column "Toggle")
+  ("q" nil                       "Quit menu" :color red :column nil))
+(global-set-key (kbd "C-c h") 'hydra-appearance/body)
 
 (defun org-agenda-cts ()
   (and (eq major-mode 'org-agenda-mode)
@@ -144,15 +164,6 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
 ;(add-hook 'org-agenda-mode-hook
 ;	  (lambda () (define-key org-agenda-mode-map "v" 'hydra-org-agenda-view/body)))
 
-(defhydra hydra-toggle (:color blue)
-  "Toggle"
-  ("l" display-line-numbers-mode "line-numbers")
-  ("c" column-number-mode        "columns")
-  ("t" toggle-truncate-lines     "truncate")
-  ("f" follow-mode               "follow")
-  ("v" visual-line-mode          "visual-line")
-  ("w" whitespace-mode           "whitespace"))
-(global-set-key (kbd "C-c t") 'hydra-toggle/body)
 
 (global-unset-key [f1])
 (defhydra hydra-shell-stuff (:color blue)
