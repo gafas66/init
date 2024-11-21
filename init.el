@@ -77,6 +77,10 @@
   (setq org-hide-emphasis-markers t)
   (add-hook 'org-mode-hook 'visual-line-mode))
 
+(use-package magit
+  :ensure t
+  :bind (("C-x C-g" . magit-status)))
+
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -192,7 +196,7 @@
    (quote
     ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
  '(org-agenda-files (quote ("~/init/tasks.org")))
- '(package-selected-packages (quote (tabbar gnu-elpa-keyring-update))))
+ '(package-selected-packages (quote (magit tabbar gnu-elpa-keyring-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

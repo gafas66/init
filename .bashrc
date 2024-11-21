@@ -2,6 +2,7 @@
 ################################################################################
 
 source $HOME/.alias
+source $HOME/.alias_local
 
 export PATH=${HOME}/bin:${HOME}/usr/local/bin:${PATH}
 
