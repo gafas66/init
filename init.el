@@ -35,8 +35,8 @@
 (use-package color-theme-modern
   :ensure t
   :config
-  (load-theme 'goldenrod t t)
-  (enable-theme 'goldenrod))
+  (load-theme 'wheat t t)
+  (enable-theme 'wheat))
 
 (require 'my-auto-insert)          ;My auto-comments and headings
 (require 'markerpen)		   ;Allow changing selected text color; NOTE not in any archive
@@ -106,13 +106,13 @@
 (defun ek-theme (theme) (interactive) (mapcar #'disable-theme custom-enabled-themes) (load-theme theme t t) (enable-theme theme))
 
 (defhydra hydra-appearance (:color blue)
-  ("1" (ek-theme 'goldenrod)         "goldenrod"         :column "Theme")
-  ("2" (ek-theme 'classic)           "classic"           :column "Theme")
-  ("3" (ek-theme 'cobalt)            "cobalt"            :column "Theme")
-  ("4" (ek-theme 'feng-shui)         "feng-shui"         :column "Theme")
-  ("5" (ek-theme 'late-night)        "late-night"        :column "Theme")
-  ("6" (ek-theme 'retro-green)       "retro-green"       :column "Theme")
-  ("7" (ek-theme 'wheat)             "wheat"             :column "Theme")
+  ("1" (ek-theme 'wheat)             "wheat"             :column "Theme")
+  ("2" (ek-theme 'goldenrod)         "goldenrod"         :column "Theme")
+  ("3" (ek-theme 'classic)           "classic"           :column "Theme")
+  ("4" (ek-theme 'cobalt)            "cobalt"            :column "Theme")
+  ("5" (ek-theme 'feng-shui)         "feng-shui"         :column "Theme")
+  ("6" (ek-theme 'late-night)        "late-night"        :column "Theme")
+  ("7" (ek-theme 'retro-green)       "retro-green"       :column "Theme")
   ("8" (ek-theme 'word-perfect)      "word-perfect"      :column "Theme")
   ("9" (ek-theme 'taming-mr-arneson) "taming-mr-arneson" :column "Theme")
   ("0" (ek-theme 'light-blue)        "light-blue       " :column "Theme")
@@ -204,13 +204,13 @@
   )
 (global-set-key (kbd "<f5>") 'ek-hi-set)
 
-;;;    
-;;;    ;(setq undo-outer-limit 1200000000)
-;;;    
-;;;    ;(unless (server-running-p) (server-start)) ;; For emacs to listen
-;;;    
-; ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
- ;; Screen resolution
+;    
+;    ;(setq undo-outer-limit 1200000000)
+;    
+;    ;(unless (server-running-p) (server-start)) ;; For emacs to listen
+;    
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Screen resolution
  
 ;; Get screen info if on X
 (if is-linux
@@ -229,23 +229,10 @@
 (cond ((> height 1590) (set-face-attribute 'default nil :height 120))
       ((= height 1080) (set-face-attribute 'default nil :height 60))
       (t nil))
-;;;    
-;;;    ;;; End of file
-;;;    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;    
-;(custom-set-variables
-; ;; custom-set-variables was added by Custom.
-; ;; If you edit it by hand, you could mess it up, so be careful.
-; ;; Your init file should contain only one such instance.
-; ;; If there is more than one, they won't work right.
-; '(package-selected-packages (quote (helm use-package))))
-;(custom-set-faces
-; ;; custom-set-faces was added by Custom.
-; ;; If you edit it by hand, you could mess it up, so be careful.
-; ;; Your init file should contain only one such instance.
-; ;; If there is more than one, they won't work right.
-; )
-;
+
+;; End of file
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -254,7 +241,6 @@
  '(custom-safe-themes
    (quote
     ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
- '(org-agenda-files nil)
  '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
