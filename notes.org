@@ -25,3 +25,7 @@ CLOSED: [2024-11-21 Thu 23:33]
 SCHEDULED: <2024-11-22 Fri>
   [2024-11-21 Thu]
   [[file:~/Projects/my-test/src/my_test/core.clj][file:~/Projects/my-test/src/my_test/core.clj]]
+** TODO Capture will link to line if selected
+SCHEDULED: <2024-11-22 Fri>
+  [2024-11-21 Thu]
+  [[file:~/init/init.el::define-key global-map "\C-cc" 'org-capture]]
