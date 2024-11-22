@@ -6,6 +6,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
+(setenv "TERM" "xterm") ;# Avoid warning at start of shell
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
@@ -276,9 +277,10 @@ _y_: ?y? year       _q_: quit           _L__l__c_: log = ?l?"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(org-agenda-files '("~/init/notes.org" "/home/erik/init/tasks.org"))
- '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update)))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+ '(org-agenda-files (quote ("~/init/notes.org" "~/init/tasks.org")))
+ '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
