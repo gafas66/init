@@ -1,0 +1,9 @@
+* Tasks
+** DONE Update ddr from Emil
+CLOSED: [2024-11-21 Thu 12:55] SCHEDULED: <2024-11-21 Thu>
+** TODO Do actual PG planning
+SCHEDULED: <2024-12-06 Fri>
+** TODO Rerun top with latest ddr from Emil
+SCHEDULED: <2024-11-22 Fri>
+** TODO Why do Eric not have viols on Rams? (no Halo?)
+SCHEDULED: <2024-11-29 Fri>
