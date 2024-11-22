@@ -80,7 +80,7 @@
   (define-key global-map "\C-ca" 'org-agenda)
   (define-key global-map "\C-cc" 'org-capture)
   (setq org-default-notes-file "~/init/org/Capture.org")
-  (setq org-agenda-files '("~/init/org"))
+  (setq org-agenda-files '("~/init/org" "~/org"))
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'current-window)
