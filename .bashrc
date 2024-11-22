@@ -9,7 +9,7 @@ export PATH=${HOME}/bin:${HOME}/usr/local/bin:${PATH}
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name  "ESK"
 
-# NOTE Commands in need of proper terminal
+# NOTE Avoid silly warnings for commands in need of proper terminal
 [[ -z ${INSIDE_EMACS+x} ]] || x=$TERM || export TERM=eterm-color
 module load prj/vec/1
 [[ -z ${INSIDE_EMACS+x} ]] || export TERM=$x || unset x

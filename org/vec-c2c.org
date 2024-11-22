@@ -1,6 +1,7 @@
 * Tasks
-** TODO Avoid tie-offs to serdes
+** TODO [#A] Avoid serdes clock routing
 SCHEDULED: <2024-11-22 Fri>
+Does not happen on pcie -> unknown why, clocks seem to be treated identically.
 ** DONE Rerun calibre
 CLOSED: [2024-11-21 Thu 12:22] SCHEDULED: <2024-11-21 Thu>
 ** DONE Check c2c calibre results
@@ -17,14 +18,26 @@ An inverter is apparently driving this input pin at BUMP
 In the phy_tc this is driven by primary input, in c2c by clock tree - pin is both bump !
 According to Claudia, W/E are for connected parallell serdes, in: should perhaps be tied off
 Main clock bump should have a create_clock on it, N version generated -invert
-** TODO Check serdes CLK_REF_IN_N def's with Chenming
-SCHEDULED: <2024-11-22 Fri>
+** DONE Check serdes CLK_REF_IN_N def's with Chenming
+CLOSED: [2024-11-22 Fri 12:17] SCHEDULED: <2024-11-22 Fri>
+Sent t-msg to Chenming 22-nov
+Can we find a temp solution? Workaround? Disconnect, then connect to port?
+What is the port name ? Does the port exist? PCIE vs C2C?
+*** TODO Wait for CS response to solve issue
+SCHEDULED: <2024-11-25 Mon>
+
 ** TODO Change phy-ver flow to include $impl
 SCHEDULED: <2024-11-29 Fri>
-** TODO Remove run_settings from flow
-SCHEDULED: <2024-11-22 Fri>
 ** TODO How do we deal with 50 macro placement false warnings?
 SCHEDULED: <2024-11-28 Thu>
-** TODO Remove M2 from rails and only use M1 like STXMOD -> solve M2 color isse
-SCHEDULED: <2024-11-22 Fri>
+** DONE Remove M2 from rails and only use M1 like STXMOD -> solve M2 color isse
+CLOSED: [2024-11-22 Fri 11:50] SCHEDULED: <2024-11-22 Fri>
+Actually the same via is in STXMOD, so this serves no purpose.
 
+* Debug notes
+** CLK_REF_IN_N on c2c
+Serdes inserted in block#1 c2c_chi_asic...
+Driven by direct input (no bufs)
+phy_clk_ref_in_n is the port name
+This is driven by CTS-net on top-level
+E=EAST, W=WEST, placed e/w in G1 -> unconnected in PHY_TC

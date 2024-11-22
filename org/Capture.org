@@ -25,7 +25,11 @@ CLOSED: [2024-11-21 Thu 23:33]
 SCHEDULED: <2024-11-22 Fri>
   [2024-11-21 Thu]
   [[file:~/Projects/my-test/src/my_test/core.clj][file:~/Projects/my-test/src/my_test/core.clj]]
-** TODO Capture will link to line if selected
-SCHEDULED: <2024-11-22 Fri>
+** DONE Capture will link to line if selected
+CLOSED: [2024-11-22 Fri 11:53] SCHEDULED: <2024-11-22 Fri>
   [2024-11-21 Thu]
   [[file:~/init/init.el::define-key global-map "\C-cc" 'org-capture]]
+** TODO Insert subtask works ok, but doesnt inherit deadline
+SCHEDULED: <2024-11-29 Fri>
+  [2024-11-22 Fri]
+  [[file:~/init/init.el::(defun%20my-org-insert-sub-task%20()]]

@@ -1,3 +1,10 @@
 * Tasks
-** TODO Rerun with colors, check timing, IO etc
-SCHEDULED: <2024-11-22 Fri>
+** DONE [#A] Rerun with colors, check timing, IO etc
+CLOSED: [2024-11-22 Fri 16:19] SCHEDULED: <2024-11-22 Fri>
+Found issues with IO delay for in2out paths
+No problmens with bump clocks on serdes -> opposite of c2c
+** DONE [#A] Reduce IO for in2out paths (otherwise 0.7 total delay!)
+CLOSED: [2024-11-22 Fri 16:18] SCHEDULED: <2024-11-22 Fri>
+Two input signals where responsible for all in2out failings.
+** TODO Review pcie run - IO ok? reg2reg path?
+SCHEDULED: <2024-11-25 Mon>
