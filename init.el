@@ -6,7 +6,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
-(setenv "TERM" "xterm") ;# Avoid warning at start of shell
+(setq my-org-dirs (list "~/init/org" (if (file-directory-p "~/org") "~/org")))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
@@ -80,7 +80,7 @@
   (define-key global-map "\C-ca" 'org-agenda)
   (define-key global-map "\C-cc" 'org-capture)
   (setq org-default-notes-file "~/init/org/Capture.org")
-  (setq org-agenda-files '("~/init/org" "~/org"))
+  (setq org-agenda-files my-org-dirs)
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'current-window)
@@ -239,9 +239,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
- '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update))))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+ '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

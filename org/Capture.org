@@ -21,10 +21,6 @@ CLOSED: [2024-11-21 Thu 23:33]
  late-night lawrence ld-dark lethe marquardt retro-green xemacs tango-dark))
 
 (defun ek-theme (theme) (interactive) (mapcar #'disable-theme custom-enabled-themes) (load-theme theme t t) (enable-theme theme))]]
-** TODO Rewrite these to make a pipe of n-channels capable of sending a message and a countrer through to the end
-SCHEDULED: <2024-11-22 Fri>
-  [2024-11-21 Thu]
-  [[file:~/Projects/my-test/src/my_test/core.clj][file:~/Projects/my-test/src/my_test/core.clj]]
 ** DONE Capture will link to line if selected
 CLOSED: [2024-11-22 Fri 11:53] SCHEDULED: <2024-11-22 Fri>
   [2024-11-21 Thu]

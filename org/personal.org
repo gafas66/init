@@ -1,12 +1,15 @@
 * Learning tasks
+:PROPERTIES:
+:CATEGORY: EMACS
+:END:
 ** DONE Learn tasks in org-mode.
 CLOSED: [2024-11-21 Thu 11:28] SCHEDULED: <2024-11-20 Wed>
 - Practice various types of lists under tasks
 - This was M-RET, showing the same symbol at front
-** TODO [#C] Setup repl for clojurescript inside emacs
-SCHEDULED: <2024-11-22 Fri>
-** TODO Make sublist of actions for work
-SCHEDULED: <2024-11-22 Fri>
+** TODO Setup repl for clojurescript inside emacs
+SCHEDULED: <2024-11-23 Sat>
+** DONE Make sublist of actions for work
+CLOSED: [2024-11-22 Fri 20:13] SCHEDULED: <2024-11-22 Fri>
 ** DONE [#A] Reorganize github to isolate work-related out
 CLOSED: [2024-11-22 Fri 17:45] SCHEDULED: <2024-11-21 Thu>
 Have moved org files to org/ directory - still readable.
@@ -20,13 +23,77 @@ CLOSED: [2024-11-21 Thu 18:20] SCHEDULED: <2024-11-21 Thu>
 CLOSED: [2024-11-22 Fri 12:19] SCHEDULED: <2024-11-22 Fri>
 ** DONE Make more org-files?
 CLOSED: [2024-11-22 Fri 14:03] SCHEDULED: <2024-11-22 Fri>
-** TODO Learn about adding tags and setting deadlines
-SCHEDULED: <2024-11-22 Fri>
-** TODO [#A] Can any file be added to watch list?
-SCHEDULED: <2024-11-22 Fri>
+** DONE Learn about adding tags and setting deadlines
+CLOSED: [2024-11-22 Fri 23:25] SCHEDULED: <2024-11-22 Fri>
+** DONE [#A] Can any file be added to watch list?
+CLOSED: [2024-11-22 Fri 20:11] SCHEDULED: <2024-11-22 Fri>
 ** TODO How to be able to use useful keys in ansi-term?
-SCHEDULED: <2024-11-22 Fri>
-** TODO Check out diary/journal function
-SCHEDULED: <2024-11-22 Fri>
-** TODO [#A] Put vec stuff into one file, use tags to place on modules?
-SCHEDULED: <2024-11-22 Fri>
+SCHEDULED: <2024-11-23 Sat>
+** DONE Check out diary/journal function
+CLOSED: [2024-11-22 Fri 20:12] SCHEDULED: <2024-11-22 Fri>
+** TODO Rewrite these to make a pipe of n-channels capable of sending a message and a countrer through to the end
+SCHEDULED: <2024-11-23 Sat>
+  [2024-11-21 Thu]
+  [[file:~/Projects/my-test/src/my_test/core.clj][file:~/Projects/my-test/src/my_test/core.clj]]
+** DONE Practice table generation
+CLOSED: [2024-11-23 Sat 00:45] SCHEDULED: <2024-11-20 Wed> DEADLINE: <2024-11-25 Mon>
+
+* Learning tables
+
+** Movement and editing
+- Move a field:  S-left S-right
+- Move a column: M-left M-right
+- Move a row: M-up M-down
+- Delete a row: S-M-up
+- Add a row:    S-M-up
+- Delete a column: S-M-left
+- Add a column:    S-M-right
+- Add horizonal line below: C-c -
+
+| So here is the first cell                                 |                                                            |   |
+| So <tab> instead of return? No need to enter the sign ->  |                                                            |   |
+| Obviously not. So what if I want another horizontal cell? | I just start writing here? What about the two lines above? |   |
+| Ah they were auto filled out!                             |                                                            |   |
+| Lets see if we can crash it:                              | then there were three ...                                  |   |
+| So got an empty third column                              |                                                            |   |
+
+
+| Module | RTL | Synth    | PNR  | STA   | Calibre |
+|--------+-----+----------+------+-------+---------|
+| C2C    | ?   | Chenming | Erik | Erik  | Erik    |
+| PCIE   | ?   | Chenming | Erik | Erik  | Erik    |
+| DDR    | ?   | Chenming | Emil | Erik? | Emil    |
+| IO     | ?   | Chenming | Emil | Erik? | Emil    |
+| VEC    | ?   | Chenming | Erik | Erik  | Erik    |
+
+|-----------+-----------+-----------|
+| heading 1 | heading 2 | heading 3 |
+|-----------+-----------+-----------|
+|           |           |           |
+|-----------+-----------+-----------|
+|           |           |           |
+
+
+* FhG related                                                           :FhG:
+** VEC project
+:PROPERTIES:
+:CATEGORY: VEC
+:END:
+*** Description
+8 x RISC-V, PCIE interface, 2xLPDDR, 6 Chip-to-Chip (C2C)
+Internationl cooperation, EU-PILOT project, non-commercial
+*** Tasks and deadlines
+**** TODO [#A] Put vec stuff into one file, use tags to place on modules?
+SCHEDULED: <2024-11-25 Mon>
+**** TODO Set ideal nets on bumps and rerun                          :c2c:
+SCHEDULED: <2024-11-23 Sat>
+**** DONE Test if categories work?
+CLOSED: [2024-11-22 Fri 23:33] SCHEDULED: <2024-11-22 Fri>
+**** TODO Tapeout
+DEADLINE: <2025-04-30 Wed>
+**** TODO Cancelation 
+DEADLINE: <2025-03-20 Thu>
+**** TODO RTL finished
+DEADLINE: <2025-01-31 Fri>
+**** TODO Final SERDES from EXTOLL                              :c2c:pcie:
+DEADLINE: <2025-03-31 Mon>
