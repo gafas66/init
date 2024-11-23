@@ -11,7 +11,7 @@
 (setq my-org-dirs (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/personal.org.gpg" "~/init/org/vec.org.gpg"))
 
 ;; Exclude if at work
-(if (file-directory-p "/home/kofoed") (remove "~/init/org/other.org.gpg" my-org-dirs))
+(setq my-org-dirs (if (file-directory-p "/home/kofoed") (remove "~/init/org/other.org.gpg" my-org-dirs) my-org-dirs))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
@@ -252,9 +252,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update))
- '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+ '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update)))
+ '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
