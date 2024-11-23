@@ -85,8 +85,8 @@ Internationl cooperation, EU-PILOT project, non-commercial
 *** Tasks and deadlines
 **** TODO [#A] Put vec stuff into one file, use tags to place on modules?
 SCHEDULED: <2024-11-25 Mon>
-**** TODO Set ideal nets on bumps and rerun                          :c2c:
-SCHEDULED: <2024-11-23 Sat>
+**** DONE Set ideal nets on bumps and rerun                          :c2c:
+CLOSED: [2024-11-23 Sat 14:27] SCHEDULED: <2024-11-23 Sat>
 **** DONE Test if categories work?
 CLOSED: [2024-11-22 Fri 23:33] SCHEDULED: <2024-11-22 Fri>
 **** TODO Tapeout
