@@ -1,4 +1,4 @@
-* Learning tasks
+* Emacs tasks
 :PROPERTIES:
 :CATEGORY: EMACS
 :END:
@@ -6,8 +6,8 @@
 CLOSED: [2024-11-21 Thu 11:28] SCHEDULED: <2024-11-20 Wed>
 - Practice various types of lists under tasks
 - This was M-RET, showing the same symbol at front
-** TODO Setup repl for clojurescript inside emacs
-SCHEDULED: <2024-11-23 Sat>
+** DONE Setup repl for clojurescript inside emacs
+CLOSED: [2024-11-23 Sat 13:46] SCHEDULED: <2024-11-23 Sat>
 ** DONE Make sublist of actions for work
 CLOSED: [2024-11-22 Fri 20:13] SCHEDULED: <2024-11-22 Fri>
 ** DONE [#A] Reorganize github to isolate work-related out
@@ -38,9 +38,9 @@ SCHEDULED: <2024-11-23 Sat>
 ** DONE Practice table generation
 CLOSED: [2024-11-23 Sat 00:45] SCHEDULED: <2024-11-20 Wed> DEADLINE: <2024-11-25 Mon>
 
-* Learning tables
+** Learning tables
 
-** Movement and editing
+*** Movement and editing
 - Move a field:  S-left S-right
 - Move a column: M-left M-right
 - Move a row: M-up M-down
