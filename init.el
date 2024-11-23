@@ -6,7 +6,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
-(setq my-org-dirs (list "~/init/org" (if (file-directory-p "~/org") "~/org")))
+;(setq my-org-dirs (list "~/init/org" (if (file-directory-p "~/org") "~/org")))
+;(setq my-org-dirs (list "~/init/org"))
+(setq my-org-dirs (list  "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/personal.org.gpg"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
@@ -142,13 +144,13 @@
       (org-deadline nil parent-deadline))))
 (define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
 
-(global-unset-key [f1])
+;(global-unset-key [f1])
 (defhydra hydra-shell-stuff (:color blue)
   "Shells"
   ("s" shell                   "shell")
   ("a" (ansi-term "/bin/bash") "ansi-term")
   ("r" rename-buffer           "Rename buffer"))
-(global-set-key [f1] 'hydra-shell-stuff/body)
+(global-set-key [f2] 'hydra-shell-stuff/body)
 
 (global-set-key (kbd "C-'") 'erase-buffer)
 (global-set-key (kbd "C-x r p") 'replace-rectangle)
@@ -180,7 +182,9 @@
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Emacs shell setup
+
 (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
 (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
 (add-hook 'shell-mode-hook (lambda () (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
@@ -193,6 +197,12 @@
 (setq ansi-color-names-vector
       ["black" "tomato" "PaleGreen2" "gold1"
        "blue" "MediumOrchid1" "cyan" "white"])
+;; NOTE Fix ansi-term keys we want(!)
+(global-set-key (kbd "M-O") 'ace-window)
+;(define-key term-raw-map (kbd "M-0") 'treemacs-select-window))
+;(define-key term-raw-map (kbd "M-x") 'helm-M-x))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun ek-hi-set ()
   (interactive)
@@ -240,7 +250,8 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
- '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update)))
+ '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
