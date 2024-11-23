@@ -10,7 +10,7 @@
 ;(setq my-org-dirs (list "~/init/org"))
 (setq my-org-dirs (list
 		   "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/personal.org.gpg"
-		   "~/init/fhg-flow.org.gpg" "~/init/vec-c2c.org.gpg" "~/init/vec-c2c.org_archive.gpg" "~/init/vec-pcie.org.gpg" "~/init/vec-top.org.gpg"))
+		   "~/init/org/fhg-flow.org.gpg" "~/init/org/vec-c2c.org.gpg" "~/init/org/vec-c2c.org_archive.gpg" "~/init/org/vec-pcie.org.gpg" "~/init/org/vec-top.org.gpg"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
