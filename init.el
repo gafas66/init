@@ -137,7 +137,7 @@
       '(("t" "General task"       entry (file+regexp org-default-notes-file "Tasks") "* TODO %?\n  %i\n  %a")
 	("c" "C2C task"           entry (file+regexp "~/init/org/vec.org.gpg" "C2C.*" ) "* TODO %?\n  %i\n  %a")
 	("p" "PCIE task"          entry (file+regexp "~/init/org/vec.org.gpg" "PCIE.*") "* TODO %?\n  %i\n  %a")
-	("v" "VEC top-level task" entry (file+regexp "~/init/org/vec.org.gpg" "VEC.*" ) "* TODO %?\n  %i\n  %a")
+	("v" "VEC top-level task" entry (file+regexp "~/init/org/vec.org.gpg" "VEC Top.*" ) "* TODO %?\n  %i\n  %a")
 	("e" "Emacs task"         entry (file+headline "~/init/org/home.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
 	("l" "Clojure task"       entry (file+headline "~/init/org/home.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
         ("j" "Journal"            entry (file+datetree "~/init/org/journal.org.gpg")
