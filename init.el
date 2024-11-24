@@ -15,6 +15,7 @@
 ;; Setup ELPA package system
 
 (add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
+;(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/lisp") ; NOTE Downloaded org-mode, latest v9.8 FIXME Doesnt work(!)
 (require 'package)
 
 (when (< emacs-major-version 27)
@@ -23,11 +24,11 @@
   (add-to-list 'package-archives '("nongnu" . "http://elpa.nongnu.org/nongnu/") t))
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
-(setq package-check-signature nil) ; KLUDGE(ESK) In case of bad signature? 'allow-unsigned is default
+;(setq package-check-signature nil) ; KLUDGE(ESK) In case of bad signature? 'allow-unsigned is default
 
 (package-initialize)
 ;; NOTE Comment out refresh when debugging/expanding/editing this file
-;(package-refresh-contents)
+(package-refresh-contents)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
@@ -331,10 +332,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
  '(package-selected-packages
-   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
- '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
+   (quote
+    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
+ '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

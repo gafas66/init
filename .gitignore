@@ -7,3 +7,4 @@
 .emacs.d/transient
 .emacs.d/ido.last
 # End
+.gnupg/random_seed
