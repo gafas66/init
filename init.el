@@ -140,7 +140,7 @@
 	("p" "PCIE task"          entry (file+regexp "~/init/org/vec.org.gpg" "PCIE.*") "* TODO %?\n  %i\n  %a")
 	("e" "Emacs task"         entry (file+headline "~/init/org/home.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
 	("l" "Clojure task"       entry (file+headline "~/init/org/home.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
-        ("j" "Journal"            entry (file+datetree "~/init/org/journal.org")
+        ("j" "Journal"            entry (file+datetree "~/init/org/journal.org.gpg")
          "* %?\nEntered on %U\n  %i\n  %a")))
 
 ;(global-set-key (kbd "C-c o a") '(org-agenda))
