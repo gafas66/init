@@ -138,8 +138,8 @@
       '(("v" "VEC top-level task" entry (file+regexp "~/init/org/vec.org.gpg" "VEC.*" ) "* TODO %?\n  %i\n  %a")
 	("c" "C2C task"           entry (file+regexp "~/init/org/vec.org.gpg" "C2C.*" ) "* TODO %?\n  %i\n  %a")
 	("p" "PCIE task"          entry (file+regexp "~/init/org/vec.org.gpg" "PCIE.*") "* TODO %?\n  %i\n  %a")
-	("e" "Emacs task"         entry (file+headline "~/init/org/personal.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
-	("l" "Clojure task"       entry (file+headline "~/init/org/personal.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
+	("e" "Emacs task"         entry (file+headline "~/init/org/home.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
+	("l" "Clojure task"       entry (file+headline "~/init/org/home.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
         ("j" "Journal"            entry (file+datetree "~/init/org/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a")))
 
@@ -332,12 +332,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   (quote
-    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
