@@ -61,7 +61,11 @@
   :init (setq tab-bar-tab-name-function nil) ; KLUDGE this is undefined for some reason
   :ensure t
   :bind
-  (("M-x" . helm-M-x)))
+  (("M-x"     . helm-M-x)
+   ("M-y"     . helm-show-kill-ring)
+   ("C-x b"   . helm-mini)
+   ("C-x C-f" . helm-find-files)
+   ("M-s o"   . helm-occur)))
 
 (use-package fic-mode :ensure t)
 (setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
@@ -84,7 +88,7 @@
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
   (define-key global-map "\C-cc" 'org-capture)
-  (setq org-default-notes-file "~/init/org/Capture.org")
+  (setq org-default-notes-file "~/init/org/Capture.org.gpg")
   (setq org-agenda-files my-org-dirs)
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
@@ -128,6 +132,12 @@
   ("f" follow-mode               "follow"       :column "Toggle")
   ("v" visual-line-mode          "visual-line"  :column "Toggle")
   ("w" whitespace-mode           "whitespace"   :column "Toggle")
+  
+  ("m" helm-all-mark-rings       "mark-rings"   :column "Helm")
+  ("r" helm-register             "registers"    :column "Helm")
+  ("p" helm-top                  "top"          :column "Helm")
+  ("o" helm-colors               "Pick color"   :column "Helm")
+
   ("q" nil                       "Quit menu" :color red :column nil))
 (global-set-key (kbd "C-c h") 'hydra-appearance/body)
 
@@ -201,9 +211,9 @@
       ["black" "tomato" "PaleGreen2" "gold1"
        "blue" "MediumOrchid1" "cyan" "white"])
 ;; NOTE Fix ansi-term keys we want(!)
-(global-set-key (kbd "M-O") 'ace-window)
-;(define-key term-raw-map (kbd "M-0") 'treemacs-select-window))
-;(define-key term-raw-map (kbd "M-x") 'helm-M-x))
+(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-o") 'ace-window)))
+(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-0") 'treemacs-select-window)))
+(add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-x") 'helm-M-x)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -252,10 +262,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
- '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+ '(package-selected-packages '(cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
