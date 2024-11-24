@@ -6,12 +6,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (setq is-linux (if (string= system-type "gnu/linux") t nil))
-;(setq my-org-dirs (list "~/init/org" (if (file-directory-p "~/org") "~/org")))
-;(setq my-org-dirs (list "~/init/org"))
-(setq my-org-dirs (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/personal.org.gpg" "~/init/org/vec.org.gpg"))
+(setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
 
 ;; Exclude if at work
-(setq my-org-dirs (if (file-directory-p "/home/kofoed") (remove "~/init/org/other.org.gpg" my-org-dirs) my-org-dirs))
+(setq my-org-files (if (file-directory-p "/home/kofoed") (remove "~/init/org/other.org.gpg" my-org-files) my-org-files))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup ELPA package system
@@ -28,7 +26,8 @@
 (setq package-check-signature nil) ; KLUDGE(ESK) In case of bad signature? 'allow-unsigned is default
 
 (package-initialize)
-(package-refresh-contents)
+;; NOTE Comment out refresh when debugging/expanding/editing this file
+;(package-refresh-contents)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
@@ -63,7 +62,7 @@
   :bind
   (("M-x"     . helm-M-x)
    ("M-y"     . helm-show-kill-ring)
-   ("C-x b"   . helm-mini)
+   ("C-x C-b" . helm-mini)
    ("C-x C-f" . helm-find-files)
    ("M-s o"   . helm-occur)))
 
@@ -88,8 +87,9 @@
   (define-key global-map "\C-cl" 'org-store-link)
   (define-key global-map "\C-ca" 'org-agenda)
   (define-key global-map "\C-cc" 'org-capture)
+  ;(setq org-directory "~/init/org")
   (setq org-default-notes-file "~/init/org/Capture.org.gpg")
-  (setq org-agenda-files my-org-dirs)
+  (setq org-agenda-files my-org-files)
   (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
   (setq org-hide-emphasis-markers t)
   (setq org-agenda-window-setup 'current-window)
@@ -98,15 +98,56 @@
   ;(setq org-agenda-skip-function-global '(org-agenda-skip-entry-if 'todo 'done))
   (add-hook 'org-mode-hook 'visual-line-mode))
 
+;; Below allows refile upto second heading (default only first level)
+(setq org-refile-targets '((nil :maxlevel . 9)
+			   (org-agenda-files :maxlevel . 9)))
+
+(setq org-todo-keywords
+      '((sequence "TODO" "NEXT" "|" "CANCELLED" "DONE")))
+
+(use-package helm-org
+  :ensure t
+  ;:config
+  ;(add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
+  ;(add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))
+  )
+(add-hook 'helm-mode-hook
+	  (lambda ()
+	    (add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
+	    (add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))))
+
 (use-package magit
   :ensure t
   :bind (("C-x C-g" . magit-status)))
 
+(use-package major-mode-hydra
+  :ensure t
+  :bind
+  ("M-SPC" . major-mode-hydra)) ;Can we make this key work?
+
+ 
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
+
+(setq org-capture-templates nil)
+(setq org-capture-templates
+      '(("v" "VEC top-level task" entry (file+regexp "~/init/org/vec.org.gpg" "VEC.*" ) "* TODO %?\n  %i\n  %a")
+	("c" "C2C task"           entry (file+regexp "~/init/org/vec.org.gpg" "C2C.*" ) "* TODO %?\n  %i\n  %a")
+	("p" "PCIE task"          entry (file+regexp "~/init/org/vec.org.gpg" "PCIE.*") "* TODO %?\n  %i\n  %a")
+	("e" "Emacs task"         entry (file+headline "~/init/org/personal.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
+	("l" "Clojure task"       entry (file+headline "~/init/org/personal.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
+        ("j" "Journal"            entry (file+datetree "~/init/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
+
+;(global-set-key (kbd "C-c o a") '(org-agenda))
+(setq org-agenda-custom-commands
+      '(("u" "Untagged tasks" tags-todo "-{.*}")))
+;	("d" "Daily Agenda"
+;	 ((agenda "" ((org-agenda-span 'day)
+;		      (org-deadline-warning-days 7)))))))
 
 (setq good-themes
       '(goldenrod classic cobalt dark-blue2 desert digital-ofs1 euphoria feng-shui fischmeister
@@ -141,6 +182,34 @@
   ("q" nil                       "Quit menu" :color red :column nil))
 (global-set-key (kbd "C-c h") 'hydra-appearance/body)
 
+(major-mode-hydra-define emacs-lisp-mode nil
+  ("Eval"
+   (("b" eval-buffer "buffer")
+    ("e" eval-defun "defun")
+    ("r" eval-region "region")
+    ("q" nil "quit"))
+   "REPL"
+   (("I" ielm "ielm"))
+   "Test"
+   (("t" ert "prompt")
+    ("T" (ert t) "all")
+    ("F" (ert :failed) "failed"))
+   "Doc"
+   (("d" describe-foo-at-point "thing-at-pt")
+    ("f" describe-function "function")
+    ("v" describe-variable "variable")
+    ("i" info-lookup-symbol "info lookup"))))
+
+(major-mode-hydra-define clojure-mode nil
+  ("Connect"
+   (("j" cider-jack-in      "jack-in")
+    ("J" cider-jack-in-cljs "jack-in-cljs")
+    ("c" nil "TBD connect")
+    ("R" nil "TBD reconnect")
+    ("Q" nil "TBD disconnect")
+    ("q" nil "quit"))))
+
+;; What does the below function do?
 (defun org-agenda-cts ()
   (and (eq major-mode 'org-agenda-mode)
        (let ((args (get-text-property
@@ -262,10 +331,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
- '(package-selected-packages (quote (cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+ '(package-selected-packages
+   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
