@@ -25,25 +25,27 @@ alias pp=popd
 stx() { cat ~/.stxmod | xargs egrep "$1" 2>/dev/null ; }
 
 alias mt="find . -newermt"
+alias d="for d in \`dirs\`;do echo \$d;done"
 
 # Git shorts
 alias gs='git status'
 alias gc='git commit -a -m "General Update"'
-alias gpl='git pull'
-alias gph='git push'
+#alias gpl='git pull'
+#alias gph='git push'
 alias gpr='git config --get remote.origin.url'
 alias gu='cd ../c2*;git pull;cd -;cd ../vec*;git pull;cd -;cd ../pci*;git pull ;cd -'
 
 # Fraunhofer
-alias cadence="/home/bur/bin/cds/cadence"
-alias lic_in_use="/home/bur/bin/cds/cadence lic_in_use"
-alias lic_available="/home/bur/bin/cds/cadence lic_available"
-alias lic_expire="/home/bur/bin/cds/cadence lic_expire"
+#alias cadence="/home/bur/bin/cds/cadence"
+#alias lic_in_use="/home/bur/bin/cds/cadence lic_in_use"
+#alias lic_available="/home/bur/bin/cds/cadence lic_available"
+#alias lic_expire="/home/bur/bin/cds/cadence lic_expire"
 
 # Current project
 alias vnc='vncserver -nolisten local -geometry 3840x2160'
 #alias  w='cd /home/EPI/project/EUPILOT/VEC/usr/esk/pnr_innovus/micro_tile_pcie_7p5T_r06_v2'
 alias  w='source /home/kofoed/bin/w'
+
 
 # End of file
 ################################################################################

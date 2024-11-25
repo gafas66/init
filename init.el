@@ -5,7 +5,7 @@
 ;; End:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq is-linux (if (string= system-type "gnu/linux") t nil))
+(setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
 (setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
 
 ;; Exclude if at work
@@ -28,7 +28,7 @@
 
 (package-initialize)
 ;; NOTE Comment out refresh when debugging/expanding/editing this file
-(package-refresh-contents)
+;(package-refresh-contents)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Install packages
@@ -135,8 +135,8 @@
 (setq org-capture-templates nil)
 (setq org-capture-templates
       '(("t" "General task"       entry (file+regexp org-default-notes-file "Tasks") "* TODO %?\n  %i\n  %a")
-	("c" "C2C task"           entry (file+regexp "~/init/org/vec.org.gpg" "C2C.*" ) "* TODO %?\n  %i\n  %a")
-	("p" "PCIE task"          entry (file+regexp "~/init/org/vec.org.gpg" "PCIE.*") "* TODO %?\n  %i\n  %a")
+	("c" "C2C task"           entry (file+headline "~/init/org/vec.org.gpg" "C2C tasks" ) "* TODO %?\n  %i\n  %a")
+	("p" "PCIE task"          entry (file+headline "~/init/org/vec.org.gpg" "PCIE tasks") "* TODO %?\n  %i\n  %a")
 	("v" "VEC top-level task" entry (file+regexp "~/init/org/vec.org.gpg" "VEC Top.*" ) "* TODO %?\n  %i\n  %a")
 	("e" "Emacs task"         entry (file+headline "~/init/org/home.org.gpg" "Emacs Tasks") "* TODO %?\n  %i\n  %a")
 	("l" "Clojure task"       entry (file+headline "~/init/org/home.org.gpg" "Clojure Tasks") "* TODO %?\n  %i\n  %a")
@@ -170,6 +170,7 @@
 
   ("l" display-line-numbers-mode "line-numbers" :column "Toggle")
   ("c" column-number-mode        "columns"      :column "Toggle")
+  ("g" global-hl-line-mode       "hl-line"      :column "Toggle")
   ("t" toggle-truncate-lines     "truncate"     :column "Toggle")
   ("f" follow-mode               "follow"       :column "Toggle")
   ("v" visual-line-mode          "visual-line"  :column "Toggle")
@@ -209,14 +210,6 @@
     ("R" nil "TBD reconnect")
     ("Q" nil "TBD disconnect")
     ("q" nil "quit"))))
-
-;; What does the below function do?
-(defun org-agenda-cts ()
-  (and (eq major-mode 'org-agenda-mode)
-       (let ((args (get-text-property
-                    (min (1- (point-max)) (point))
-                    'org-last-args)))
-         (nth 2 args))))
 
 (defun my-org-insert-sub-task ()
   (interactive)
@@ -261,6 +254,7 @@
 ;(scroll-bar-mode -1)
 
 (global-hi-lock-mode 1)
+(global-hl-line-mode)
 (show-paren-mode t)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
@@ -332,10 +326,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
  '(package-selected-packages
-   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
- '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
+   (quote
+    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
+ '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

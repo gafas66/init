@@ -6,6 +6,11 @@ source $HOME/.alias_local
 
 export PATH=${HOME}/bin:${HOME}/usr/local/bin:${PATH}
 
+export CDPATH=
+export CDPATH="$CDPATH:/home/EPI/project/EUPILOT/VEC/usr/esk"
+export CDPATH="$CDPATH:/home/EPI/project/STXMOD/users"
+alias c="echo \$CDPATH | sed 's/:/\n/g'"
+
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name  "ESK"
 
