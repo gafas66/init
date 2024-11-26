@@ -11,6 +11,8 @@ export CDPATH="$CDPATH:/home/EPI/project/EUPILOT/VEC/usr/esk"
 export CDPATH="$CDPATH:/home/EPI/project/STXMOD/users"
 alias c="echo \$CDPATH | sed 's/:/\n/g'"
 
+module use /home/kofoed/modulefiles
+
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name  "ESK"
 
