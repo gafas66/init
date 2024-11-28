@@ -8,10 +8,10 @@
 
 ;; From git clone --depth 1 https://code.orgmode.org/bzg/org-mode.git
 ;; cd org-mode ; make autoloads
-(setq my-src "~/src/org-mode/lisp")
-(when (file-directory-p my-src)
-  (add-to-list 'load-path my-src)
-  (require 'org-loaddefs))
+;(setq my-src "~/src/org-mode/lisp")
+;(when (file-directory-p my-src)
+;  (add-to-list 'load-path my-src)
+;  (require 'org-loaddefs))
 
 ;;
 (setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
@@ -101,6 +101,7 @@
   (setq org-log-done 'time)
   (setq org-return-follows-link t)
   (add-hook 'org-mode-hook 'org-indent-mode)
+  (add-hook 'org-mode-hook 'hl-line-mode)
   (define-key org-mode-map (kbd "C-c <up>") 'org-priority-up)
   (define-key org-mode-map (kbd "C-c <down>") 'org-priority-down)
   (define-key global-map "\C-cl" 'org-store-link)
@@ -186,18 +187,19 @@
   ("9" (ek-theme 'taming-mr-arneson) "taming-mr-arneson" :column "Theme")
   ("0" (ek-theme 'light-blue)        "light-blue       " :column "Theme")
 
-  ("l" display-line-numbers-mode "line-numbers" :column "Toggle")
-  ("c" column-number-mode        "columns"      :column "Toggle")
-  ("g" global-hl-line-mode       "hl-line"      :column "Toggle")
-  ("t" toggle-truncate-lines     "truncate"     :column "Toggle")
-  ("f" follow-mode               "follow"       :column "Toggle")
-  ("v" visual-line-mode          "visual-line"  :column "Toggle")
-  ("w" whitespace-mode           "whitespace"   :column "Toggle")
+  ("l" display-line-numbers-mode "line-numbers"   :column "Toggle")
+  ("c" column-number-mode        "columns"        :column "Toggle")
+  ("g" hl-line-mode              "hl-line"        :column "Toggle")
+  ("G" global-hl-line-mode       "hl-line GLOBAL" :column "Toggle")
+  ("t" toggle-truncate-lines     "truncate"       :column "Toggle")
+  ("f" follow-mode               "follow"         :column "Toggle")
+  ("v" visual-line-mode          "visual-line"    :column "Toggle")
+  ("w" whitespace-mode           "whitespace"     :column "Toggle")
   
-  ("m" helm-all-mark-rings       "mark-rings"   :column "Helm")
-  ("r" helm-register             "registers"    :column "Helm")
-  ("p" helm-top                  "top"          :column "Helm")
-  ("o" helm-colors               "Pick color"   :column "Helm")
+  ("m" helm-all-mark-rings       "mark-rings"     :column "Helm")
+  ("r" helm-register             "registers"      :column "Helm")
+  ("p" helm-top                  "top"            :column "Helm")
+  ("o" helm-colors               "Pick color"     :column "Helm")
 
   ("q" nil                       "Quit menu" :color red :column nil))
 (global-set-key (kbd "C-c h") 'hydra-appearance/body)
@@ -344,10 +346,12 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
+   (quote
+    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
  '(package-selected-packages
-   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
- '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
+   (quote
+    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
+ '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

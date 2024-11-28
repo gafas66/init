@@ -25,7 +25,7 @@ alias pp=popd
 stx() { cat ~/.stxmod | xargs egrep "$1" 2>/dev/null ; }
 
 alias mt="find . -newermt"
-alias d="for d in \`dirs\`;do echo \$d;done"
+alias d="dirs -v"
 
 # Git shorts
 alias gs='git status'
@@ -37,9 +37,9 @@ alias gu='cd ../c2*;git pull;cd -;cd ../vec*;git pull;cd -;cd ../pci*;git pull ;
 
 # Fraunhofer
 #alias cadence="/home/bur/bin/cds/cadence"
-#alias lic_in_use="/home/bur/bin/cds/cadence lic_in_use"
-#alias lic_available="/home/bur/bin/cds/cadence lic_available"
-#alias lic_expire="/home/bur/bin/cds/cadence lic_expire"
+alias lic_in_use="/home/bur/bin/cds/cadence lic_in_use"
+alias lic_available="/home/bur/bin/cds/cadence lic_available"
+alias lic_expire="/home/bur/bin/cds/cadence lic_expire"
 
 # Current project
 alias vnc='vncserver -nolisten local -geometry 3840x2160'
