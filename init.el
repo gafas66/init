@@ -4,7 +4,16 @@
 ;; comment-column: 1
 ;; End:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Use absolute latest org-mode
 
+;; From git clone --depth 1 https://code.orgmode.org/bzg/org-mode.git
+;; cd org-mode ; make autoloads
+(setq my-src "~/src/org-mode/lisp")
+(when (file-directory-p my-src)
+  (add-to-list 'load-path my-src)
+  (require 'org-loaddefs))
+
+;;
 (setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
 (setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
 
@@ -34,6 +43,14 @@
 ;; Install packages
 
 (package-install 'use-package)
+
+;;; Load org mode early to ensure that the orgmode ELPA version gets picked up, not the
+;;; shipped version
+;(use-package org-plus-contrib
+;  :pin org)
+;(use-package org
+;  :ensure org-plus-contrib
+;  :pin org)
 
 (use-package bind-key :ensure t)
 (use-package cider :ensure t)
@@ -327,12 +344,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   (quote
-    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '(major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
