@@ -275,7 +275,6 @@
 ;(scroll-bar-mode -1)
 
 (global-hi-lock-mode 1)
-(global-hl-line-mode)
 (show-paren-mode t)
 (put 'erase-buffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
