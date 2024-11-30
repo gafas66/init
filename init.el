@@ -102,6 +102,7 @@
   (setq org-return-follows-link t)
   (add-hook 'org-mode-hook 'org-indent-mode)
   (add-hook 'org-mode-hook 'hl-line-mode)
+  (add-hook 'org-agenda-mode-hook 'hl-line-mode)
   (define-key org-mode-map (kbd "C-c <up>") 'org-priority-up)
   (define-key org-mode-map (kbd "C-c <down>") 'org-priority-down)
   (define-key global-map "\C-cl" 'org-store-link)
@@ -116,7 +117,7 @@
   (setq org-agenda-restore-windows-after-quit t)
   (setq org-agenda-skip-scheduled-if-done t)
   ;(setq org-agenda-skip-function-global '(org-agenda-skip-entry-if 'todo 'done))
-  (add-hook 'org-mode-hook 'visual-line-mode))
+  )
 
 ;; Below allows refile upto second heading (default only first level)
 (setq org-refile-targets '((nil :maxlevel . 9)

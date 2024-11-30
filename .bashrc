@@ -37,13 +37,13 @@ export __YELLOW="\[\033[1;33m\]"
 export __WHITE="\[\033[1;37m\]"
 export __RESTORE="\[\033[0m\]" #0m restores to the terminal's default colour
 
-PROMPT_DIRTRIM=1
+#PROMPT_DIRTRIM=1
 PROMPT_COMMAND='\
 BRANCH="";\
 if git branch &> /dev/null; then \
     BRANCH="git:$(git branch 2> /dev/null | grep \* | cut -d " " -f 2)";\
 fi;\
-PS1="\u@\h ${__GREEN}BASH ${__YELLOW}${BRANCH}${__RESTORE} \w \$ ";'
+PS1="${__GREEN}\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n\h $ ";'
 
 # End
 ################################################################################
