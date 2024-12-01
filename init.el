@@ -119,6 +119,12 @@
 
 (when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 
+; NOTE - can't see any difference
+;(use-package spaceline
+;  :ensure t
+;  :config
+;  (spaceline-spacemacs-theme))
+
 (use-package helm
   :init (setq tab-bar-tab-name-function nil) ; KLUDGE this is undefined for some reason
   :ensure t
@@ -307,6 +313,11 @@
   ("u" (markerpen-mark-region 5)  "underline"))
 (global-set-key (kbd "C-,") 'hydra-comma/body)
 
+;; Now shift l/r/u/d will move to that window (not start selection)
+;; FIXME Crashes with org-mode date-selector
+;(when (fboundp 'windmove-default-keybindings)
+;  (windmove-default-keybindings))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Various
 
@@ -390,12 +401,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   (quote
-    (all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '(spaceline all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
