@@ -107,6 +107,13 @@
   :if (display-graphic-p))
 ; NOTE Run all-the-icons-install-fonts
 
+(use-package dimmer
+  :ensure t
+  :config
+  (dimmer-configure-which-key)
+  (dimmer-configure-helm)
+  (dimmer-mode t))
+
 (use-package eat
   :ensure t)
 ;  :bind
@@ -403,7 +410,7 @@
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   '(spaceline all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+   '(dimmer spaceline all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
  '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
