@@ -64,14 +64,58 @@
 (require 'my-auto-insert)          ;My auto-comments and headings
 (require 'markerpen)		   ;Allow changing selected text color; NOTE not in any archive
 
-(use-package tabbar
+;(use-package tabbar
+;  :ensure t
+;  :config (tabbar-mode)
+;  (set-face-attribute 'tabbar-default    nil :background "gray60")
+;  (set-face-attribute 'tabbar-unselected nil :background "gray85"  :foreground "gray30" :box nil)
+;  (set-face-attribute 'tabbar-selected   nil :background "yellow" :foreground "blue"  :box nil :weight 'bold)
+;  (set-face-attribute 'tabbar-button     nil :box '(:line-width 1 :color "gray72" :style released-button))
+;  (set-face-attribute 'tabbar-separator  nil :height 0.7))
+
+(use-package centaur-tabs
   :ensure t
-  :config (tabbar-mode)
-  (set-face-attribute 'tabbar-default    nil :background "gray60")
-  (set-face-attribute 'tabbar-unselected nil :background "gray85"  :foreground "gray30" :box nil)
-  (set-face-attribute 'tabbar-selected   nil :background "yellow" :foreground "blue"  :box nil :weight 'bold)
-  (set-face-attribute 'tabbar-button     nil :box '(:line-width 1 :color "gray72" :style released-button))
-  (set-face-attribute 'tabbar-separator  nil :height 0.7))
+  :demand
+  :config
+  (centaur-tabs-mode 1)
+  ;(setq centaur-tabs-height 32) ; Does not affect font or icon
+  ;(centaur-tabs-headline-match)
+  ;(setq centaur-tabs-style "bar")
+  (setq centaur-tabs-set-bar 'over)
+  ;(centaur-tabs-change-fonts "arial" 160) 
+  (setq centaur-tabs-set-icons t)
+  (setq centaur-tabs-icon-type 'all-the-icons)
+  ;(setq centaur-tabs-plain-icons t) ; Replacing icons!
+  ;(setq centaur-tabs-modified-marker t)
+  (defun centaur-tabs-buffer-groups ()
+    "Use as few groups as possible."
+    (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
+                 (cond ((string-equal "eglot" (downcase (substring (buffer-name) 1 6)))
+                        "Eglot")
+                       (t
+                        "Tools")))
+                ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
+                 "Magit")
+                (t
+                 "Default"))))
+  :bind
+  ("C-<left>" . centaur-tabs-backward)
+  ("C-<right>" . centaur-tabs-forward))
+
+(use-package all-the-icons
+  :ensure t
+  :if (display-graphic-p))
+; NOTE Run all-the-icons-install-fonts
+
+(use-package eat
+  :ensure t)
+;  :bind
+;  (("M-o" ace-window)))
+
+(use-package avy
+  :ensure t
+  :bind
+  (("C-:" . 'avy-goto-char-2)))
 
 (when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 
@@ -346,12 +390,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   (quote
-    (major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '(all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
