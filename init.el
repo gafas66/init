@@ -24,6 +24,7 @@
 ;; Setup ELPA package system
 
 (add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
+(add-to-list 'load-path "~/src/all-the-icons-dired") ; NOTE My local lisps
 ;(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/lisp") ; NOTE Downloaded org-mode, latest v9.8 FIXME Doesnt work(!)
 (require 'package)
 
@@ -107,13 +108,13 @@
   :if (display-graphic-p))
 ; NOTE Run all-the-icons-install-fonts
 
-(use-package dimmer
-  :ensure t
-  :config
-  (dimmer-configure-which-key)
-  (dimmer-configure-helm)
-  (setq dimmer-fraction 0.2)
-  (dimmer-mode t))
+;(use-package dimmer
+;  :ensure t
+;  :config
+;  (dimmer-configure-which-key)
+;  (dimmer-configure-helm)
+;  (setq dimmer-fraction 0.2)
+;  (dimmer-mode t))
 
 (use-package eat
   :ensure t)
@@ -204,13 +205,19 @@
   :bind
   ("M-SPC" . major-mode-hydra)) ;Can we make this key work?
 
+(load "all-the-icons-dired")
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+;(use-package origami :ensure t) ; No keybindings?
+
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Key bindings
 
-(setq org-capture-templates nil)
+(setq outline-minor-mode-cycle t)
+
 (setq org-capture-templates
       '(("t" "General task"       entry (file+regexp org-default-notes-file "Tasks") "* TODO %?\n  %i\n  %a")
 	("c" "C2C task"           entry (file+headline "~/init/org/vec.org.gpg" "C2C tasks" ) "* TODO %?\n  %i\n  %a")
@@ -409,12 +416,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default)))
+   '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   (quote
-    (dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update)))
- '(safe-local-variable-values (quote ((epa-file-encrypt-to ekofoed@gmail\.com)))))
+   '(use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+ '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
