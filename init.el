@@ -6,14 +6,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Use absolute latest org-mode
 
-;; From git clone --depth 1 https://code.orgmode.org/bzg/org-mode.git
-;; cd org-mode ; make autoloads
-;(setq my-src "~/src/org-mode/lisp")
-;(when (file-directory-p my-src)
-;  (add-to-list 'load-path my-src)
-;  (require 'org-loaddefs))
-
-;;
 (setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
 (setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
 
@@ -25,7 +17,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
 (add-to-list 'load-path "~/src/all-the-icons-dired") ; NOTE My local lisps
-;(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/lisp") ; NOTE Downloaded org-mode, latest v9.8 FIXME Doesnt work(!)
+
 (require 'package)
 
 (when (< emacs-major-version 27)
@@ -44,19 +36,11 @@
 ;; Install packages
 
 (package-install 'use-package)
+(setq use-package-always-ensure t)
 
-;;; Load org mode early to ensure that the orgmode ELPA version gets picked up, not the
-;;; shipped version
-;(use-package org-plus-contrib
-;  :pin org)
-;(use-package org
-;  :ensure org-plus-contrib
-;  :pin org)
-
-(use-package bind-key :ensure t)
-(use-package cider :ensure t)
+(use-package bind-key)
+(use-package cider)
 (use-package color-theme-modern
-  :ensure t
   :config
   (setq d-t (if t 'goldenrod 'wheat))
   (load-theme d-t t t)
@@ -67,7 +51,6 @@
 
 (if (< emacs-major-version 27)
     (use-package tabbar
-      :ensure t
       :config (tabbar-mode)
       (set-face-attribute 'tabbar-default    nil :background "gray60")
       (set-face-attribute 'tabbar-unselected nil :background "gray85"  :foreground "gray30" :box nil)
@@ -75,7 +58,6 @@
       (set-face-attribute 'tabbar-button     nil :box '(:line-width 1 :color "gray72" :style released-button))
       (set-face-attribute 'tabbar-separator  nil :height 0.7))
   (use-package centaur-tabs
-    :ensure t
     :demand
     :config
     (centaur-tabs-mode 1)
@@ -104,25 +86,21 @@
     ("C-<right>" . centaur-tabs-forward)))
   
 (use-package all-the-icons
-  :ensure t
   :if (display-graphic-p))
 ; NOTE Run all-the-icons-install-fonts
 
-;(use-package dimmer
-;  :ensure t
-;  :config
-;  (dimmer-configure-which-key)
-;  (dimmer-configure-helm)
-;  (setq dimmer-fraction 0.2)
-;  (dimmer-mode t))
+(use-package dimmer
+  :config
+  (dimmer-configure-which-key)
+  (dimmer-configure-helm)
+  (setq dimmer-fraction 0.2)
+  (dimmer-mode t))
 
-(use-package eat
-  :ensure t)
+(use-package eat)
 ;  :bind
 ;  (("M-o" ace-window)))
 
 (use-package avy
-  :ensure t
   :bind
   (("C-:" . 'avy-goto-char-2)))
 
@@ -136,7 +114,6 @@
 
 (use-package helm
   :init (setq tab-bar-tab-name-function nil) ; KLUDGE this is undefined for some reason
-  :ensure t
   :bind
   (("M-x"     . helm-M-x)
    ("M-y"     . helm-show-kill-ring)
@@ -150,7 +127,6 @@
 (setq fic-highlighted-words '("FIXME" "TODO" "NOTE" "KLUDGE" "BUG"))
 
 (use-package treemacs
-  :ensure t
   :bind (("M-0" . treemacs-select-window)
 	 ("M-o" . ace-window)))
 
@@ -186,7 +162,6 @@
       '((sequence "TODO" "WAIT" "|" "CANCELLED" "DONE")))
 
 (use-package helm-org
-  :ensure t
   ;:config
   ;(add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
   ;(add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))
@@ -197,11 +172,9 @@
 	    (add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))))
 
 (use-package magit
-  :ensure t
   :bind (("C-x C-g" . magit-status)))
 
 (use-package major-mode-hydra
-  :ensure t
   :bind
   ("M-SPC" . major-mode-hydra)) ;Can we make this key work?
 
@@ -209,6 +182,11 @@
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
 
 ;(use-package origami :ensure t) ; No keybindings?
+
+;; Occurence using helm-swoop
+(use-package helm-swoop
+  :bind
+  (("M-i" . helm-swoop)))
 
 ;;; Done installing packages
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -228,7 +206,6 @@
         ("j" "Journal"            entry (file+datetree "~/init/org/journal.org.gpg")
          "* %?\nEntered on %U\n%i\n  %a")))
 
-;(global-set-key (kbd "C-c o a") '(org-agenda))
 (setq org-agenda-custom-commands
       '(("u" "Untagged tasks" tags-todo "-{.*}")))
 ;	("d" "Daily Agenda"
@@ -418,7 +395,7 @@
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   '(use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+   '(helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
  '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
