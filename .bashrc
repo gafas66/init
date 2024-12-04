@@ -18,7 +18,10 @@ git config --global user.name  "ESK"
 
 # NOTE Avoid silly warnings for commands in need of proper terminal
 [[ -z ${INSIDE_EMACS+x} ]] || x=$TERM && export TERM=eterm-color
-module load prj/vec/1
+if command -v module 2>&1 > /dev/null
+   then
+       module load prj/vec/1
+fi
 [[ -z ${INSIDE_EMACS+x} ]] || export TERM=$x && unset x
 
 export __RED="\[\033[0;31m\]"
@@ -43,7 +46,7 @@ BRANCH="";\
 if git branch &> /dev/null; then \
     BRANCH="git:$(git branch 2> /dev/null | grep \* | cut -d " " -f 2)";\
 fi;\
-PS1="${__GREEN}\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n\h $ ";'
+PS1="\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n\h $ ";'
 
 # End
 ################################################################################

@@ -60,7 +60,7 @@
   (use-package centaur-tabs
     :demand
     :config
-    (centaur-tabs-mode 1)
+    (centaur-tabs-mode t)
 					;(setq centaur-tabs-height 32) ; Does not affect font or icon
 					;(centaur-tabs-headline-match)
 					;(setq centaur-tabs-style "bar")
@@ -84,7 +84,9 @@
     :bind
     ("C-<left>" . centaur-tabs-backward)
     ("C-<right>" . centaur-tabs-forward)))
-  
+;; KLUDGE This is a known issue, fixed for some reason by below line
+(centaur-tabs-group-by-projectile-project)
+
 (use-package all-the-icons
   :if (display-graphic-p))
 ; NOTE Run all-the-icons-install-fonts
@@ -99,6 +101,14 @@
 (use-package eat)
 ;  :bind
 ;  (("M-o" ace-window)))
+(add-hook 'window-configuration-change-hook
+  (lambda ()
+    (when (string-equal major-mode "eat-mode")
+      (unless (bound-and-true-p called-once)
+					;(eat-term-send-string eat-terminal "exec $SHELL -l")
+	(eat-term-send-string eat-terminal "ssh dsc009")
+        (eat-self-input 1 'return)
+        (setq-local called-once t)))))
 
 (use-package avy
   :bind
