@@ -114,7 +114,9 @@
   :bind
   (("C-:" . 'avy-goto-char-2)))
 
-(when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
+;(when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
+(use-package doom-modeline
+  :init (doom-modeline-mode 1))
 
 ; NOTE - can't see any difference
 ;(use-package spaceline
@@ -298,6 +300,7 @@
   "Shells"
   ("s" shell                   "shell")
   ("a" (ansi-term "/bin/bash") "ansi-term")
+  ("e" (eat "/bin/bash" "echo hi") "eat-term")
   ("r" rename-buffer           "Rename buffer"))
 (global-set-key [f2] 'hydra-shell-stuff/body)
 
@@ -405,7 +408,7 @@
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   '(helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+   '(doom-modeline helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
  '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
