@@ -173,6 +173,9 @@
 (setq org-todo-keywords
       '((sequence "TODO" "WAIT" "|" "CANCELLED" "DONE")))
 
+(require 'ob-clojure)
+(setq org-babel-clojure-backend 'cider)
+
 (use-package helm-org
   ;:config
   ;(add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
@@ -408,7 +411,7 @@
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   '(doom-modeline helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+   '(ob-clojure doom-modeline helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
  '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
