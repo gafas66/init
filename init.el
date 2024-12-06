@@ -130,8 +130,9 @@
   (("M-x"     . helm-M-x)
    ("M-y"     . helm-show-kill-ring)
    ("C-x C-b" . helm-mini)
-   ("C-x C-f" . helm-find-files)
+   ;("C-x C-f" . helm-find-files)
    ("M-s o"   . helm-occur)))
+(global-set-key (kbd "C-x C-f") 'ido-find-file)
 
 (use-package fic-mode :ensure t)
 (setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
