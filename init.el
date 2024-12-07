@@ -98,9 +98,10 @@
   (setq dimmer-fraction 0.2)
   (dimmer-mode t))
 
-(use-package eat)
-;  :bind
-;  (("M-o" ace-window)))
+(use-package eat
+  :config
+  (define-key eat-semi-char-mode-map (kbd "M-o") 'ace-window)
+  (define-key eat-semi-char-mode-map (kbd "M-0") 'treemacs-select-window))
 (add-hook 'window-configuration-change-hook
   (lambda ()
     (when (string-equal major-mode "eat-mode")
@@ -117,6 +118,7 @@
 ;(when (> emacs-major-version 26) (use-package powerline :ensure t :config (powerline-default-theme)))
 (use-package doom-modeline
   :init (doom-modeline-mode 1))
+(use-package nerd-icons) ;then use M-x nerd-icons-install-fonts
 
 ; NOTE - can't see any difference
 ;(use-package spaceline
@@ -412,7 +414,7 @@
  '(custom-safe-themes
    '("cb39485fd94dabefc5f2b729b963cbd0bac9461000c57eae454131ed4954a8ac" default))
  '(package-selected-packages
-   '(ob-clojure doom-modeline helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
+   '(nerd-fonts ob-clojure doom-modeline helm-swoop use-package origami dimmer all-the-icons eat centaur-tabs major-mode-hydra helm-org cycle-themes magit tabbar gnu-elpa-keyring-update))
  '(safe-local-variable-values '((epa-file-encrypt-to ekofoed@gmail\.com))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
