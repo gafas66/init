@@ -44,6 +44,7 @@ This is built-in, does not require a repl-server to run in the background
 #+RESULTS:
 : yeah!
 
+
 Observe that elisp only return last result, not all like clojure
 
 ** Clojure using babashka
@@ -106,8 +107,9 @@ Below does work, and --prn makes the result appear - only final line
 #+end_src
 
 #+RESULTS:
-| /home/erik/Projects/clojure-examples/src/clojure_examples |
-| clojure_examples                                          |
+| /home/erik/init/org |
+| org                 |
+
 
 ** Ruby?
 
