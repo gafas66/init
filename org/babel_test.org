@@ -1,0 +1,161 @@
+* Lets try what babel-org is all about
+** Clojure test
+
+To run using lein/clojure, start cider-jack-in with this file inside a
+lein project (and from this file).
+
+#+begin_src clojure
+  (ns kk.test)
+  (def my-x 5)
+  my-x
+#+end_src
+
+#+RESULTS:
+| #'kk.test/my-x |
+|              5 |
+
+Did this come out ok?
+
+#+begin_src clojure :results silent
+  (+ 1 4)
+#+end_src
+
+As expected, above does not show result. All lines are however kept in
+repl.
+
+#+begin_src clojure :results value
+  (+ 1 4)
+#+end_src
+
+#+RESULTS:
+: 5
+
+** Elisp
+
+This is built-in, does not require a repl-server to run in the background
+
+#+begin_src elisp
+  (setq my-x 5)
+  (setq my-y 55)
+  (+ my-x my-y)
+  (message "yeah!")
+#+end_src
+
+#+RESULTS:
+: yeah!
+
+Observe that elisp only return last result, not all like clojure
+
+** Clojure using babashka
+
+To make this work, two steps are needed. First, start a repl using bb
+#+begin_src shell
+  bb --nrepl-server &
+#+end_src
+
+Then link this very file with cider-connect to said server, Host nothing, port 1667 (probably)
+
+Now clojure should work ok:
+
+#+begin_src clojure
+  (def x 9)
+  (def y 4)
+  (* x y)
+  (println "Hello world!")
+#+end_src
+
+#+RESULTS:
+| #'kk.test/x |
+| #'kk.test/y |
+| 36          |
+
+Lets see if the values defined above are still valid in the next block:
+
+#+begin_src clojure
+  (def result (+ x y))
+  result
+#+end_src
+
+#+RESULTS:
+| #'user/result |
+|            13 |
+
+We can also execute babashka without having a server running, this
+does not save results from one code-block to next, and is a
+workaround.
+
+The shebang suggestion below does not work - why?
+  ##+begin_src shell :shebang "#!/usr/bin/env bb"
+
+Below does work, and --prn makes the result appear - only final line
+
+#+begin_src shell :shebang "#!/home/erik/bin/bb --prn"
+  (def x 8)
+  (def y 1)
+  (+ x y)
+#+end_src
+
+#+RESULTS:
+: 9
+
+** Shell attempt
+
+#+begin_src shell
+  pwd
+  pwd | sed 's^.*/^^'
+#+end_src
+
+#+RESULTS:
+| /home/erik/Projects/clojure-examples/src/clojure_examples |
+| clojure_examples                                          |
+
+** Ruby?
+
+#+begin_src ruby
+  #"This block was executed last on #{Date.today}"
+  "This is a text".upcase
+#+end_src
+
+#+RESULTS:
+: THIS IS A TEXT
+
+** Will perl work in babel also?
+
+#+begin_src perl :results value
+  "Hello world";
+#+end_src
+#+BEGIN_SRC emacs-lisp
+  (message "Yeah!")
+#+END_SRC
+
+
+#+begin_src clojure :results silent
+  (+ 1 4)
+#+end_src
+
+#+begin_src clojure :results value
+  [ 1 2 3 4]
+#+end_src
+
+
+#+begin_src clojure
+  (use '(incanter core charts pdf))
+  ;;; Create the x and y data:
+  (def x-data [0.0 1.0 2.0 3.0 4.0 5.0])
+  (def y-data [2.3 9.0 2.6 3.1 8.1 4.5])
+  (def xy-line (xy-plot x-data y-data))
+  (view xy-line)
+  (save-pdf xy-line "incanter-xy-line.pdf")
+  (save xy-line "incanter-xy-line.png")
+#+end_src
+
+#+RESULTS:
+| #'clojure-examples.core/x-data                                                                                                                                                                                                                                                                                                                                                                                            |
+| #'clojure-examples.core/y-data                                                                                                                                                                                                                                                                                                                                                                                            |
+| #'clojure-examples.core/xy-line                                                                                                                                                                                                                                                                                                                                                                                           |
+| #object[org.jfree.chart.ChartFrame 0x5a75d4dd "org.jfree.chart.ChartFrame[frame0,0,0,500x400,layout=java.awt.BorderLayout,title=Incanter Plot,resizable,normal,defaultCloseOperation=DISPOSE_ON_CLOSE,rootPane=javax.swing.JRootPane[,0,37,500x363,layout=javax.swing.JRootPane$RootLayout,alignmentX=0.0,alignmentY=0.0,border=,flags=16777673,maximumSize=,minimumSize=,preferredSize=],rootPaneCheckingEnabled=true]"] |
+
+
+#+CAPTION: A basic x-y line plot
+#+NAME: fig:xy-line
+[[./incanter-xy-line.pdf]]

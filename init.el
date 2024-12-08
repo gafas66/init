@@ -178,6 +178,9 @@
 
 (require 'ob-clojure)
 (setq org-babel-clojure-backend 'cider)
+(setq org-confirm-babel-evaluate nil)
+(require 'ob-ruby)
+(require 'ob-shell)
 
 (use-package org-bullets
   :config
