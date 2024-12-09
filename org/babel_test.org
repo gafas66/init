@@ -66,9 +66,10 @@ Now clojure should work ok:
 #+end_src
 
 #+RESULTS:
-| #'kk.test/x |
-| #'kk.test/y |
-| 36          |
+| #'user/x |
+| #'user/y |
+| 36       |
+
 
 Lets see if the values defined above are still valid in the next block:
 
@@ -80,6 +81,7 @@ Lets see if the values defined above are still valid in the next block:
 #+RESULTS:
 | #'user/result |
 |            13 |
+
 
 We can also execute babashka without having a server running, this
 does not save results from one code-block to next, and is a
@@ -115,7 +117,7 @@ Below does work, and --prn makes the result appear - only final line
 
 #+begin_src ruby
   #"This block was executed last on #{Date.today}"
-  "This is a text".upcase
+  "This is a text".upcase         # 
 #+end_src
 
 #+RESULTS:
