@@ -1,6 +1,7 @@
 * Figure out if we're at work or home
 
 #+begin_src elisp
+  (message "Starting up org-mode init file")
   (setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
   (setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
   ;; Exclude if at work
@@ -40,9 +41,7 @@ does not always work.
   (package-refresh-contents)
 #+end_src
 
-* Installing packages
-
-First out is use-package, apparently "straight" is an alternative to this.
+Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
 
 #+begin_src elisp
@@ -50,9 +49,12 @@ First out is use-package, apparently "straight" is an alternative to this.
   (setq use-package-always-ensure t)
 #+end_src
 
+* Installing packages
 ** Presentation fonts/colors/tabs/themes
+*** Installing a theme collection
 
-Using goldenrod as default for now, several more are available with C-c h via hydra.
+Using goldenrod as default for now, selecting some with C-c h via
+hydra. other collections seem to be available.
 
 #+begin_src elisp
   (use-package color-theme-modern
@@ -60,6 +62,8 @@ Using goldenrod as default for now, several more are available with C-c h via hy
     (load-theme 'goldenrod t t)
     (enable-theme 'goldenrod))
 #+end_src
+
+*** Select tab system - centaur on newer emacs versions
 
 Choose tabbar (built-in) or centaur tab, dependent on emacs version.
 
@@ -107,16 +111,24 @@ There seemns to be an error in centaur, can be fixed with the following fix (onl
   (centaur-tabs-group-by-projectile-project)
 #+end_src
 
+*** install icons for use in org, modelines, and tabs
+
 Download all the icons package, this requires to run
 "all-the-icons-install-fonts" via M-x after. This is potentially
 replaced now by nerd-icons.
+
+nerd-icons: As for all-icons above, M-x
+nerd-icons-install-fonts is required.
 
 #+begin_src elisp
   (use-package all-the-icons
       :if (display-graphic-p))
   (load "all-the-icons-dired")
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+  (use-package nerd-icons)
 #+end_src
+
+*** Modeline selection and dimmer mode
 
 Dimming the non-active windows may be useful, 20% is default
 
@@ -129,13 +141,12 @@ Dimming the non-active windows may be useful, 20% is default
     (dimmer-mode t))
 #+end_src
 
-Using doom-modeline and nerd-icons. As for all-icons above, M-x
-nerd-icons-install-fonts is required.
+Using doom-modeline. Other modelines are available, like powerline and
+spacemacs.
 
 #+begin_src elisp
   (use-package doom-modeline
     :init (doom-modeline-mode 1))
-  (use-package nerd-icons)
 #+end_src
 
 ** Shell and programming
@@ -207,8 +218,9 @@ etc. Markerpen is manually downloaded.
 #+end_src
 
 ** Org mode setup
+*** Main setup
 
-Extending org mode with bullets and specific headline fonts.
+Perhaps use :bind to improve readability below?
 
 #+begin_src elisp
   (use-package org
@@ -234,53 +246,58 @@ Extending org mode with bullets and specific headline fonts.
     (setq org-agenda-skip-scheduled-if-done t)
     ;(setq org-agenda-skip-function-global '(org-agenda-skip-entry-if 'todo 'done))
     )
-#+end_src
-
-Here follows setup with coloring and bullets for orgmode. Not sure yet about the fonts and their sizes.
-
-#+begin_src elisp
-
-  ;; Below allows refile upto second heading (default only first level)
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)))
 
   (setq org-todo-keywords
         '((sequence "TODO" "WAIT" "|" "CANCELLED" "DONE")))
 
+#+end_src
+
+*** Babel setup - various programming languages inside org mode
+
+#+begin_src elisp
   (require 'ob-clojure)
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
   (require 'ob-ruby)
   (require 'ob-shell)
-
-  (use-package org-bullets
-    :config
-    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-  (font-lock-add-keywords 'org-mode
-                          '(("^ +\\([-*]\\) "
-                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-
-  (when window-system
-    (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-                                 ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-                                 ((x-list-fonts "Verdana")         '(:font "Verdana"))
-                                 ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-                                 (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-           (base-font-color     (face-foreground 'default nil 'default))
-           (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-      (custom-theme-set-faces 'user
-                              `(org-level-8 ((t (,@headline ,@variable-tuple))))
-                              `(org-level-7 ((t (,@headline ,@variable-tuple))))
-                              `(org-level-6 ((t (,@headline ,@variable-tuple))))
-                              `(org-level-5 ((t (,@headline ,@variable-tuple))))
-                              `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-                              `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
-                              `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
-                              `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
-                              `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
 #+end_src
 
-Here are templates for capturing tasks for now
+*** Bullets and fonts for headlines
+
+  Here follows setup with coloring and bullets for orgmode. Not sure yet about the fonts and their sizes.
+
+ #+begin_src elisp
+   (use-package org-bullets
+     :config
+     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+   (font-lock-add-keywords 'org-mode
+                           '(("^ +\\([-*]\\) "
+                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+   (when window-system
+     (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+                                  ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+                                  ((x-list-fonts "Verdana")         '(:font "Verdana"))
+                                  ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+                                  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+            (base-font-color     (face-foreground 'default nil 'default))
+            (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+       (custom-theme-set-faces 'user
+                               `(org-level-8 ((t (,@headline ,@variable-tuple))))
+                               `(org-level-7 ((t (,@headline ,@variable-tuple))))
+                               `(org-level-6 ((t (,@headline ,@variable-tuple))))
+                               `(org-level-5 ((t (,@headline ,@variable-tuple))))
+                               `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+                               `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
+                               `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
+                               `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
+                               `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
+#+end_src
+
+*** Setup of org templates (C-c c), creating actions distributed across multiple files
+
+Here are templates for capturing tasks for December 2024, focused on VEC project at work
 
 #+begin_src elisp
   (setq outline-minor-mode-cycle t)
@@ -301,6 +318,8 @@ Here are templates for capturing tasks for now
   ;	 ((agenda "" ((org-agenda-span 'day)
   ;		      (org-deadline-warning-days 7)))))))
 #+end_src
+
+*** Org subtasks and helm-org
 
 Procedure for inserting sub-task , have not really used this yet
 
@@ -333,6 +352,8 @@ The helm-org below I've not got to work yet, not sure what it does !
 
 Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
 
+*** Installing hydra, M-SPC works?
+
 #+begin_src elisp
   (use-package bind-key)
   (use-package major-mode-hydra
@@ -340,7 +361,7 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
     ("M-SPC" . major-mode-hydra)) ;Can we make this key work?
 #+end_src
 
-Hydra selectors for themes, toggle modes, shell, cider
+*** Hydra selectors for themes, toggle modes, shell, cider
 
 #+begin_src elisp
   (setq good-themes
@@ -378,6 +399,14 @@ Hydra selectors for themes, toggle modes, shell, cider
     ("q" nil                       "Quit menu" :color red :column nil))
   (global-set-key (kbd "C-c h") 'hydra-appearance/body)
 
+#+end_src
+
+*** Hydra for lisp modes, elisp and clojure
+
+For these two hydras, M-SPC is the key (does it work though?)
+
+#+begin_src elisp
+
   (major-mode-hydra-define emacs-lisp-mode nil
     ("Eval"
      (("b" eval-buffer "buffer")
@@ -395,15 +424,25 @@ Hydra selectors for themes, toggle modes, shell, cider
       ("f" describe-function "function")
       ("v" describe-variable "variable")
       ("i" info-lookup-symbol "info lookup"))))
+#+end_src
 
+Connect buffer to server is for example for bb --nrepl-server
+
+#+begin_src elisp
   (major-mode-hydra-define clojure-mode nil
     ("Connect"
      (("j" cider-jack-in      "jack-in")
       ("J" cider-jack-in-cljs "jack-in-cljs")
-      ("c" nil "TBD connect")
+      ("c" cider-connect      "Connect buffer to server")
       ("R" nil "TBD reconnect")
       ("Q" nil "TBD disconnect")
       ("q" nil "quit"))))
+
+#+end_src
+
+*** Hydra for shell and markerpen
+
+#+begin_src elisp
 
   (defhydra hydra-shell-stuff (:color blue)
     "Shells"
@@ -430,7 +469,6 @@ Hydra selectors for themes, toggle modes, shell, cider
 
 ** Various toggle settings
 
-
 #+begin_src elisp
   (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -444,8 +482,6 @@ Hydra selectors for themes, toggle modes, shell, cider
   (show-paren-mode t)
   (put 'erase-buffer 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
-
-  #+begin_src elisp
 #+end_src
 
 ** Emacs shell setup
@@ -470,7 +506,7 @@ Hydra selectors for themes, toggle modes, shell, cider
 
 #+end_src
 
-** Other functions like ek-set mode
+** Other functions like ek-set mode and inital text size
 
 Below mode is intended to be used to highlight interesting stuff in innovus/etc log files
 
