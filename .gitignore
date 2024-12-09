@@ -8,3 +8,4 @@
 .emacs.d/ido.last
 # End
 .gnupg/random_seed
+settings.el

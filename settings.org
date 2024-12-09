@@ -137,7 +137,7 @@ Dimming the non-active windows may be useful, 20% is default
     :config
     (dimmer-configure-which-key)
     (dimmer-configure-helm)
-    (setq dimmer-fraction 0.2)
+    (setq dimmer-fraction 0.3)
     (dimmer-mode t))
 #+end_src
 
