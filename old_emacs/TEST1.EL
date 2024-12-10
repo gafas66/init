@@ -1,0 +1,12 @@
+; Sample LISP test program
+;
+; Written by Erik Kofoed
+
+(setq start-string '(("MEASURE" "CHOOSE" 2)
+		     ("TIMER" "RND" 2)
+		     ("TIMER" "CHOOSE" 2)))
+
+(defun test1 ()
+  ""
+  (interactive)
+  (print (assoc '("MEASURE") 'start-string)))
