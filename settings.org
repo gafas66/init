@@ -155,8 +155,6 @@ Using *eat* as main shell for now, works reasonably well, and seems to
 be a better term emulator than ansi-term. Treemacs makes projects
 easier.
 
-Fix the dsc009 code below to work/home.
-
 #+begin_src elisp
   (use-package cider)
   (use-package eat
@@ -168,9 +166,16 @@ Fix the dsc009 code below to work/home.
               (when (string-equal major-mode "eat-mode")
                 (unless (bound-and-true-p called-once)
                                           ;(eat-term-send-string eat-terminal "exec $SHELL -l")
-                  (eat-term-send-string eat-terminal "ssh dsc009")
+                  (eat-term-send-string eat-terminal "if [[ \"$(hostname)\" == \"dsc005\" ]];then ssh dsc009;fi")
                   (eat-self-input 1 'return)
                   (setq-local called-once t)))))
+#+end_src
+
+** Project management
+
+Using treemacs for now. Apparently a package called projectile might be useful.
+
+#+begin_src elisp
   (use-package treemacs
     :bind (("M-0" . treemacs-select-window)
            ("M-o" . ace-window)))
@@ -203,7 +208,7 @@ Avy mode has some other options, like char-1
     (("C-:" . 'avy-goto-char-2)))
 #+end_src
 
-** Coloring of keywords and marking random text
+** Coloring of keywords and marking random text + fic
 
 Fic-mode should work everywhere, hightlight actions and FIXME
 etc. Markerpen is manually downloaded.
@@ -217,7 +222,7 @@ etc. Markerpen is manually downloaded.
   (setq fic-highlighted-words '("FIXME" "TODO" "NOTE" "KLUDGE" "BUG"))
 #+end_src
 
-** Org mode setup
+** Org mode setup (and org-babel)
 *** Main setup
 
 Perhaps use :bind to improve readability below?
@@ -256,12 +261,16 @@ Perhaps use :bind to improve readability below?
 
 *** Babel setup - various programming languages inside org mode
 
+We change the default of asking to execute w/C-c C-c
+It seems the ob-tcl does not exist, as it should?
+
 #+begin_src elisp
   (require 'ob-clojure)
-  (setq org-babel-clojure-backend 'cider)
-  (setq org-confirm-babel-evaluate nil)
   (require 'ob-ruby)
   (require 'ob-shell)
+  ;(require 'ob-tcl)
+  (setq org-babel-clojure-backend 'cider)
+  (setq org-confirm-babel-evaluate nil)
 #+end_src
 
 *** Bullets and fonts for headlines

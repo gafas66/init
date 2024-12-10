@@ -11,16 +11,15 @@ export CDPATH="$CDPATH:/home/EPI/project/EUPILOT/VEC/usr/esk"
 export CDPATH="$CDPATH:/home/EPI/project/STXMOD/users"
 alias c="echo \$CDPATH | sed 's/:/\n/g'"
 
-module use /home/kofoed/modulefiles
-
 git config --global user.email "ekofoed@gmail.com"
 git config --global user.name  "ESK"
 
 # NOTE Avoid silly warnings for commands in need of proper terminal
 [[ -z ${INSIDE_EMACS+x} ]] || x=$TERM && export TERM=eterm-color
 if command -v module 2>&1 > /dev/null
-   then
-       module load prj/vec/1
+then
+    module use /home/kofoed/modulefiles
+    module load prj/vec/1
 fi
 [[ -z ${INSIDE_EMACS+x} ]] || export TERM=$x && unset x
 

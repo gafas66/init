@@ -109,19 +109,20 @@ Below does work, and --prn makes the result appear - only final line
 #+end_src
 
 #+RESULTS:
-| /home/erik/init/org |
-| org                 |
+| /home/kofoed/init/org |
+| org                   |
 
 
-** Ruby?
+** Ruby
 
 #+begin_src ruby
   #"This block was executed last on #{Date.today}"
-  "This is a text".upcase         # 
+  "This is a text".upcase
 #+end_src
 
 #+RESULTS:
 : THIS IS A TEXT
+
 
 ** Will perl work in babel also?
 
