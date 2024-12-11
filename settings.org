@@ -45,7 +45,8 @@ Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
 
 #+begin_src elisp
-  (package-install 'use-package)
+  (unless (package-installed-p 'use-package)
+    (package-install 'use-package))
   (setq use-package-always-ensure t)
 #+end_src
 
@@ -199,6 +200,7 @@ Avy mode has some other options, like char-1
        ("M-y"     . helm-show-kill-ring)
        ("C-x C-b" . helm-mini)
       ;("C-x C-f" . helm-find-files)
+       ("M-i"     . helm-swoop)
        ("M-s o"   . helm-occur)))
 
   (global-set-key (kbd "C-x C-f") 'ido-find-file)
@@ -476,6 +478,7 @@ Connect buffer to server is for example for bb --nrepl-server
   (global-set-key (kbd "C-,") 'hydra-comma/body)
 #+end_src
 
+* Other settings
 ** Various toggle settings
 
 #+begin_src elisp
@@ -517,6 +520,7 @@ Connect buffer to server is for example for bb --nrepl-server
 
 ** Other functions like ek-set mode and inital text size
 
+
 Below mode is intended to be used to highlight interesting stuff in innovus/etc log files
 
 #+begin_src elisp
@@ -554,5 +558,20 @@ Setup text resolution based on what we can figure out about the current system.
         ((= height 1080) (set-face-attribute 'default nil :height 60))
         (t nil))
 #+end_src
+
+* Testing stuff
+** Check centaur buffer type
+
+#+begin_src elisp
+  (defun my/check-buffer-group ()
+    "Show what type of centaur buffer this is"
+    (interactive)
+    (message (car (centaur-tabs-buffer-groups))))
+  (global-set-key (kbd "M-t") 'my/check-buffer-group)
+  (define-key eat-semi-char-mode-map (kbd "M-t") 'my/check-buffer-group)
+#+end_src
+
+#+RESULTS:
+: my/check-buffer-group
 
 * End of file
