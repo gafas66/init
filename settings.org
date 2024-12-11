@@ -8,6 +8,9 @@
   (setq my-org-files (if (file-directory-p "/home/kofoed") (remove "~/init/org/other.org.gpg" my-org-files) my-org-files))
 #+end_src
 
+#+RESULTS:
+| ~/init/org/Capture.org.gpg | ~/init/org/home.org.gpg | ~/init/org/vec.org.gpg | ~/init/org/journal.org.gpg |
+
 * Setting up ELPA package system
 
 Here we need some locally downloaded stuff, like all-icons (to be
@@ -41,6 +44,8 @@ does not always work.
   (package-refresh-contents)
 #+end_src
 
+#+RESULTS:
+
 Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
 
@@ -49,6 +54,9 @@ Will use use-package, apparently "straight" is an alternative to this.
     (package-install 'use-package))
   (setq use-package-always-ensure t)
 #+end_src
+
+#+RESULTS:
+: t
 
 * Installing packages
 ** Presentation fonts/colors/tabs/themes
@@ -64,6 +72,9 @@ hydra. other collections seem to be available.
     (enable-theme 'goldenrod))
 #+end_src
 
+#+RESULTS:
+: t
+
 *** Select tab system - centaur on newer emacs versions
 
 Choose tabbar (built-in) or centaur tab, dependent on emacs version.
@@ -76,41 +87,47 @@ Choose tabbar (built-in) or centaur tab, dependent on emacs version.
         (set-face-attribute 'tabbar-unselected nil :background "gray85"  :foreground "gray30" :box nil)
         (set-face-attribute 'tabbar-selected   nil :background "yellow" :foreground "blue"  :box nil :weight 'bold)
         (set-face-attribute 'tabbar-button     nil :box '(:line-width 1 :color "gray72" :style released-button))
-        (set-face-attribute 'tabbar-separator  nil :height 0.7))
-    (use-package centaur-tabs
-      :demand
-      :config
-      (centaur-tabs-mode t)
+        (set-face-attribute 'tabbar-separator  nil :height 0.7)))
+#+end_src
+
+#+RESULTS:
+: t
+
+Use centaur tabs when version is 27 or newer
+
+#+begin_src elisp
+  (if (> emacs-major-version 26)
+      (use-package centaur-tabs
+        :demand
+        :config
+        (centaur-tabs-mode t)
                                           ;(setq centaur-tabs-height 32) ; Does not affect font or icon
                                           ;(centaur-tabs-headline-match)
                                           ;(setq centaur-tabs-style "bar")
-      (setq centaur-tabs-set-bar 'over)
+        (setq centaur-tabs-set-bar 'over)
                                           ;(centaur-tabs-change-fonts "arial" 160) 
-      (setq centaur-tabs-set-icons t)
-      (setq centaur-tabs-icon-type 'all-the-icons)
+        (setq centaur-tabs-set-icons t)
+        (setq centaur-tabs-icon-type 'all-the-icons)
                                           ;(setq centaur-tabs-plain-icons t) ; Replacing icons!
                                           ;(setq centaur-tabs-modified-marker t)
-      (defun centaur-tabs-buffer-groups ()
-        "Use as few groups as possible."
-        (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
-                     (cond ((string-equal "eglot" (downcase (substring (buffer-name) 1 6)))
-                            "Eglot")
-                           (t
-                            "Tools")))
-                    ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
-                     "Magit")
-                    (t
-                     "Default"))))
-      :bind
-      ("C-<left>" . centaur-tabs-backward)
-      ("C-<right>" . centaur-tabs-forward)))
+        (defun centaur-tabs-buffer-groups ()
+          "Use as few groups as possible."
+          (list (cond ((string-equal "*" (substring (buffer-name) 0 1))
+                       (cond ((string-equal "eglot" (downcase (substring (buffer-name) 1 6)))
+                              "Eglot")
+                             (t
+                              "Tools")))
+                      ((string-equal "magit" (downcase (substring (buffer-name) 0 5)))
+                       "Magit")
+                      (t
+                       "Default"))))
+        (centaur-tabs-group-by-projectile-project);KLUDGE This is actually a bugfix
+        :bind
+        ("C-<left>" . centaur-tabs-backward)
+        ("C-<right>" . centaur-tabs-forward)))
 #+end_src
 
-There seemns to be an error in centaur, can be fixed with the following fix (online)
-
-#+begin_src elisp
-  (centaur-tabs-group-by-projectile-project)
-#+end_src
+#+RESULTS:
 
 *** install icons for use in org, modelines, and tabs
 
@@ -129,6 +146,9 @@ nerd-icons-install-fonts is required.
   (use-package nerd-icons)
 #+end_src
 
+#+RESULTS:
+: t
+
 *** Modeline selection and dimmer mode
 
 Dimming the non-active windows may be useful, 20% is default
@@ -142,6 +162,9 @@ Dimming the non-active windows may be useful, 20% is default
     (dimmer-mode t))
 #+end_src
 
+#+RESULTS:
+: t
+
 Using doom-modeline. Other modelines are available, like powerline and
 spacemacs.
 
@@ -149,6 +172,9 @@ spacemacs.
   (use-package doom-modeline
     :init (doom-modeline-mode 1))
 #+end_src
+
+#+RESULTS:
+: t
 
 ** Shell and programming
 
@@ -162,17 +188,21 @@ easier.
     :config
     (define-key eat-semi-char-mode-map (kbd "M-o") 'ace-window)
     (define-key eat-semi-char-mode-map (kbd "M-0") 'treemacs-select-window))
+  (define-key eat-semi-char-mode-map (kbd "M-a") (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
   (add-hook 'window-configuration-change-hook
             (lambda ()
               (when (string-equal major-mode "eat-mode")
                 (unless (bound-and-true-p called-once)
                                           ;(eat-term-send-string eat-terminal "exec $SHELL -l")
-                  (eat-term-send-string eat-terminal "if [[ \"$(hostname)\" == \"dsc005\" ]];then ssh dsc009;fi")
+                  (eat-term-send-string eat-terminal "if [[ \"$(hostname)\" == \"dsc005\" ]];then ssh dsc001;fi")
                   (eat-self-input 1 'return)
                   (setq-local called-once t)))))
 #+end_src
 
-** Project management
+#+RESULTS:
+| (lambda nil (when (string-equal major-mode eat-mode) (unless (bound-and-true-p called-once) (eat-term-send-string eat-terminal if [[ "$(hostname)" == "dsc005" ]];then ssh dsc001;fi) (eat-self-input 1 (quote return)) (setq-local called-once t)))) | dimmer-config-change-handler | window--adjust-process-windows |
+
+Project management
 
 Using treemacs for now. Apparently a package called projectile might be useful.
 
@@ -181,6 +211,9 @@ Using treemacs for now. Apparently a package called projectile might be useful.
     :bind (("M-0" . treemacs-select-window)
            ("M-o" . ace-window)))
 #+end_src
+
+#+RESULTS:
+: ace-window
 
 ** Movement and selection
 
@@ -210,6 +243,9 @@ Avy mode has some other options, like char-1
     (("C-:" . 'avy-goto-char-2)))
 #+end_src
 
+#+RESULTS:
+: avy-goto-char-2
+
 ** Coloring of keywords and marking random text + fic
 
 Fic-mode should work everywhere, hightlight actions and FIXME
@@ -223,6 +259,9 @@ etc. Markerpen is manually downloaded.
   (mapcar (lambda (mode) (add-hook mode 'fic-mode)) p-modes)
   (setq fic-highlighted-words '("FIXME" "TODO" "NOTE" "KLUDGE" "BUG"))
 #+end_src
+
+#+RESULTS:
+| FIXME | TODO | NOTE | KLUDGE | BUG |
 
 ** Org mode setup (and org-babel)
 *** Main setup
@@ -261,6 +300,9 @@ Perhaps use :bind to improve readability below?
 
 #+end_src
 
+#+RESULTS:
+| sequence | TODO | WAIT |   |   | CANCELLED | DONE |
+
 *** Babel setup - various programming languages inside org mode
 
 We change the default of asking to execute w/C-c C-c
@@ -274,6 +316,8 @@ It seems the ob-tcl does not exist, as it should?
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
 #+end_src
+
+#+RESULTS:
 
 *** Bullets and fonts for headlines
 
@@ -306,6 +350,8 @@ It seems the ob-tcl does not exist, as it should?
                                `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
 #+end_src
 
+#+RESULTS:
+
 *** Setup of org templates (C-c c), creating actions distributed across multiple files
 
 Here are templates for capturing tasks for December 2024, focused on VEC project at work
@@ -330,6 +376,9 @@ Here are templates for capturing tasks for December 2024, focused on VEC project
   ;		      (org-deadline-warning-days 7)))))))
 #+end_src
 
+#+RESULTS:
+| u | Untagged tasks | tags-todo | -{.*} |
+
 *** Org subtasks and helm-org
 
 Procedure for inserting sub-task , have not really used this yet
@@ -345,6 +394,9 @@ Procedure for inserting sub-task , have not really used this yet
   (define-key org-mode-map (kbd "C-c s") 'my-org-insert-sub-task)
 #+end_src
 
+#+RESULTS:
+: my-org-insert-sub-task
+
 The helm-org below I've not got to work yet, not sure what it does !
 
 #+begin_src elisp
@@ -359,6 +411,9 @@ The helm-org below I've not got to work yet, not sure what it does !
                   (add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))))
 #+end_src
 
+#+RESULTS:
+| lambda | nil | (add-to-list (quote helm-completing-read-handlers-alist) (quote (org-capture . helm-org-completing-read-tags))) | (add-to-list (quote helm-completing-read-handlers-alist) (quote (org-set-tags . helm-org-completing-read-tags))) |
+
 ** Hydra mode setup for keybinding selections
 
 Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
@@ -371,6 +426,9 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
     :bind
     ("M-SPC" . major-mode-hydra)) ;Can we make this key work?
 #+end_src
+
+#+RESULTS:
+: major-mode-hydra
 
 *** Hydra selectors for themes, toggle modes, shell, cider
 
@@ -412,6 +470,9 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
 
 #+end_src
 
+#+RESULTS:
+: hydra-appearance/body
+
 *** Hydra for lisp modes, elisp and clojure
 
 For these two hydras, M-SPC is the key (does it work though?)
@@ -437,6 +498,9 @@ For these two hydras, M-SPC is the key (does it work though?)
       ("i" info-lookup-symbol "info lookup"))))
 #+end_src
 
+#+RESULTS:
+: major-mode-hydras/emacs-lisp-mode/body
+
 Connect buffer to server is for example for bb --nrepl-server
 
 #+begin_src elisp
@@ -450,6 +514,9 @@ Connect buffer to server is for example for bb --nrepl-server
       ("q" nil "quit"))))
 
 #+end_src
+
+#+RESULTS:
+: major-mode-hydras/clojure-mode/body
 
 *** Hydra for shell and markerpen
 
@@ -478,6 +545,9 @@ Connect buffer to server is for example for bb --nrepl-server
   (global-set-key (kbd "C-,") 'hydra-comma/body)
 #+end_src
 
+#+RESULTS:
+: hydra-comma/body
+
 * Other settings
 ** Various toggle settings
 
@@ -495,6 +565,8 @@ Connect buffer to server is for example for bb --nrepl-server
   (put 'erase-buffer 'disabled nil)
   (put 'narrow-to-region 'disabled nil)
 #+end_src
+
+#+RESULTS:
 
 ** Emacs shell setup
 
@@ -518,6 +590,11 @@ Connect buffer to server is for example for bb --nrepl-server
 
 #+end_src
 
+#+RESULTS:
+| lambda | nil | (define-key term-raw-map (kbd M-x) (quote helm-M-x))               |
+| lambda | nil | (define-key term-raw-map (kbd M-0) (quote treemacs-select-window)) |
+| lambda | nil | (define-key term-raw-map (kbd M-o) (quote ace-window))             |
+
 ** Other functions like ek-set mode and inital text size
 
 
@@ -535,6 +612,9 @@ Below mode is intended to be used to highlight interesting stuff in innovus/etc 
   (global-set-key (kbd "<f5>") 'ek-hi-set)
 
 #+end_src
+
+#+RESULTS:
+: ek-hi-set
 
 Setup text resolution based on what we can figure out about the current system.
 
@@ -559,8 +639,20 @@ Setup text resolution based on what we can figure out about the current system.
         (t nil))
 #+end_src
 
-* Testing stuff
+#+RESULTS:
+
+* Testing stuff and temporary commands/keys
+
+Candidates for keys are
+
+| Key | Default            |
+| M-t | transpose words    |
+| M-a | backward sentrence |
+| M-p | undefined          |
+| M-r | move to top/bottom |
+
 ** Check centaur buffer type
+
 
 #+begin_src elisp
   (defun my/check-buffer-group ()
@@ -573,5 +665,14 @@ Setup text resolution based on what we can figure out about the current system.
 
 #+RESULTS:
 : my/check-buffer-group
+
+** Test M-a as switch to agenda
+
+#+begin_src elisp
+  (global-set-key (kbd "M-a") (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
+#+end_src
+
+#+RESULTS:
+| lambda | nil | (interactive) | (switch-to-buffer *Org Agenda*) |
 
 * End of file
