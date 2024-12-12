@@ -40,11 +40,15 @@ does not always work.
   (setq package-check-signature nil)
 
   (package-initialize)
-  ;; NOTE Comment out refresh when debugging/expanding/editing this file
-  (package-refresh-contents)
 #+end_src
 
-#+RESULTS:
+Let's only refresh packages on Mondays.
+How about creating a file inside elpa, and do (f-touch) on this every refresh?
+
+#+begin_src elisp
+  (if (= (format-time-string "%a" (current-time)) "Mon")
+      (package-refresh-contents) nil)
+#+end_src
 
 Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
@@ -54,9 +58,6 @@ Will use use-package, apparently "straight" is an alternative to this.
     (package-install 'use-package))
   (setq use-package-always-ensure t)
 #+end_src
-
-#+RESULTS:
-: t
 
 * Installing packages
 ** Presentation fonts/colors/tabs/themes
