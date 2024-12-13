@@ -1,6 +1,8 @@
+#+PROPERTY: header-args :tangle yes
+
 * Figure out if we're at work or home
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (message "Starting up org-mode init file")
   (setq is-linux (and (getenv "DISPLAY") (if (string= system-type "gnu/linux") t nil)))
   (setq my-org-files (list "~/init/org/Capture.org.gpg" "~/init/org/other.org.gpg" "~/init/org/home.org.gpg" "~/init/org/vec.org.gpg" "~/init/org/journal.org.gpg"))
@@ -25,7 +27,7 @@ The algorithm priority is a workaround.
 For package-check-signature, 'allow-unsigned is the default, but this
 does not always work.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
   (add-to-list 'load-path "~/src/all-the-icons-dired") ; NOTE My local lisps
 
@@ -42,18 +44,17 @@ does not always work.
   (package-initialize)
 #+end_src
 
-Let's only refresh packages on Mondays.
+Find a way to refresh only when its a week since last time
 How about creating a file inside elpa, and do (f-touch) on this every refresh?
 
-##- #+begin_src elisp :exports none
-##-   (if (= (format-time-string "%a" (current-time)) "Mon")
-##-       (package-refresh-contents) nil)
-##- #+end_src
+#+begin_src emacs-lisp
+  (package-refresh-contents) nil)
+#+end_src
 
 Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (unless (package-installed-p 'use-package)
     (package-install 'use-package))
   (setq use-package-always-ensure t)
@@ -66,7 +67,7 @@ Will use use-package, apparently "straight" is an alternative to this.
 Using goldenrod as default for now, selecting some with C-c h via
 hydra. other collections seem to be available.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package color-theme-modern
     :config
     (load-theme 'goldenrod t t)
@@ -80,7 +81,7 @@ hydra. other collections seem to be available.
 
 Choose tabbar (built-in) or centaur tab, dependent on emacs version.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (if (< emacs-major-version 27)
       (use-package tabbar
         :config (tabbar-mode)
@@ -96,7 +97,7 @@ Choose tabbar (built-in) or centaur tab, dependent on emacs version.
 
 Use centaur tabs when version is 27 or newer
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (if (> emacs-major-version 26)
       (use-package centaur-tabs
         :demand
@@ -139,7 +140,7 @@ replaced now by nerd-icons.
 nerd-icons: As for all-icons above, M-x
 nerd-icons-install-fonts is required.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package all-the-icons
       :if (display-graphic-p))
   (load "all-the-icons-dired")
@@ -154,7 +155,7 @@ nerd-icons-install-fonts is required.
 
 Dimming the non-active windows may be useful, 20% is default
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package dimmer
     :config
     (dimmer-configure-which-key)
@@ -169,7 +170,7 @@ Dimming the non-active windows may be useful, 20% is default
 Using doom-modeline. Other modelines are available, like powerline and
 spacemacs.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package doom-modeline
     :init (doom-modeline-mode 1))
 #+end_src
@@ -183,7 +184,7 @@ Using *eat* as main shell for now, works reasonably well, and seems to
 be a better term emulator than ansi-term. Treemacs makes projects
 easier.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package cider)
   (use-package eat
     :config
@@ -207,7 +208,7 @@ Project management
 
 Using treemacs for now. Apparently a package called projectile might be useful.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package treemacs
     :bind (("M-0" . treemacs-select-window)
            ("M-o" . ace-window)))
@@ -226,7 +227,7 @@ nil in :init
 
 Avy mode has some other options, like char-1
 
-#+begin_src elisp
+#+begin_src emacs-lisp
     (use-package helm
       :init (setq tab-bar-tab-name-function nil)
       :bind
@@ -252,7 +253,7 @@ Avy mode has some other options, like char-1
 Fic-mode should work everywhere, hightlight actions and FIXME
 etc. Markerpen is manually downloaded.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (require 'markerpen)
 
   (use-package fic-mode :ensure t)
@@ -269,7 +270,7 @@ etc. Markerpen is manually downloaded.
 
 Perhaps use :bind to improve readability below?
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package org
     :pin gnu
     :config
@@ -307,7 +308,7 @@ Perhaps use :bind to improve readability below?
 We change the default of asking to execute w/C-c C-c
 It seems the ob-tcl does not exist, as it should?
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (require 'ob-clojure)
   (require 'ob-ruby)
   (require 'ob-shell)
@@ -322,7 +323,7 @@ It seems the ob-tcl does not exist, as it should?
 
   Here follows setup with coloring and bullets for orgmode. Not sure yet about the fonts and their sizes.
 
- #+begin_src elisp
+ #+begin_src emacs-lisp
    (use-package org-bullets
      :config
      (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
@@ -355,7 +356,7 @@ It seems the ob-tcl does not exist, as it should?
 
 Here are templates for capturing tasks for December 2024, focused on VEC project at work
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (setq outline-minor-mode-cycle t)
 
   (setq org-capture-templates
@@ -382,7 +383,7 @@ Here are templates for capturing tasks for December 2024, focused on VEC project
 
 Procedure for inserting sub-task , have not really used this yet
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (defun my-org-insert-sub-task ()
     (interactive)
     (let ((parent-deadline (org-get-deadline-time nil)))
@@ -398,7 +399,7 @@ Procedure for inserting sub-task , have not really used this yet
 
 The helm-org below I've not got to work yet, not sure what it does !
 
-#+begin_src elisp
+#+begin_src emacs-lisp
       (use-package helm-org
         ;:config
         ;(add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
@@ -419,7 +420,7 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
 
 *** Installing hydra, M-SPC works?
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (use-package bind-key)
   (use-package major-mode-hydra
     :bind
@@ -431,7 +432,7 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
 
 *** Hydra selectors for themes, toggle modes, shell, cider
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (setq good-themes
         '(goldenrod classic cobalt dark-blue2 desert digital-ofs1 euphoria feng-shui fischmeister
                     late-night lawrence ld-dark lethe marquardt retro-green xemacs tango-dark))
@@ -472,11 +473,11 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
 #+RESULTS:
 : hydra-appearance/body
 
-*** Hydra for lisp modes, elisp and clojure
+*** Hydra for lisp modes, emacs-lisp and clojure
 
 For these two hydras, M-SPC is the key (does it work though?)
 
-#+begin_src elisp
+#+begin_src emacs-lisp
 
   (major-mode-hydra-define emacs-lisp-mode nil
     ("Eval"
@@ -502,7 +503,7 @@ For these two hydras, M-SPC is the key (does it work though?)
 
 Connect buffer to server is for example for bb --nrepl-server
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (major-mode-hydra-define clojure-mode nil
     ("Connect"
      (("j" cider-jack-in      "jack-in")
@@ -519,7 +520,7 @@ Connect buffer to server is for example for bb --nrepl-server
 
 *** Hydra for shell and markerpen
 
-#+begin_src elisp
+#+begin_src emacs-lisp
 
   (defhydra hydra-shell-stuff (:color blue)
     "Shells"
@@ -550,7 +551,7 @@ Connect buffer to server is for example for bb --nrepl-server
 * Other settings
 ** Various toggle settings
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (defalias 'yes-or-no-p 'y-or-n-p)
 
   (winner-mode 1)				;Allows revert windows content/position history w/ C-c <|> 
@@ -569,7 +570,7 @@ Connect buffer to server is for example for bb --nrepl-server
 
 ** Emacs shell setup
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (autoload 'ansi-color-for-comint-mode-on "ansi-color" nil t)
   (add-hook 'shell-mode-hook 'ansi-color-for-comint-mode-on)
   (add-hook 'shell-mode-hook (lambda () (face-remap-set-base 'comint-highlight-prompt :inherit nil)))
@@ -599,7 +600,7 @@ Connect buffer to server is for example for bb --nrepl-server
 
 Below mode is intended to be used to highlight interesting stuff in innovus/etc log files
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (defun ek-hi-set ()
     (interactive)
     (hi-lock-mode -1)
@@ -617,7 +618,7 @@ Below mode is intended to be used to highlight interesting stuff in innovus/etc 
 
 Setup text resolution based on what we can figure out about the current system.
 
-#+begin_src elisp
+#+begin_src emacs-lisp
 
   ;; Get screen info if on X
   (if is-linux
@@ -653,7 +654,7 @@ Candidates for keys are
 ** Check centaur buffer type
 
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (defun my/check-buffer-group ()
     "Show what type of centaur buffer this is"
     (interactive)
@@ -667,7 +668,7 @@ Candidates for keys are
 
 ** Test M-a as switch to agenda
 
-#+begin_src elisp
+#+begin_src emacs-lisp
   (global-set-key (kbd "M-a") (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
 #+end_src
 
