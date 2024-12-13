@@ -7,6 +7,7 @@ lein project (and from this file).
 #+begin_src clojure
   (ns kk.test)
   (def my-x 5)
+  (println "Written in clojure mode")
   my-x
 #+end_src
 
@@ -101,6 +102,28 @@ Below does work, and --prn makes the result appear - only final line
 #+RESULTS:
 : 9
 
+** TCL try (downloaded)
+
+Not part of official distro
+
+#+begin_src tcl
+  set x 5
+  set y 2
+  set z [expr {$x + $y}]
+#+end_src
+
+#+RESULTS:
+: 7
+
+#+begin_src tcl
+  package require Tk
+  button .hello -text "Hello, World!" -command { exit }
+  pack .hello
+  mainloop
+#+end_src
+
+#+RESULTS:
+
 ** Shell attempt
 
 #+begin_src shell
@@ -112,7 +135,6 @@ Below does work, and --prn makes the result appear - only final line
 | /home/kofoed/init/org |
 | org                   |
 
-
 ** Ruby
 
 #+begin_src ruby
@@ -122,7 +144,6 @@ Below does work, and --prn makes the result appear - only final line
 
 #+RESULTS:
 : THIS IS A TEXT
-
 
 ** Will perl work in babel also?
 

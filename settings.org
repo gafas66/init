@@ -45,10 +45,10 @@ does not always work.
 Let's only refresh packages on Mondays.
 How about creating a file inside elpa, and do (f-touch) on this every refresh?
 
-#+begin_src elisp
-  (if (= (format-time-string "%a" (current-time)) "Mon")
-      (package-refresh-contents) nil)
-#+end_src
+##- #+begin_src elisp :exports none
+##-   (if (= (format-time-string "%a" (current-time)) "Mon")
+##-       (package-refresh-contents) nil)
+##- #+end_src
 
 Will use use-package, apparently "straight" is an alternative to this.
 :ensure t is absolutely required, but can be made global.
@@ -295,10 +295,8 @@ Perhaps use :bind to improve readability below?
     )
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)))
-
   (setq org-todo-keywords
         '((sequence "TODO" "WAIT" "|" "CANCELLED" "DONE")))
-
 #+end_src
 
 #+RESULTS:
@@ -313,7 +311,7 @@ It seems the ob-tcl does not exist, as it should?
   (require 'ob-clojure)
   (require 'ob-ruby)
   (require 'ob-shell)
-  ;(require 'ob-tcl)
+  (require 'ob-tcl)
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
 #+end_src
