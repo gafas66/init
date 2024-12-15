@@ -1,5 +1,6 @@
 #+PROPERTY: header-args :tangle yes
 
+
 * Figure out if we're at work or home
 
 #+begin_src emacs-lisp
@@ -44,11 +45,13 @@ does not always work.
   (package-initialize)
 #+end_src
 
+#+RESULTS:
+
 Find a way to refresh only when its a week since last time
 How about creating a file inside elpa, and do (f-touch) on this every refresh?
 
 #+begin_src emacs-lisp
-  (package-refresh-contents) nil)
+  ;(package-refresh-contents) nil)
 #+end_src
 
 Will use use-package, apparently "straight" is an alternative to this.
@@ -93,7 +96,6 @@ Choose tabbar (built-in) or centaur tab, dependent on emacs version.
 #+end_src
 
 #+RESULTS:
-: t
 
 Use centaur tabs when version is 27 or newer
 
@@ -130,6 +132,7 @@ Use centaur tabs when version is 27 or newer
 #+end_src
 
 #+RESULTS:
+: centaur-tabs-forward
 
 *** install icons for use in org, modelines, and tabs
 
@@ -149,7 +152,6 @@ nerd-icons-install-fonts is required.
 #+end_src
 
 #+RESULTS:
-: t
 
 *** Modeline selection and dimmer mode
 
@@ -176,7 +178,6 @@ spacemacs.
 #+end_src
 
 #+RESULTS:
-: t
 
 ** Shell and programming
 
@@ -202,7 +203,7 @@ easier.
 #+end_src
 
 #+RESULTS:
-| (lambda nil (when (string-equal major-mode eat-mode) (unless (bound-and-true-p called-once) (eat-term-send-string eat-terminal if [[ "$(hostname)" == "dsc005" ]];then ssh dsc001;fi) (eat-self-input 1 (quote return)) (setq-local called-once t)))) | dimmer-config-change-handler | window--adjust-process-windows |
+| (lambda nil (when (string-equal major-mode eat-mode) (unless (bound-and-true-p called-once) (eat-term-send-string eat-terminal if [[ "$(hostname)" == "dsc005" ]];then ssh dsc001;fi) (eat-self-input 1 'return) (setq-local called-once t)))) | doom-modeline-invalidate-huds | doom-modeline-refresh-bars | dimmer-config-change-handler | powerline-set-selected-window | window--adjust-process-windows |
 
 Project management
 
@@ -313,11 +314,26 @@ It seems the ob-tcl does not exist, as it should?
   (require 'ob-ruby)
   (require 'ob-shell)
   (require 'ob-tcl)
+  ;(require ob-perl)
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
 #+end_src
 
+*** Babel templates C-c C-,
+
+#+begin_src emacs-lisp
+  (require 'org-tempo)
+  (setq org-structure-template-alist '())
+  (add-to-list 'org-structure-template-alist '("s" . "src sh\n"))
+  (add-to-list 'org-structure-template-alist '("e" . "src emacs-lisp\n"))
+  (add-to-list 'org-structure-template-alist '("c" . "src clojure\n"))
+  (add-to-list 'org-structure-template-alist '("t" . "src tcl\n"))
+
+#+end_src
+
 #+RESULTS:
+: ((c . src clojure) (e . src emacs-lisp
+: ) (s . src sh))
 
 *** Bullets and fonts for headlines
 
@@ -351,6 +367,34 @@ It seems the ob-tcl does not exist, as it should?
 #+end_src
 
 #+RESULTS:
+
+*** Unicode pretty symbols
+
+From https://github.com/jonnay/emagicians-starter-kit/blob/master/Programming.org
+Apparently built-in, but need some settings, taken from above.
+
+This is lambda - a greek symbol.
+
+#+begin_src emacs-lisp
+  (global-prettify-symbols-mode t)
+  (defvar emagician/prettify-list
+   '(("lambda" . 955)
+     ("<=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≤))
+     (">=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≥))
+     ("->" . ?⟶)
+     ("=>" . ?⟹)
+     ("==" . ?⩵)
+     ("//" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?⫽))
+     ("!=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≠))
+     ("->>" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
+                    (Bl . Bl) ?- (Bc . Br) ?- (Bc . Bc) ?>
+                    (Bc . Bl) ?- (Br . Br) ?>))))
+  (setq prettify-symbols-unprettify-at-point 'right-edge)
+  (setq prettify-symbols-alist emagician/prettify-list)
+#+end_src
+
+#+RESULTS:
+: ((lambda . 955) (<= 32 (Br . Bl) 32 (Bc . Bc) 8804) (>= 32 (Br . Bl) 32 (Bc . Bc) 8805) (-> . 10230) (=> . 10233) (== . 10869) (// 32 (Br . Bl) 32 (Bc . Bc) 11005) (!= 32 (Br . Bl) 32 (Bc . Bc) 8800) (->> 32 (Br . Bl) 32 (Br . Bl) 32 (Bl . Bl) 45 (Bc . Br) 45 (Bc . Bc) 62 (Bc . Bl) 45 (Br . Br) 62))
 
 *** Setup of org templates (C-c c), creating actions distributed across multiple files
 
@@ -412,7 +456,7 @@ The helm-org below I've not got to work yet, not sure what it does !
 #+end_src
 
 #+RESULTS:
-| lambda | nil | (add-to-list (quote helm-completing-read-handlers-alist) (quote (org-capture . helm-org-completing-read-tags))) | (add-to-list (quote helm-completing-read-handlers-alist) (quote (org-set-tags . helm-org-completing-read-tags))) |
+| lambda | nil | (add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags)) | (add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags)) |
 
 ** Hydra mode setup for keybinding selections
 
@@ -591,9 +635,9 @@ Connect buffer to server is for example for bb --nrepl-server
 #+end_src
 
 #+RESULTS:
-| lambda | nil | (define-key term-raw-map (kbd M-x) (quote helm-M-x))               |
-| lambda | nil | (define-key term-raw-map (kbd M-0) (quote treemacs-select-window)) |
-| lambda | nil | (define-key term-raw-map (kbd M-o) (quote ace-window))             |
+| lambda | nil | (define-key term-raw-map (kbd M-x) 'helm-M-x)               |
+| lambda | nil | (define-key term-raw-map (kbd M-0) 'treemacs-select-window) |
+| lambda | nil | (define-key term-raw-map (kbd M-o) 'ace-window)             |
 
 ** Other functions like ek-set mode and inital text size
 
@@ -634,7 +678,7 @@ Setup text resolution based on what we can figure out about the current system.
       (setq height 1080)))
 
                                           ; Set according to screen resolution
-  (cond ((> height 1590) (set-face-attribute 'default nil :height 120))
+  (cond ((> height 1590) (set-face-attribute 'default nil :height 110))
         ((= height 1080) (set-face-attribute 'default nil :height 60))
         (t nil))
 #+end_src
