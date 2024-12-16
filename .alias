@@ -46,6 +46,14 @@ alias vnc='vncserver -nolisten local -geometry 3840x2160'
 #alias  w='cd /home/EPI/project/EUPILOT/VEC/usr/esk/pnr_innovus/micro_tile_pcie_7p5T_r06_v2'
 alias  w='source /home/kofoed/bin/w'
 
+# Filter verilog files to single lines to easily grep
+fver="sed 's^//.*^&;^'"              # ';' at end of comments (remove instead?)
+fver="$fver | sed 's/^module/;&/'"   # Create newlnes for modules
+fver="$fver | tr '\n' ' '"           # into 1-line
+fver="$fver | tr ';' '\n'"           # split into lines on ';'
+fver="$fver | sed 's/$/;/'"          # re-insert ';' at end
+fver="$fver | sed 's/^ *//'"         # Remove leading space on lines
+alias fver=$fver
 
 # End of file
 ################################################################################
