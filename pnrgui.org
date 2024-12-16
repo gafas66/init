@@ -1,0 +1,44 @@
+* GUI for pnr stage
+** Heading and require
+
+#+begin_src tcl
+  ################################################################################
+  # Erik Kofoed, Fraunhofer, 2024
+
+  package require Tk
+
+  puts "End of first part"
+#+end_src
+
+#+RESULTS:
+: 
+
+** Hello world
+
+Simple test program to see if this works.
+
+#+begin_src tcl
+  package require Tk
+  button .hello -text "Quit" -command { exit }
+
+  pack .hello
+  return "End of second part"
+  #mainloop
+
+#+end_src
+
+#+RESULTS:
+: End of second part
+
+** Footer
+
+Something sensible perhaps?
+
+#+begin_src tcl
+  # End
+  ################################################################################
+  
+#+end_src
+
+#+RESULTS:
+: 

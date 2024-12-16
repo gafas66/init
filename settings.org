@@ -1,6 +1,5 @@
 #+PROPERTY: header-args :tangle yes
 
-
 * Figure out if we're at work or home
 
 #+begin_src emacs-lisp
