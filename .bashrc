@@ -45,7 +45,7 @@ BRANCH="";\
 if git branch &> /dev/null; then \
     BRANCH="git:$(git branch 2> /dev/null | grep \* | cut -d " " -f 2)";\
 fi;\
-PS1="\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n\h $ ";'
+PS1="\h\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n$ ";'
 
 # End
 ################################################################################
