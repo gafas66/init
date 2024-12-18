@@ -1,43 +1,40 @@
 :PROPERTIES:
-:header-args: :tangle yes :results silent
+:header-args: :results prepend
 :END:
 
 * GUI for pnr stage
 ** Heading and require
 
+#+NAME: TK_HEADER
 #+begin_src tcl
   ################################################################################
-  # Erik Kofoed, Fraunhofer, 2024
+  # Erik Kofoed
 
   package require Tk
-
-  puts "End of first part"
 #+end_src
 
 ** Hello world
 
 Simple test program to see if this works.
 
-#+begin_src tcl
-  package require Tk
+#+begin_src tcl :noweb yes :tangle yes
+  <<TK_HEADER>>
 
   button .hello -text "Quit" -command { exit }
   pack .hello
   bind . <q> { exit}
 
   return "End of second part"
-  #mainloop
-
 #+end_src
- 
+
 ** Footer
 
 Something sensible perhaps?
 
-#+begin_src tcl
+#+begin_src tcl :tangle yes
+  
   # End
   ################################################################################
-  
-#+end_src
+  #+end_src
 
 * End of file
