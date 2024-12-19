@@ -1,40 +1,182 @@
+* Script to present available dbs/* for load
 :PROPERTIES:
-:header-args: :results prepend
+:header-args: :tangle yes
 :END:
-
-* GUI for pnr stage
-** Heading and require
+** Initial tk setup. Some nice fonts for headlines.
 
 #+NAME: TK_HEADER
 #+begin_src tcl
-  ################################################################################
-  # Erik Kofoed
+  #! /usr/bin/env tclsh
 
-  package require Tk
+  package require Tk;
+  namespace eval g {}
+
+  font create myDefaultFont -family Helvetica -size 12
+  option add *font myDefaultFont
+
+  font create Title -size 16
+  font create Heading -size 12
+  font create D1 -weight bold -size 12
+
+  # get into right directory
+  if [file exist ../INNOVUS] {cd ..}
 #+end_src
 
-** Hello world
+** Main procedure and window
 
-Simple test program to see if this works.
+Intended to be destroyed and rebuilt
 
-#+begin_src tcl :noweb yes :tangle yes
-  <<TK_HEADER>>
+#+begin_src tcl
+  proc g::main {} {
 
-  button .hello -text "Quit" -command { exit }
-  pack .hello
-  bind . <q> { exit}
-
-  return "End of second part"
+      g::clear
+      pack [label .l_title -text "Place and Route FLOW" -font Title -borderwidth 2 -relief ridge] -anchor n
+      pack [set f1 [frame .f1 -borderwidth 2 -relief ridge]] -side left -anchor n
+      pack [set f2 [frame .f2 -borderwidth 2 -relief ridge]] -side left
+      g::works $f2
+      pack [button .f1.new    -text "New run"     -command {exec echo "make run" > gui_action ;exit}] -fill x
+      pack [button .f1.b_quit -text Quit          -command exit] -fill x
+      bind . <q> { exit }
+  }
 #+end_src
 
-** Footer
+** Find all defined workspaces, check for results
 
-Something sensible perhaps?
+#+begin_src tcl
+  proc g::works {f} {
+      set n 1
+      set cols {"-bg \"light grey\"" "-fg white -bg red" "-fg blue -bg yellow" "-fg white -bg green" "-fg white -bg blue" } ; set cn 0
+      set cmax 0
+      foreach dirname [exec ls -t INNOVUS/] {
+          set dir "INNOVUS/$dirname"
+          d "dir is '$dir'"
+          set design "?"
+          set dcol($design) "light grey"
+          if [file exist $dir/inputs.tcl] {
+              set design [exec grep -- -design $dir/inputs.tcl | head -1]
+              regexp -- {.* (.*)} $design x design
+              if { ! [info exist dcol($design)] } {
+                  set dcol($design) [lindex $cols $cn] ; set cn [expr {($cn <4) ? [incr cn] : 0}]
+              }
+          }
+          d "design($design) cn($cn) dcol(design) = $dcol($design)"
+          grid [label $f.label$n -text "$design" -font D1 {*}$dcol($design)] -column 0 -row $n
+          grid [button $f.button$n -text "$dirname" -command [list g::w_action $f $dir]] -column 1 -row $n -sticky ew
+          if [file exist $dir/dbs/init] {
+              set c 2
+              foreach step [exec ls -tr $dir/dbs/] { ;# sorted by age
 
-#+begin_src tcl :tangle yes
-  
-  # End
-  ################################################################################
-  #+end_src
+                  set col "light grey"
+                  set diff [expr {[clock seconds] - [file mtime $dir/dbs/$step]}]
+                  if {$diff < 86400} {set col "yellow"}
+                  if {$diff <  3600} {set col "green"}
+
+                  grid [button $f.button${n}_${c} -text "$step" -command [list g::w_action_step $f $dir $step] -bg $col] -column $c -row $n -sticky ew
+                  set cmax [expr {$c > $cmax ? $c : $cmax}]
+                  incr c
+              }
+          }
+          incr n
+      }
+      grid [label $f.mod  -text "Module" -font Heading -borderwidth 2 -relief ridge]   -column 0 -row 0  -sticky ew
+      grid [label $f.work -text "Work dir" -font Heading -borderwidth 2 -relief ridge] -column 1 -row 0 -sticky ew
+      grid [label $f.dbs  -text "Available databases" -font Heading -borderwidth 2 -relief ridge] -column 2 -row 0 -columnspan $cmax -sticky ew
+  }
+#+end_src
+
+** Helper routines (e.g., callbacks from buttons pressed)
+
+Here we will make the latest chosen step. gui_action is a file passed back to make.
+Could we call make directly here?
+
+#+begin_src tcl
+  proc g::w_action_step {frame dir step} {
+      puts "make db LATEST=$dir DB=$step"
+      exec echo "make db LATEST=$dir DB=$step" > gui_action
+      exit
+  }
+#+end_src
+
+This shows a popup for deletign the chosen workspace. Should we have a
+tickmark in main to chose multiple?
+
+#+begin_src tcl
+  proc g::w_action {frame dir} {
+      # Show some info on this dir, button to return to main
+      g::clear
+      pack [label .l_title -text "$dir"] -anchor n
+      pack [set f1 [frame .f1 -borderwidth 2 -relief ridge]] -side left -anchor n
+      pack [set f2 [frame .f2 -borderwidth 2 -relief ridge]] -side left
+      pack [button .f1.b_delete -text "DELETE workspace!" -command [list g::d_action $dir]] -fill x
+      pack [button .f1.b_main   -text "Return to main" -command g::main] -fill x
+  }
+#+end_src
+
+The actual delete popup - a second stage to avoid mistakes.
+
+#+begin_src tcl
+  proc g::d_action {dir} {
+      set msg "Delete empty directory?"
+      if [file exists $dir/dbs/init] {
+          set msg "Directory is not empty (init exists)"
+      }
+      set reply [tk_messageBox -message $msg -type okcancel]
+      if {$reply == "ok"} {exec rm -fr $dir}
+  }
+#+end_src
+
+** Test code
+
+#+begin_src tcl
+  proc unless {test script args} {tailcall if !($test) $script {*}$args}
+
+  proc g::test {} {
+      unless [file exist INNOVUS] {puts "Directory INNOVUS not found";exit}
+      g::main
+  }
+#+end_src
+** Final help routines and call to main
+
+#+begin_src tcl
+  proc d           {m} {if $::dbg {puts "# $m"}};set dbg 0
+  proc g::clear    {} {foreach c [winfo children .] {destroy $c}}
+
+  #g::main
+  g::test
+#+end_src
+
+* End of tcl script
+
+#+begin_src tcl :tangle no :results append
+  proc unless {test script args} {tailcall if !($test) $script {*}$args}
+  cd ..
+  unless [file exist INNOVUS] {return "Dir INNOVUS not found"}
+
+  set work [dict create]
+  dict set work -dir [exec pwd]
+
+  set n 0
+  for dir [glob INNOVUS/WORK*] {
+      incr n
+      dict set work -dir -$n $dir
+  }
+  return hello
+
+  #unless $n {return "Did not find any WORK* directories"}
+
+  return "Done"
+#+end_src
+
+#+RESULTS:
+
+#+begin_src sh :results silent :tangle no
+  # Let's launch
+  chmod +x pnrgui.tcl
+  ./pnrgui.tcl
+#+end_src
 
 * End of file
+
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda () (org-babel-tangle) (set-file-modes "pnrgui.tcl" #o755)) nil t)
+# End:
