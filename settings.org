@@ -170,7 +170,14 @@ easier.
     :config
     (define-key eat-semi-char-mode-map (kbd "M-o") 'ace-window)
     (define-key eat-semi-char-mode-map (kbd "M-0") 'treemacs-select-window)
-    (define-key eat-semi-char-mode-map (kbd "M-RET") 'shell-resync-dirs))
+    (define-key eat-semi-char-mode-map (kbd "M-RET")
+      (lambda ()
+        (interactive)
+        (eat-term-send-string eat-terminal "dirs")
+        (eat-self-input 1 'return)
+        ;(goto-char (- (line-beginning-position) 1))
+        (forward-line)
+        (setq ek/dir (thing-at-point 'line)))))
   (define-key eat-semi-char-mode-map (kbd "M-a") (lambda () (interactive) (switch-to-buffer "*Org Agenda*")))
   (add-hook 'window-configuration-change-hook
             (lambda ()
@@ -553,16 +560,12 @@ Connect buffer to server is for example for bb --nrepl-server
 
   (setq ansi-color-names-vector
         ["black" "tomato" "PaleGreen2" "gold1"
-         "DeepSkyBlue1" "MediumOrchid1" "cyan" "white"])
-  (setq ansi-color-names-vector
-        ["black" "tomato" "PaleGreen2" "gold1"
          "blue" "MediumOrchid1" "cyan" "white"])
   ;; NOTE Fix ansi-term keys we want(!)
   (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-o") 'ace-window)))
   (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-0") 'treemacs-select-window)))
   (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-x") 'helm-M-x)))
   (add-hook 'term-mode-hook (lambda () (define-key term-raw-map (kbd "M-RET") 'shell-resync-dirs)))
-
 #+end_src
 
 ** Other functions like ek-set mode and inital text size
