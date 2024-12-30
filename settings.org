@@ -63,6 +63,7 @@ Will use use-package, apparently "straight" is an alternative to this.
 
 Using goldenrod as default for now, selecting some with C-c h via
 hydra. other collections seem to be available.
+Color-theme-modern has many different themes.
 
 #+begin_src emacs-lisp
   (use-package color-theme-modern
@@ -71,6 +72,11 @@ hydra. other collections seem to be available.
     (enable-theme 'goldenrod))
 #+end_src
 
+Testing out gruvbox theme - perhaps think of personal edits?
+
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme)
+#+end_src
 *** Select tab system - centaur on newer emacs versions
 
 Choose tabbar (built-in) or centaur tab, dependent on emacs version.
@@ -201,7 +207,7 @@ Using treemacs for now. Apparently a package called projectile might be useful.
            ("M-o" . ace-window)))
 #+end_src
 
-** Movement and selection
+** Movement and selection - helm and ido
 
 Using helm to select commands and buffers etc.Can't get helm
 find-files to work properly, so back to normal for that.
@@ -212,17 +218,27 @@ nil in :init
 Avy mode has some other options, like char-1
 
 #+begin_src emacs-lisp
-    (use-package helm
-      :init (setq tab-bar-tab-name-function nil)
-      :bind
-      (("M-x"     . helm-M-x)
-       ("M-y"     . helm-show-kill-ring)
-       ("C-x C-b" . helm-mini)
-      ;("C-x C-f" . helm-find-files)
-       ("M-i"     . helm-swoop)
-       ("M-s o"   . helm-occur)))
+  (use-package helm
+    :init (setq tab-bar-tab-name-function nil)
+    :bind
+    (("M-x"     . helm-M-x)
+     ("M-y"     . helm-show-kill-ring)
+     ("C-x C-b" . helm-mini)
+     ;("C-x C-f" . helm-find-files)
+     ("M-i"     . helm-swoop)
+     ("M-s o"   . helm-occur)))
 
-  (global-set-key (kbd "C-x C-f") 'ido-find-file)
+  (use-package ido
+    :config
+    (ido-mode t)
+    (setq ido-max-window-height 10)
+    (setq ido-enable-flext-matching t)
+    (setq ido-everywhere t)
+    (setq ido-file-extension-order '(".tcl" ".org" ".el"))
+    (setq ido-ignore-directories '(".git"))
+    :bind
+    (("C-x C-f" . 'ido-find-file)
+     ("C-x d"   . 'ido-dired)))
 
   (use-package avy
     :bind
@@ -446,7 +462,9 @@ Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
     ("7" (ek-theme 'retro-green)       "retro-green"       :column "Theme")
     ("8" (ek-theme 'word-perfect)      "word-perfect"      :column "Theme")
     ("9" (ek-theme 'taming-mr-arneson) "taming-mr-arneson" :column "Theme")
-    ("0" (ek-theme 'light-blue)        "light-blue       " :column "Theme")
+    ("0" (ek-theme 'light-blue)        "light-blue"        :column "Theme")
+    ("a" (ek-theme 'leuven)            "leuven"            :column "Theme")
+    ("b" (ek-theme 'gruvbox)           "gruvbox"           :column "Theme")
 
     ("l" display-line-numbers-mode "line-numbers"   :column "Toggle")
     ("c" column-number-mode        "columns"        :column "Toggle")
