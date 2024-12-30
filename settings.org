@@ -73,9 +73,10 @@ Color-theme-modern has many different themes.
 #+end_src
 
 Testing out gruvbox theme - perhaps think of personal edits?
+This does not work from dsc005 for some reason (20-dec-24)
 
 #+begin_src emacs-lisp
-  (use-package gruvbox-theme)
+  ;(use-package gruvbox-theme)
 #+end_src
 *** Select tab system - centaur on newer emacs versions
 
