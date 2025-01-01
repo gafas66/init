@@ -12,8 +12,7 @@
 
 * Setting up ELPA package system
 
-Here we need some locally downloaded stuff, like all-icons (to be
-replaced by nerd-icons?)
+Here we need some locally downloaded stuff, nerd-icons, org-roam etc
 
 There are version issues around v26/27 versus gpg keys. These are
 needed for downloading packages, and have recently (3-4 years)
@@ -25,8 +24,7 @@ For package-check-signature, 'allow-unsigned is the default, but this
 does not always work.
 
 #+begin_src emacs-lisp
-  (add-to-list 'load-path "~/.emacs.d/lisp") ; NOTE My local lisps
-  (add-to-list 'load-path "~/src/all-the-icons-dired") ; NOTE My local lisps
+  (add-to-list 'load-path "~/init/lisp") ; NOTE My local lisps
 
   (require 'package)
 
@@ -64,9 +62,10 @@ Will use use-package, apparently "straight" is an alternative to this.
 Using goldenrod as default for now, selecting some with C-c h via
 hydra. other collections seem to be available.
 Color-theme-modern has many different themes.
+:ensure t seems to be required here for some reason.
 
 #+begin_src emacs-lisp
-  (use-package color-theme-modern
+  (use-package color-theme-modern :ensure t
     :config
     (load-theme 'goldenrod t t)
     (enable-theme 'goldenrod))
@@ -107,7 +106,7 @@ Use centaur tabs when version is 27 or newer
         (setq centaur-tabs-set-bar 'over)
                                           ;(centaur-tabs-change-fonts "arial" 160) 
         (setq centaur-tabs-set-icons t)
-        (setq centaur-tabs-icon-type 'all-the-icons)
+        (setq centaur-tabs-icon-type 'nerd-icons)
                                           ;(setq centaur-tabs-plain-icons t) ; Replacing icons!
                                           ;(setq centaur-tabs-modified-marker t)
         (defun centaur-tabs-buffer-groups ()
@@ -129,19 +128,17 @@ Use centaur tabs when version is 27 or newer
 
 *** install icons for use in org, modelines, and tabs
 
-Download all the icons package, this requires to run
-"all-the-icons-install-fonts" via M-x after. This is potentially
-replaced now by nerd-icons.
-
-nerd-icons: As for all-icons above, M-x
-nerd-icons-install-fonts is required.
+Download nerd-icons package, this requires to run
+nerd-icons-install-fonts is required. [[id:b7c9ceed-d471-441e-a0d4-9be860760441][Icons]]
 
 #+begin_src emacs-lisp
-  (use-package all-the-icons
-    :if (display-graphic-p))
-  (load "all-the-icons-dired")
-  (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-  (use-package nerd-icons)
+  (use-package nerd-icons
+    :config
+    (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
+      (nerd-icons-install-fonts t)))
+  (use-package nerd-icons-dired
+    :hook
+    (dired-mode . nerd-icons-dired-mode))
 #+end_src
 
 *** Modeline selection and dimmer mode
@@ -256,7 +253,7 @@ Fic-mode should work everywhere, hightlight actions and FIXME
 etc. Markerpen is manually downloaded.
 
 #+begin_src emacs-lisp
-  (require 'markerpen)
+  (require 'markerpen nil :noerror)
 
   (use-package fic-mode :ensure t)
   (setq p-modes '(tcl-mode-hook ruby-mode-hook perl-mode-hook cperl-mode-hook emacs-lisp-mode-hook python-mode-hook))
@@ -296,7 +293,7 @@ Perhaps use :bind to improve readability below?
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)))
   (setq org-todo-keywords
-        '((sequence "TODO" "WAIT" "|" "CANCELLED" "DONE")))
+        '((sequence "TODO" "IN-PROGRESS" "|" "CANCELLED" "DONE")))
 #+end_src
 
 *** Babel setup - various programming languages inside org mode
@@ -308,7 +305,7 @@ It seems the ob-tcl does not exist, as it should?
   (require 'ob-clojure)
   (require 'ob-ruby)
   (require 'ob-shell)
-  (require 'ob-tcl)
+  (require 'ob-tcl nil :noerror)
                                           ;(require ob-perl)
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
@@ -438,18 +435,20 @@ The helm-org below I've not got to work yet, not sure what it does !
 *** Org roam for "brain" functionality
 
 #+begin_src emacs-lisp
-  (require 'emacsql)
+  (require 'emacsql nil :noerror)
   (use-package org-roam
     :init
     (setq org-roam-v2-ack t)
-      :custom
-      (org-roam-directory "~/RoamNotes")
-      (org-roam-completion-everywhere t)
-      :bind (("C-c n l" . org-roam-buffer-toggle)
-             ("C-c n f" . org-roam-node-find)
-             ("C-c n i" . org-roam-node-insert))
-      :config
-      (org-roam-setup))
+    (setq ek/roamnotes "~/RoamNotes")
+    (unless (file-directory-p ek/roamnotes) (make-directory ek/roamnotes))
+    :custom
+    (org-roam-directory ek/roamnotes)
+    (org-roam-completion-everywhere t)
+    :bind (("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n i" . org-roam-node-insert))
+    :config
+    (org-roam-setup))
 #+end_src
 ** Hydra mode setup for keybinding selections
 
