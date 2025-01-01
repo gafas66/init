@@ -45,7 +45,7 @@ Find a way to refresh only when its a week since last time
 How about creating a file inside elpa, and do (f-touch) on this every refresh?
 
 #+begin_src emacs-lisp
-  ;(package-refresh-contents) nil)
+  (package-refresh-contents)
 #+end_src
 
 Will use use-package, apparently "straight" is an alternative to this.
@@ -76,7 +76,7 @@ Testing out gruvbox theme - perhaps think of personal edits?
 This does not work from dsc005 for some reason (20-dec-24)
 
 #+begin_src emacs-lisp
-  ;(use-package gruvbox-theme)
+                                          ;(use-package gruvbox-theme)
 #+end_src
 *** Select tab system - centaur on newer emacs versions
 
@@ -138,7 +138,7 @@ nerd-icons-install-fonts is required.
 
 #+begin_src emacs-lisp
   (use-package all-the-icons
-      :if (display-graphic-p))
+    :if (display-graphic-p))
   (load "all-the-icons-dired")
   (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
   (use-package nerd-icons)
@@ -165,7 +165,7 @@ spacemacs.
     :init (doom-modeline-mode 1))
 #+end_src
 
-** Shell and programming
+** Shell and programming and completion
 
 Using *eat* as main shell for now, works reasonably well, and seems to
 be a better term emulator than ansi-term. Treemacs makes projects
@@ -196,6 +196,10 @@ easier.
                   (eat-term-send-string eat-terminal "if [[ \"$(hostname)\" == \"dsc005\" ]];then ssh dsc009;fi")
                   (eat-self-input 1 'return)
                   (setq-local called-once t)))))
+
+  (use-package company
+    :config
+    (add-hook 'after-init-hook 'global-company-mode))
 #+end_src
 
 Project management
@@ -225,7 +229,7 @@ Avy mode has some other options, like char-1
     (("M-x"     . helm-M-x)
      ("M-y"     . helm-show-kill-ring)
      ("C-x C-b" . helm-mini)
-     ;("C-x C-f" . helm-find-files)
+                                          ;("C-x C-f" . helm-find-files)
      ("M-i"     . helm-swoop)
      ("M-s o"   . helm-occur)))
 
@@ -279,7 +283,7 @@ Perhaps use :bind to improve readability below?
     (define-key global-map "\C-cl" 'org-store-link)
     (define-key global-map "\C-ca" 'org-agenda)
     (define-key global-map "\C-cc" 'org-capture)
-    ;(setq org-directory "~/init/org")
+                                          ;(setq org-directory "~/init/org")
     (setq org-default-notes-file "~/init/org/Capture.org.gpg")
     (setq org-agenda-files my-org-files)
     (define-key org-mode-map (kbd "C-c C-g C-r") 'org-shiftmetaright)
@@ -287,7 +291,7 @@ Perhaps use :bind to improve readability below?
     (setq org-agenda-window-setup 'current-window)
     (setq org-agenda-restore-windows-after-quit t)
     (setq org-agenda-skip-scheduled-if-done t)
-    ;(setq org-agenda-skip-function-global '(org-agenda-skip-entry-if 'todo 'done))
+                                          ;(setq org-agenda-skip-function-global '(org-agenda-skip-entry-if 'todo 'done))
     )
   (setq org-refile-targets '((nil :maxlevel . 9)
                              (org-agenda-files :maxlevel . 9)))
@@ -305,7 +309,7 @@ It seems the ob-tcl does not exist, as it should?
   (require 'ob-ruby)
   (require 'ob-shell)
   (require 'ob-tcl)
-  ;(require ob-perl)
+                                          ;(require ob-perl)
   (setq org-babel-clojure-backend 'cider)
   (setq org-confirm-babel-evaluate nil)
 #+end_src
@@ -324,33 +328,33 @@ It seems the ob-tcl does not exist, as it should?
 
 *** Bullets and fonts for headlines
 
-  Here follows setup with coloring and bullets for orgmode. Not sure yet about the fonts and their sizes.
+Here follows setup with coloring and bullets for orgmode. Not sure yet about the fonts and their sizes.
 
- #+begin_src emacs-lisp
-   (use-package org-bullets
-     :config
-     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-   (font-lock-add-keywords 'org-mode
-                           '(("^ +\\([-*]\\) "
-                              (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
-   (when window-system
-     (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
-                                  ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
-                                  ((x-list-fonts "Verdana")         '(:font "Verdana"))
-                                  ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
-                                  (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
-            (base-font-color     (face-foreground 'default nil 'default))
-            (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
-       (custom-theme-set-faces 'user
-                               `(org-level-8 ((t (,@headline ,@variable-tuple))))
-                               `(org-level-7 ((t (,@headline ,@variable-tuple))))
-                               `(org-level-6 ((t (,@headline ,@variable-tuple))))
-                               `(org-level-5 ((t (,@headline ,@variable-tuple))))
-                               `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
-                               `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
-                               `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
-                               `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
-                               `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
+#+begin_src emacs-lisp
+  (use-package org-bullets
+    :config
+    (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (font-lock-add-keywords 'org-mode
+                          '(("^ +\\([-*]\\) "
+                             (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•"))))))
+  (when window-system
+    (let* ((variable-tuple (cond ((x-list-fonts "Source Sans Pro") '(:font "Source Sans Pro"))
+                                 ((x-list-fonts "Lucida Grande")   '(:font "Lucida Grande"))
+                                 ((x-list-fonts "Verdana")         '(:font "Verdana"))
+                                 ((x-family-fonts "Sans Serif")    '(:family "Sans Serif"))
+                                 (nil (warn "Cannot find a Sans Serif Font.  Install Source Sans Pro."))))
+           (base-font-color     (face-foreground 'default nil 'default))
+           (headline           `(:inherit default :weight bold :foreground ,base-font-color)))
+      (custom-theme-set-faces 'user
+                              `(org-level-8 ((t (,@headline ,@variable-tuple))))
+                              `(org-level-7 ((t (,@headline ,@variable-tuple))))
+                              `(org-level-6 ((t (,@headline ,@variable-tuple))))
+                              `(org-level-5 ((t (,@headline ,@variable-tuple))))
+                              `(org-level-4 ((t (,@headline ,@variable-tuple :height 1.1))))
+                              `(org-level-3 ((t (,@headline ,@variable-tuple :height 1.2))))
+                              `(org-level-2 ((t (,@headline ,@variable-tuple :height 1.3))))
+                              `(org-level-1 ((t (,@headline ,@variable-tuple :height 1.4))))
+                              `(org-document-title ((t (,@headline ,@variable-tuple :height 1.5 :underline nil)))))))
 #+end_src
 
 *** Unicode pretty symbols
@@ -363,17 +367,17 @@ This is lambda - a greek symbol.
 #+begin_src emacs-lisp
   (global-prettify-symbols-mode t)
   (defvar emagician/prettify-list
-   '(("lambda" . 955)
-     ("<=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≤))
-     (">=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≥))
-     ("->" . ?⟶)
-     ("=>" . ?⟹)
-     ("==" . ?⩵)
-     ("//" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?⫽))
-     ("!=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≠))
-     ("->>" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
-                    (Bl . Bl) ?- (Bc . Br) ?- (Bc . Bc) ?>
-                    (Bc . Bl) ?- (Br . Br) ?>))))
+    '(("lambda" . 955)
+      ("<=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≤))
+      (">=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≥))
+      ("->" . ?⟶)
+      ("=>" . ?⟹)
+      ("==" . ?⩵)
+      ("//" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?⫽))
+      ("!=" . (?\s  (Br . Bl) ?\s (Bc . Bc) ?≠))
+      ("->>" .  (?\s (Br . Bl) ?\s (Br . Bl) ?\s
+                     (Bl . Bl) ?- (Bc . Br) ?- (Bc . Bc) ?>
+                     (Bc . Bl) ?- (Br . Br) ?>))))
   (setq prettify-symbols-unprettify-at-point 'right-edge)
   (setq prettify-symbols-alist emagician/prettify-list)
 #+end_src
@@ -397,9 +401,9 @@ Here are templates for capturing tasks for December 2024, focused on VEC project
 
   (setq org-agenda-custom-commands
         '(("u" "Untagged tasks" tags-todo "-{.*}")))
-  ;	("d" "Daily Agenda"
-  ;	 ((agenda "" ((org-agenda-span 'day)
-  ;		      (org-deadline-warning-days 7)))))))
+                                          ;	("d" "Daily Agenda"
+                                          ;	 ((agenda "" ((org-agenda-span 'day)
+                                          ;		      (org-deadline-warning-days 7)))))))
 #+end_src
 
 *** Org subtasks and helm-org
@@ -419,7 +423,7 @@ Procedure for inserting sub-task , have not really used this yet
 
 The helm-org below I've not got to work yet, not sure what it does !
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
       (use-package helm-org
         ;:config
         ;(add-to-list 'helm-completing-read-handlers-alist '(org-capture . helm-org-completing-read-tags))
@@ -431,6 +435,22 @@ The helm-org below I've not got to work yet, not sure what it does !
                   (add-to-list 'helm-completing-read-handlers-alist '(org-set-tags . helm-org-completing-read-tags))))
 #+end_src
 
+*** Org roam for "brain" functionality
+
+#+begin_src emacs-lisp
+  (require 'emacsql)
+  (use-package org-roam
+    :init
+    (setq org-roam-v2-ack t)
+      :custom
+      (org-roam-directory "~/RoamNotes")
+      (org-roam-completion-everywhere t)
+      :bind (("C-c n l" . org-roam-buffer-toggle)
+             ("C-c n f" . org-roam-node-find)
+             ("C-c n i" . org-roam-node-insert))
+      :config
+      (org-roam-setup))
+#+end_src
 ** Hydra mode setup for keybinding selections
 
 Hydra allows a menu for a key or keyseq. bind-key has not really been used yet.
