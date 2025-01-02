@@ -47,5 +47,9 @@ if git branch &> /dev/null; then \
 fi;\
 PS1="\h\s ${__YELLOW}${BRANCH}${__RESTORE} \w\n$ ";'
 
+# EAT mode shell directory tracking?
+#[ -n "$EAT_SHELL_INTEGRATION_DIR" ] && \
+#    source "$EAT_SHELL_INTEGRATION_DIR/bash"
+
 # End
 ################################################################################
