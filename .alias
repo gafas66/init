@@ -10,7 +10,7 @@ alias h='history'
 
 COLOR=--color
 
-alias l="ls -lha $COLOR"
+alias l="ls -lh $COLOR"
 alias ll="ls -lha $COLOR"
 alias lt="ls -lhat $COLOR | head -40"
 

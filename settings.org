@@ -162,7 +162,7 @@ spacemacs.
     :init (doom-modeline-mode 1))
 #+end_src
 
-** Shell and programming and completion
+** Shell and programming
 
 Using *eat* as main shell for now, works reasonably well, and seems to
 be a better term emulator than ansi-term. Treemacs makes projects
@@ -196,28 +196,37 @@ easier.
                   (setq-local called-once t)))))
 #+end_src
 
+** Code completion
+
 Code completion has two main alternatives, company and corfu, trying both.
 (if t ... means company
 
 #+begin_src emacs-lisp
-  (if t
-      (progn
-        (use-package company
-          :config
-          (global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
-          (setq company-tooltip-align-annotations t)
-          (add-hook 'after-init-hook 'global-company-mode)))
-    (use-package corfu
-      :init
-      (global-corfu-mode))
-    (add-hook 'minibuffer-setup-hook (lambda ()
-                                       (when (memq #'completion-at-point
-                                                   (flatten-tree
-                                                    (current-local-map)))
-                                         (corfu-mode)))))
+  (use-package company
+        :config
+        ;(global-set-key (kbd "<tab>") #'company-indent-or-complete-common)
+        ;(global-set-key (kbd "<tab>") #'indent)
+        (setq company-tooltip-align-annotations t)
+        (add-hook 'after-init-hook 'global-company-mode))
+  (use-package corfu
+    :disabled
+    :init
+    (global-corfu-mode))
+  (add-hook 'minibuffer-setup-hook (lambda ()
+                                     (when (memq #'completion-at-point
+                                                 (flatten-tree
+                                                  (current-local-map)))
+                                       (corfu-mode))))
 #+end_src
 
-*** Project management
+Let;s start using eglot [2025-01-03 Fri]
+
+#+begin_src emacs-lisp
+  (use-package project) ; Workaround
+  (use-package eglot)
+
+#+end_src
+** Project management
 
 Using treemacs for now. Apparently a package called projectile might be useful.
 
@@ -462,7 +471,7 @@ emacs, or installed in unix.
 
 #+begin_src emacs-lisp
   (when (> emacs-major-version 28)
-    (require 'emacsql nil :noerror)
+    ;(require 'emacsql nil :noerror)
     (use-package org-roam
       :init
       (setq org-roam-v2-ack t)
